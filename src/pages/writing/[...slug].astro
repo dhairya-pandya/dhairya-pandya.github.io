@@ -78,7 +78,7 @@ const titleOf = (x: typeof item) => (x.entry.data as any).title;
 <PageLayout
   machine={machineDoc}
   section="writing"
-  title={`${data.title}, Ashutosh Rana`}
+  title={`${data.title}, Dhairya Pandya`}
   description={isEssay ? data.description : data.blurb}
 >
   <article class="band">
@@ -275,6 +275,16 @@ const titleOf = (x: typeof item) => (x.entry.data as any).title;
   .post a:hover {
     text-decoration-color: var(--color-ink);
   }
+  /* Diagrams sit in a hairline frame like everything else on the
+     site, rather than floating loose against the page. */
+  .post img {
+    display: block;
+    width: 100%;
+    height: auto;
+    border-radius: var(--radius-card);
+    border: 1px solid var(--color-line-2);
+  }
+
   /* Code blocks scroll on their own axis so a long line never makes
      the page scroll sideways. */
   .post pre {

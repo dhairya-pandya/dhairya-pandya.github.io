@@ -1,19 +1,20 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 500" width="1000" height="500" role="img">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 500" width="1000" height="500" role="img" class="lp">
+  <style>svg.lp { --lp-bg-a: #141416; --lp-bg-b: #0d0d0e; --lp-ink: #f2f2f2; --lp-dim: #8f8f8f; --lp-line: rgba(255,255,255,0.14); --lp-faint: rgba(255,255,255,0.06); } @media (prefers-color-scheme: light) { svg.lp { --lp-bg-a: #ffffff; --lp-bg-b: #f3f3f1; --lp-ink: #131313; --lp-dim: #6b6b68; --lp-line: rgba(0,0,0,0.14); --lp-faint: rgba(0,0,0,0.06); } }</style>
   <defs>
-    <linearGradient id="plate" x1="0" y1="0" x2="0" y2="1">
-      <stop offset="0" stop-color="#141416"/>
-      <stop offset="1" stop-color="#0d0d0e"/>
+    <linearGradient id="lpg" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="var(--lp-bg-a)"/>
+      <stop offset="1" stop-color="var(--lp-bg-b)"/>
     </linearGradient>
-    <filter id="grain" x="0" y="0" width="100%" height="100%">
+    <filter id="lpgrain" x="0" y="0" width="100%" height="100%">
       <feTurbulence type="fractalNoise" baseFrequency="0.8" numOctaves="3" seed="7" result="n"/>
       <feColorMatrix in="n" type="saturate" values="0"/>
       <feComponentTransfer><feFuncA type="linear" slope="0.055"/></feComponentTransfer>
     </filter>
-    
   </defs>
-  <rect width="1000" height="500" fill="url(#plate)"/>
-  <rect x="120" y="120" width="130" height="260" fill="#fb923c" opacity="0.85"/><text x="185" y="410" text-anchor="middle" font-family="Geist Mono, ui-monospace, monospace" font-size="19" fill="#8f8f8f">FP32</text><rect x="320" y="218.8" width="130" height="161.2" fill="#fb923c" opacity="0.7"/><text x="385" y="410" text-anchor="middle" font-family="Geist Mono, ui-monospace, monospace" font-size="19" fill="#8f8f8f">FP16</text><rect x="520" y="281.2" width="130" height="98.8" fill="#fb923c" opacity="0.55"/><text x="585" y="410" text-anchor="middle" font-family="Geist Mono, ui-monospace, monospace" font-size="19" fill="#8f8f8f">INT8</text><rect x="720" y="330.6" width="130" height="49.4" fill="#fb923c" opacity="0.4"/><text x="785" y="410" text-anchor="middle" font-family="Geist Mono, ui-monospace, monospace" font-size="19" fill="#8f8f8f">INT4</text>
-  <text x="60" y="460" font-family="Geist Mono, ui-monospace, monospace" font-size="17" letter-spacing="1.6" fill="#8f8f8f">PRECISION IS A BUDGET, NOT A SETTING</text>
-  <rect width="1000" height="500" filter="url(#grain)" opacity="0.85"/>
-  <rect x="0.5" y="0.5" width="999" height="499" fill="none" stroke="rgba(255,255,255,0.10)"/>
+  <rect width="1000" height="500" fill="url(#lpg)"/>
+  
+  <rect x="120" y="120" width="130" height="260" fill="#fb923c" opacity="0.85"/><text x="185" y="410" text-anchor="middle" font-family="Geist Mono, ui-monospace, monospace" font-size="19" fill="var(--lp-dim)">FP32</text><rect x="320" y="218.8" width="130" height="161.2" fill="#fb923c" opacity="0.7"/><text x="385" y="410" text-anchor="middle" font-family="Geist Mono, ui-monospace, monospace" font-size="19" fill="var(--lp-dim)">FP16</text><rect x="520" y="281.2" width="130" height="98.8" fill="#fb923c" opacity="0.55"/><text x="585" y="410" text-anchor="middle" font-family="Geist Mono, ui-monospace, monospace" font-size="19" fill="var(--lp-dim)">INT8</text><rect x="720" y="330.6" width="130" height="49.4" fill="#fb923c" opacity="0.4"/><text x="785" y="410" text-anchor="middle" font-family="Geist Mono, ui-monospace, monospace" font-size="19" fill="var(--lp-dim)">INT4</text>
+     <text x="60" y="460" font-family="Geist Mono, ui-monospace, monospace" font-size="17" letter-spacing="1.6" fill="var(--lp-dim)">PRECISION IS A BUDGET, NOT A SETTING</text>
+  <rect width="1000" height="500" filter="url(#lpgrain)" opacity="0.9"/>
+  <rect x="0.5" y="0.5" width="999" height="499" fill="none" stroke="var(--lp-line)"/>
 </svg>

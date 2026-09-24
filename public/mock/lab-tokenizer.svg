@@ -1,50 +1,51 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 600" width="900" height="600" role="img">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 600" width="900" height="600" role="img" class="lp">
+  <style>svg.lp { --lp-bg-a: #141416; --lp-bg-b: #0d0d0e; --lp-ink: #f2f2f2; --lp-dim: #8f8f8f; --lp-line: rgba(255,255,255,0.14); --lp-faint: rgba(255,255,255,0.06); } @media (prefers-color-scheme: light) { svg.lp { --lp-bg-a: #ffffff; --lp-bg-b: #f3f3f1; --lp-ink: #131313; --lp-dim: #6b6b68; --lp-line: rgba(0,0,0,0.14); --lp-faint: rgba(0,0,0,0.06); } }</style>
   <defs>
-    <linearGradient id="plate" x1="0" y1="0" x2="0" y2="1">
-      <stop offset="0" stop-color="#141416"/>
-      <stop offset="1" stop-color="#0d0d0e"/>
+    <linearGradient id="lpg" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="var(--lp-bg-a)"/>
+      <stop offset="1" stop-color="var(--lp-bg-b)"/>
     </linearGradient>
-    <filter id="grain" x="0" y="0" width="100%" height="100%">
+    <filter id="lpgrain" x="0" y="0" width="100%" height="100%">
       <feTurbulence type="fractalNoise" baseFrequency="0.8" numOctaves="3" seed="7" result="n"/>
       <feColorMatrix in="n" type="saturate" values="0"/>
       <feComponentTransfer><feFuncA type="linear" slope="0.055"/></feComponentTransfer>
     </filter>
-    
   </defs>
-  <rect width="900" height="600" fill="url(#plate)"/>
-  <text x="36" y="70" font-family="Geist Mono, ui-monospace, monospace" font-size="15" letter-spacing="1.2" fill="#8f8f8f">14 TOKENS  /  62 CHARS  /  4.4 CHARS PER TOKEN</text>
+  <rect width="900" height="600" fill="url(#lpg)"/>
+  
+  <text x="36" y="70" font-family="Geist Mono, ui-monospace, monospace" font-size="15" letter-spacing="1.2" fill="var(--lp-dim)">14 TOKENS  /  62 CHARS  /  4.4 CHARS PER TOKEN</text>
      <rect x="36" y="120" width="82.5" height="44" rx="5" fill="#22d3ee" opacity="0.28" stroke="#22d3ee" stroke-opacity="0.45"/>
-      <text x="77.25" y="149" text-anchor="middle" font-family="Geist Mono, ui-monospace, monospace" font-size="17" fill="#f2f2f2">Quant</text>
-      <text x="77.25" y="180" text-anchor="middle" font-family="Geist Mono, ui-monospace, monospace" font-size="12" fill="#8f8f8f">1000</text><rect x="126.5" y="120" width="109.5" height="44" rx="5" fill="#22d3ee" opacity="0.16" stroke="#22d3ee" stroke-opacity="0.45"/>
-      <text x="181.25" y="149" text-anchor="middle" font-family="Geist Mono, ui-monospace, monospace" font-size="17" fill="#f2f2f2">ization</text>
-      <text x="181.25" y="180" text-anchor="middle" font-family="Geist Mono, ui-monospace, monospace" font-size="12" fill="#8f8f8f">1137</text><rect x="244" y="120" width="55.5" height="44" rx="5" fill="#22d3ee" opacity="0.28" stroke="#22d3ee" stroke-opacity="0.45"/>
-      <text x="271.75" y="149" text-anchor="middle" font-family="Geist Mono, ui-monospace, monospace" font-size="17" fill="#f2f2f2">&#183;is</text>
-      <text x="271.75" y="180" text-anchor="middle" font-family="Geist Mono, ui-monospace, monospace" font-size="12" fill="#8f8f8f">1274</text><rect x="307.5" y="120" width="42" height="44" rx="5" fill="#22d3ee" opacity="0.16" stroke="#22d3ee" stroke-opacity="0.45"/>
-      <text x="328.5" y="149" text-anchor="middle" font-family="Geist Mono, ui-monospace, monospace" font-size="17" fill="#f2f2f2">&#183;a</text>
-      <text x="328.5" y="180" text-anchor="middle" font-family="Geist Mono, ui-monospace, monospace" font-size="12" fill="#8f8f8f">1411</text><rect x="357.5" y="120" width="123" height="44" rx="5" fill="#22d3ee" opacity="0.28" stroke="#22d3ee" stroke-opacity="0.45"/>
-      <text x="419" y="149" text-anchor="middle" font-family="Geist Mono, ui-monospace, monospace" font-size="17" fill="#f2f2f2">&#183;measure</text>
-      <text x="419" y="180" text-anchor="middle" font-family="Geist Mono, ui-monospace, monospace" font-size="12" fill="#8f8f8f">1548</text><rect x="488.5" y="120" width="69" height="44" rx="5" fill="#22d3ee" opacity="0.16" stroke="#22d3ee" stroke-opacity="0.45"/>
-      <text x="523" y="149" text-anchor="middle" font-family="Geist Mono, ui-monospace, monospace" font-size="17" fill="#f2f2f2">ment</text>
-      <text x="523" y="180" text-anchor="middle" font-family="Geist Mono, ui-monospace, monospace" font-size="12" fill="#8f8f8f">1685</text><rect x="565.5" y="120" width="123" height="44" rx="5" fill="#22d3ee" opacity="0.28" stroke="#22d3ee" stroke-opacity="0.45"/>
-      <text x="627" y="149" text-anchor="middle" font-family="Geist Mono, ui-monospace, monospace" font-size="17" fill="#f2f2f2">&#183;problem</text>
-      <text x="627" y="180" text-anchor="middle" font-family="Geist Mono, ui-monospace, monospace" font-size="12" fill="#8f8f8f">1822</text><rect x="696.5" y="120" width="28.5" height="44" rx="5" fill="#22d3ee" opacity="0.16" stroke="#22d3ee" stroke-opacity="0.45"/>
-      <text x="710.75" y="149" text-anchor="middle" font-family="Geist Mono, ui-monospace, monospace" font-size="17" fill="#f2f2f2">&#44;</text>
-      <text x="710.75" y="180" text-anchor="middle" font-family="Geist Mono, ui-monospace, monospace" font-size="12" fill="#8f8f8f">1959</text><rect x="733" y="120" width="69" height="44" rx="5" fill="#22d3ee" opacity="0.28" stroke="#22d3ee" stroke-opacity="0.45"/>
-      <text x="767.5" y="149" text-anchor="middle" font-family="Geist Mono, ui-monospace, monospace" font-size="17" fill="#f2f2f2">&#183;not</text>
-      <text x="767.5" y="180" text-anchor="middle" font-family="Geist Mono, ui-monospace, monospace" font-size="12" fill="#8f8f8f">2096</text><rect x="810" y="120" width="42" height="44" rx="5" fill="#22d3ee" opacity="0.16" stroke="#22d3ee" stroke-opacity="0.45"/>
-      <text x="831" y="149" text-anchor="middle" font-family="Geist Mono, ui-monospace, monospace" font-size="17" fill="#f2f2f2">&#183;a</text>
-      <text x="831" y="180" text-anchor="middle" font-family="Geist Mono, ui-monospace, monospace" font-size="12" fill="#8f8f8f">2233</text><rect x="36" y="182" width="136.5" height="44" rx="5" fill="#22d3ee" opacity="0.28" stroke="#22d3ee" stroke-opacity="0.45"/>
-      <text x="104.25" y="211" text-anchor="middle" font-family="Geist Mono, ui-monospace, monospace" font-size="17" fill="#f2f2f2">&#183;compress</text>
-      <text x="104.25" y="242" text-anchor="middle" font-family="Geist Mono, ui-monospace, monospace" font-size="12" fill="#8f8f8f">2370</text><rect x="180.5" y="182" width="55.5" height="44" rx="5" fill="#22d3ee" opacity="0.16" stroke="#22d3ee" stroke-opacity="0.45"/>
-      <text x="208.25" y="211" text-anchor="middle" font-family="Geist Mono, ui-monospace, monospace" font-size="17" fill="#f2f2f2">ion</text>
-      <text x="208.25" y="242" text-anchor="middle" font-family="Geist Mono, ui-monospace, monospace" font-size="12" fill="#8f8f8f">2507</text><rect x="244" y="182" width="69" height="44" rx="5" fill="#22d3ee" opacity="0.28" stroke="#22d3ee" stroke-opacity="0.45"/>
-      <text x="278.5" y="211" text-anchor="middle" font-family="Geist Mono, ui-monospace, monospace" font-size="17" fill="#f2f2f2">&#183;one</text>
-      <text x="278.5" y="242" text-anchor="middle" font-family="Geist Mono, ui-monospace, monospace" font-size="12" fill="#8f8f8f">2644</text><rect x="321" y="182" width="28.5" height="44" rx="5" fill="#22d3ee" opacity="0.16" stroke="#22d3ee" stroke-opacity="0.45"/>
-      <text x="335.25" y="211" text-anchor="middle" font-family="Geist Mono, ui-monospace, monospace" font-size="17" fill="#f2f2f2">.</text>
-      <text x="335.25" y="242" text-anchor="middle" font-family="Geist Mono, ui-monospace, monospace" font-size="12" fill="#8f8f8f">2781</text><g font-family="Geist Mono, ui-monospace, monospace">
-    <text x="36" y="554" font-size="24" fill="#f2f2f2" letter-spacing="-0.2">Subword boundaries</text>
-    <text x="36" y="578" font-size="15" fill="#8f8f8f" letter-spacing="0.8">BPE, where the model actually splits your words</text>
+      <text x="77.25" y="149" text-anchor="middle" font-family="Geist Mono, ui-monospace, monospace" font-size="17" fill="var(--lp-ink)">Quant</text>
+      <text x="77.25" y="180" text-anchor="middle" font-family="Geist Mono, ui-monospace, monospace" font-size="12" fill="var(--lp-dim)">1000</text><rect x="126.5" y="120" width="109.5" height="44" rx="5" fill="#22d3ee" opacity="0.16" stroke="#22d3ee" stroke-opacity="0.45"/>
+      <text x="181.25" y="149" text-anchor="middle" font-family="Geist Mono, ui-monospace, monospace" font-size="17" fill="var(--lp-ink)">ization</text>
+      <text x="181.25" y="180" text-anchor="middle" font-family="Geist Mono, ui-monospace, monospace" font-size="12" fill="var(--lp-dim)">1137</text><rect x="244" y="120" width="55.5" height="44" rx="5" fill="#22d3ee" opacity="0.28" stroke="#22d3ee" stroke-opacity="0.45"/>
+      <text x="271.75" y="149" text-anchor="middle" font-family="Geist Mono, ui-monospace, monospace" font-size="17" fill="var(--lp-ink)">&#183;is</text>
+      <text x="271.75" y="180" text-anchor="middle" font-family="Geist Mono, ui-monospace, monospace" font-size="12" fill="var(--lp-dim)">1274</text><rect x="307.5" y="120" width="42" height="44" rx="5" fill="#22d3ee" opacity="0.16" stroke="#22d3ee" stroke-opacity="0.45"/>
+      <text x="328.5" y="149" text-anchor="middle" font-family="Geist Mono, ui-monospace, monospace" font-size="17" fill="var(--lp-ink)">&#183;a</text>
+      <text x="328.5" y="180" text-anchor="middle" font-family="Geist Mono, ui-monospace, monospace" font-size="12" fill="var(--lp-dim)">1411</text><rect x="357.5" y="120" width="123" height="44" rx="5" fill="#22d3ee" opacity="0.28" stroke="#22d3ee" stroke-opacity="0.45"/>
+      <text x="419" y="149" text-anchor="middle" font-family="Geist Mono, ui-monospace, monospace" font-size="17" fill="var(--lp-ink)">&#183;measure</text>
+      <text x="419" y="180" text-anchor="middle" font-family="Geist Mono, ui-monospace, monospace" font-size="12" fill="var(--lp-dim)">1548</text><rect x="488.5" y="120" width="69" height="44" rx="5" fill="#22d3ee" opacity="0.16" stroke="#22d3ee" stroke-opacity="0.45"/>
+      <text x="523" y="149" text-anchor="middle" font-family="Geist Mono, ui-monospace, monospace" font-size="17" fill="var(--lp-ink)">ment</text>
+      <text x="523" y="180" text-anchor="middle" font-family="Geist Mono, ui-monospace, monospace" font-size="12" fill="var(--lp-dim)">1685</text><rect x="565.5" y="120" width="123" height="44" rx="5" fill="#22d3ee" opacity="0.28" stroke="#22d3ee" stroke-opacity="0.45"/>
+      <text x="627" y="149" text-anchor="middle" font-family="Geist Mono, ui-monospace, monospace" font-size="17" fill="var(--lp-ink)">&#183;problem</text>
+      <text x="627" y="180" text-anchor="middle" font-family="Geist Mono, ui-monospace, monospace" font-size="12" fill="var(--lp-dim)">1822</text><rect x="696.5" y="120" width="28.5" height="44" rx="5" fill="#22d3ee" opacity="0.16" stroke="#22d3ee" stroke-opacity="0.45"/>
+      <text x="710.75" y="149" text-anchor="middle" font-family="Geist Mono, ui-monospace, monospace" font-size="17" fill="var(--lp-ink)">&#44;</text>
+      <text x="710.75" y="180" text-anchor="middle" font-family="Geist Mono, ui-monospace, monospace" font-size="12" fill="var(--lp-dim)">1959</text><rect x="733" y="120" width="69" height="44" rx="5" fill="#22d3ee" opacity="0.28" stroke="#22d3ee" stroke-opacity="0.45"/>
+      <text x="767.5" y="149" text-anchor="middle" font-family="Geist Mono, ui-monospace, monospace" font-size="17" fill="var(--lp-ink)">&#183;not</text>
+      <text x="767.5" y="180" text-anchor="middle" font-family="Geist Mono, ui-monospace, monospace" font-size="12" fill="var(--lp-dim)">2096</text><rect x="810" y="120" width="42" height="44" rx="5" fill="#22d3ee" opacity="0.16" stroke="#22d3ee" stroke-opacity="0.45"/>
+      <text x="831" y="149" text-anchor="middle" font-family="Geist Mono, ui-monospace, monospace" font-size="17" fill="var(--lp-ink)">&#183;a</text>
+      <text x="831" y="180" text-anchor="middle" font-family="Geist Mono, ui-monospace, monospace" font-size="12" fill="var(--lp-dim)">2233</text><rect x="36" y="182" width="136.5" height="44" rx="5" fill="#22d3ee" opacity="0.28" stroke="#22d3ee" stroke-opacity="0.45"/>
+      <text x="104.25" y="211" text-anchor="middle" font-family="Geist Mono, ui-monospace, monospace" font-size="17" fill="var(--lp-ink)">&#183;compress</text>
+      <text x="104.25" y="242" text-anchor="middle" font-family="Geist Mono, ui-monospace, monospace" font-size="12" fill="var(--lp-dim)">2370</text><rect x="180.5" y="182" width="55.5" height="44" rx="5" fill="#22d3ee" opacity="0.16" stroke="#22d3ee" stroke-opacity="0.45"/>
+      <text x="208.25" y="211" text-anchor="middle" font-family="Geist Mono, ui-monospace, monospace" font-size="17" fill="var(--lp-ink)">ion</text>
+      <text x="208.25" y="242" text-anchor="middle" font-family="Geist Mono, ui-monospace, monospace" font-size="12" fill="var(--lp-dim)">2507</text><rect x="244" y="182" width="69" height="44" rx="5" fill="#22d3ee" opacity="0.28" stroke="#22d3ee" stroke-opacity="0.45"/>
+      <text x="278.5" y="211" text-anchor="middle" font-family="Geist Mono, ui-monospace, monospace" font-size="17" fill="var(--lp-ink)">&#183;one</text>
+      <text x="278.5" y="242" text-anchor="middle" font-family="Geist Mono, ui-monospace, monospace" font-size="12" fill="var(--lp-dim)">2644</text><rect x="321" y="182" width="28.5" height="44" rx="5" fill="#22d3ee" opacity="0.16" stroke="#22d3ee" stroke-opacity="0.45"/>
+      <text x="335.25" y="211" text-anchor="middle" font-family="Geist Mono, ui-monospace, monospace" font-size="17" fill="var(--lp-ink)">.</text>
+      <text x="335.25" y="242" text-anchor="middle" font-family="Geist Mono, ui-monospace, monospace" font-size="12" fill="var(--lp-dim)">2781</text><g font-family="Geist Mono, ui-monospace, monospace">
+    <text x="36" y="554" font-size="24" fill="var(--lp-ink)" letter-spacing="-0.2">Subword boundaries</text>
+    <text x="36" y="578" font-size="15" fill="var(--lp-dim)" letter-spacing="0.8">BPE, where the model actually splits your words</text>
   </g>
-  <rect width="900" height="600" filter="url(#grain)" opacity="0.85"/>
-  <rect x="0.5" y="0.5" width="899" height="599" fill="none" stroke="rgba(255,255,255,0.10)"/>
+  <rect width="900" height="600" filter="url(#lpgrain)" opacity="0.9"/>
+  <rect x="0.5" y="0.5" width="899" height="599" fill="none" stroke="var(--lp-line)"/>
 </svg>

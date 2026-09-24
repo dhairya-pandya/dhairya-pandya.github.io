@@ -1,0 +1,49 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 750" width="1200" height="750" role="img">
+  <defs>
+    <linearGradient id="plate" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#141416"/>
+      <stop offset="1" stop-color="#0d0d0e"/>
+    </linearGradient>
+    <filter id="grain" x="0" y="0" width="100%" height="100%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.8" numOctaves="3" seed="7" result="n"/>
+      <feColorMatrix in="n" type="saturate" values="0"/>
+      <feComponentTransfer><feFuncA type="linear" slope="0.055"/></feComponentTransfer>
+    </filter>
+    
+  </defs>
+  <rect width="1200" height="750" fill="url(#plate)"/>
+  <path d="M40 0V750M80 0V750M120 0V750M160 0V750M200 0V750M240 0V750M280 0V750M320 0V750M360 0V750M400 0V750M440 0V750M480 0V750M520 0V750M560 0V750M600 0V750M640 0V750M680 0V750M720 0V750M760 0V750M800 0V750M840 0V750M880 0V750M920 0V750M960 0V750M1000 0V750M1040 0V750M1080 0V750M1120 0V750M1160 0V750M0 40H1200M0 80H1200M0 120H1200M0 160H1200M0 200H1200M0 240H1200M0 280H1200M0 320H1200M0 360H1200M0 400H1200M0 440H1200M0 480H1200M0 520H1200M0 560H1200M0 600H1200M0 640H1200M0 680H1200M0 720H1200" stroke="rgba(255,255,255,0.055)" stroke-width="1" fill="none"/>
+  <path d="M600 104V554" stroke="#8f8f8f" stroke-width="1.5" opacity="0.35"/><g>
+    <rect x="430" y="50" width="340" height="54" rx="10" fill="#22d3ee" opacity="0.16" stroke="#22d3ee" stroke-width="1.5"/>
+    <text x="600" y="74" text-anchor="middle" font-family="Geist Mono, ui-monospace, monospace" font-size="16" letter-spacing="1" fill="#f2f2f2">TRAY / CONTROL CENTRE</text>
+    <text x="600" y="94" text-anchor="middle" font-family="Geist Mono, ui-monospace, monospace" font-size="12" fill="#8f8f8f">Electron main + renderer</text>
+  </g><path d="M390 77H424" stroke="#a78bfa" stroke-width="1.8" opacity="0.6"/>
+    <path d="M404 71l-12 6 12 6" fill="none" stroke="#a78bfa" stroke-width="1.8"/><g>
+    <rect x="184" y="50" width="200" height="54" rx="10" fill="#a78bfa" opacity="0.14" stroke="#a78bfa" stroke-width="1.5"/>
+    <text x="284" y="74" text-anchor="middle" font-family="Geist Mono, ui-monospace, monospace" font-size="15" letter-spacing="1" fill="#f2f2f2">MONGODB</text>
+    <text x="284" y="94" text-anchor="middle" font-family="Geist Mono, ui-monospace, monospace" font-size="11" fill="#8f8f8f">agents + conversations</text>
+  </g><path d="M600 104 C 600 140, 282 140, 282 176" fill="none" stroke="#22d3ee" stroke-width="1.8" opacity="0.55"/><rect x="194" y="176" width="176" height="44" rx="8" fill="none" stroke="#22d3ee" stroke-width="1.5"/>
+      <text x="282" y="203" text-anchor="middle" font-family="Geist Mono, ui-monospace, monospace" font-size="15" letter-spacing="1" fill="#f2f2f2">GEMINI</text><path d="M282 220 C 282 261, 400 261, 400 302" fill="none" stroke="#2dd4bf" stroke-width="1.8" opacity="0.6"/><path d="M600 104 C 600 140, 494 140, 494 176" fill="none" stroke="#22d3ee" stroke-width="1.8" opacity="0.55"/><rect x="406" y="176" width="176" height="44" rx="8" fill="none" stroke="#22d3ee" stroke-width="1.5"/>
+      <text x="494" y="203" text-anchor="middle" font-family="Geist Mono, ui-monospace, monospace" font-size="15" letter-spacing="1" fill="#f2f2f2">CLAUDE</text><path d="M494 220 C 494 261, 533.3333333333334 261, 533.3333333333334 302" fill="none" stroke="#2dd4bf" stroke-width="1.8" opacity="0.6"/><path d="M600 104 C 600 140, 706 140, 706 176" fill="none" stroke="#22d3ee" stroke-width="1.8" opacity="0.55"/><rect x="618" y="176" width="176" height="44" rx="8" fill="none" stroke="#22d3ee" stroke-width="1.5"/>
+      <text x="706" y="203" text-anchor="middle" font-family="Geist Mono, ui-monospace, monospace" font-size="15" letter-spacing="1" fill="#f2f2f2">CODEX</text><path d="M706 220 C 706 261, 666.6666666666667 261, 666.6666666666667 302" fill="none" stroke="#2dd4bf" stroke-width="1.8" opacity="0.6"/><path d="M600 104 C 600 140, 918 140, 918 176" fill="none" stroke="#22d3ee" stroke-width="1.8" opacity="0.55"/><rect x="830" y="176" width="176" height="44" rx="8" fill="none" stroke="#22d3ee" stroke-width="1.5"/>
+      <text x="918" y="203" text-anchor="middle" font-family="Geist Mono, ui-monospace, monospace" font-size="15" letter-spacing="1" fill="#f2f2f2">CUSTOM</text><path d="M918 220 C 918 261, 800 261, 800 302" fill="none" stroke="#2dd4bf" stroke-width="1.8" opacity="0.6"/><g>
+    <rect x="370" y="302" width="460" height="50" rx="10" fill="#2dd4bf" opacity="0.14" stroke="#2dd4bf" stroke-width="1.5"/>
+    <path d="M384 344l10 -34" stroke="#2dd4bf" stroke-width="1" opacity="0.22"/><path d="M400 344l10 -34" stroke="#2dd4bf" stroke-width="1" opacity="0.22"/><path d="M416 344l10 -34" stroke="#2dd4bf" stroke-width="1" opacity="0.22"/><path d="M432 344l10 -34" stroke="#2dd4bf" stroke-width="1" opacity="0.22"/><path d="M448 344l10 -34" stroke="#2dd4bf" stroke-width="1" opacity="0.22"/><path d="M464 344l10 -34" stroke="#2dd4bf" stroke-width="1" opacity="0.22"/><path d="M480 344l10 -34" stroke="#2dd4bf" stroke-width="1" opacity="0.22"/><path d="M496 344l10 -34" stroke="#2dd4bf" stroke-width="1" opacity="0.22"/><path d="M512 344l10 -34" stroke="#2dd4bf" stroke-width="1" opacity="0.22"/><path d="M528 344l10 -34" stroke="#2dd4bf" stroke-width="1" opacity="0.22"/><path d="M544 344l10 -34" stroke="#2dd4bf" stroke-width="1" opacity="0.22"/><path d="M560 344l10 -34" stroke="#2dd4bf" stroke-width="1" opacity="0.22"/><path d="M576 344l10 -34" stroke="#2dd4bf" stroke-width="1" opacity="0.22"/><path d="M592 344l10 -34" stroke="#2dd4bf" stroke-width="1" opacity="0.22"/><path d="M608 344l10 -34" stroke="#2dd4bf" stroke-width="1" opacity="0.22"/><path d="M624 344l10 -34" stroke="#2dd4bf" stroke-width="1" opacity="0.22"/><path d="M640 344l10 -34" stroke="#2dd4bf" stroke-width="1" opacity="0.22"/><path d="M656 344l10 -34" stroke="#2dd4bf" stroke-width="1" opacity="0.22"/><path d="M672 344l10 -34" stroke="#2dd4bf" stroke-width="1" opacity="0.22"/><path d="M688 344l10 -34" stroke="#2dd4bf" stroke-width="1" opacity="0.22"/><path d="M704 344l10 -34" stroke="#2dd4bf" stroke-width="1" opacity="0.22"/><path d="M720 344l10 -34" stroke="#2dd4bf" stroke-width="1" opacity="0.22"/><path d="M736 344l10 -34" stroke="#2dd4bf" stroke-width="1" opacity="0.22"/><path d="M752 344l10 -34" stroke="#2dd4bf" stroke-width="1" opacity="0.22"/><path d="M768 344l10 -34" stroke="#2dd4bf" stroke-width="1" opacity="0.22"/><path d="M784 344l10 -34" stroke="#2dd4bf" stroke-width="1" opacity="0.22"/><path d="M800 344l10 -34" stroke="#2dd4bf" stroke-width="1" opacity="0.22"/><path d="M816 344l10 -34" stroke="#2dd4bf" stroke-width="1" opacity="0.22"/>
+    <text x="600" y="325" text-anchor="middle" font-family="Geist Mono, ui-monospace, monospace" font-size="16" letter-spacing="1.2" fill="#f2f2f2">ARMORIQ SDK</text>
+    <text x="600" y="345" text-anchor="middle" font-family="Geist Mono, ui-monospace, monospace" font-size="12" letter-spacing="0.6" fill="#8f8f8f">cryptographic intent verification, every call</text>
+  </g><path d="M600 352V428" stroke="#2dd4bf" stroke-width="2" opacity="0.75"/>
+    <path d="M594 416l6 12 6 -12" fill="none" stroke="#2dd4bf" stroke-width="2"/><g>
+    <rect x="470" y="428" width="260" height="50" rx="8" fill="none" stroke="#8f8f8f" stroke-width="1.5"/>
+    <text x="600" y="458" text-anchor="middle" font-family="Geist Mono, ui-monospace, monospace" font-size="16" letter-spacing="1" fill="#f2f2f2">MCP SERVERS</text>
+  </g><path d="M600 478V554" stroke="#8f8f8f" stroke-width="1.5" stroke-dasharray="3 4"/><g>
+    <rect x="470" y="554" width="260" height="56" rx="8" fill="#8f8f8f" opacity="0.08" stroke="#8f8f8f" stroke-width="1.5"/>
+    <text x="600" y="578" text-anchor="middle" font-family="Geist Mono, ui-monospace, monospace" font-size="15" letter-spacing="1" fill="#f2f2f2">LOCAL SYSTEM</text>
+    <text x="600" y="598" text-anchor="middle" font-family="Geist Mono, ui-monospace, monospace" font-size="11" fill="#8f8f8f">files, terminal, screen capture</text>
+  </g><g font-family="Geist Mono, ui-monospace, monospace">
+    <text x="48" y="658" font-size="19" letter-spacing="1.6" fill="#8f8f8f">FIG.02  REQUEST PATH</text>
+    <text x="48" y="692" font-size="30" letter-spacing="-0.2" fill="#f2f2f2">MongoDB off to one side</text>
+    <text x="48" y="720" font-size="17" letter-spacing="0.5" fill="#8f8f8f">tray to session to ArmorIQ to MCP to local system, one column</text>
+  </g>
+  <rect width="1200" height="750" filter="url(#grain)" opacity="0.9"/>
+  <rect x="0.5" y="0.5" width="1199" height="749" fill="none" stroke="rgba(255,255,255,0.10)"/>
+</svg>

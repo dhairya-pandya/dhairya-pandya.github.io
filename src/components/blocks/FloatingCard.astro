@@ -1,0 +1,53 @@
+---
+/**
+ * A small polaroid, tucked into the top-right corner of a section,
+ * inside the centred column rather than out in the margin. Sized
+ * and positioned to sit beside the short first line (a name, a
+ * title) before the section's body text reaches full column width,
+ * so it reads as a margin note without actually sitting in the
+ * margin.
+ */
+interface Props {
+  src: string;
+  alt: string;
+  side?: "left" | "right";
+  top?: string;
+  tilt?: number;
+  width?: string;
+}
+const { src, alt, side = "right", top = "0", tilt = -4, width = "4.25rem" } = Astro.props;
+const edge = side;
+---
+
+<figure
+  class="fc"
+  style={`top:${top}; ${edge}: calc((100vw - var(--column)) / 2 + 0.5rem); transform: rotate(${tilt}deg); width:${width};`}
+>
+  <img src={src} alt={alt} width="120" height="160" loading="lazy" decoding="async" />
+</figure>
+
+<style>
+  .fc {
+    display: none;
+    position: absolute;
+    padding: 4px;
+    border-radius: var(--radius-photo);
+    background-color: #ffffff;
+    border: 1px solid rgb(0 0 0 / 0.14);
+    box-shadow: 0 10px 20px rgb(0 0 0 / 0.28);
+    pointer-events: none;
+    z-index: 1;
+  }
+  @media (min-width: 56rem) {
+    .fc {
+      display: block;
+    }
+  }
+  .fc img {
+    display: block;
+    width: 100%;
+    aspect-ratio: 3 / 4;
+    object-fit: cover;
+    border-radius: calc(var(--radius-photo) - 4px);
+  }
+</style>

@@ -48,6 +48,15 @@ const PANEL = "#141416";
 const LINE = "rgba(255,255,255,0.10)";
 const FAINT = "rgba(255,255,255,0.055)";
 
+const LP_DARK = {
+  a: "#141416", b: "#0d0d0e", ink: "#f2f2f2", dim: "#8f8f8f",
+  line: "rgba(255,255,255,0.14)", faint: "rgba(255,255,255,0.06)",
+};
+const LP_LIGHT = {
+  a: "#ffffff", b: "#f3f3f1", ink: "#131313", dim: "#6b6b68",
+  line: "rgba(0,0,0,0.14)", faint: "rgba(0,0,0,0.06)",
+};
+
 const HUES = {
   amber: ["#f59e0b", "#7c4a06"],
   lime: ["#a3e635", "#3f5312"],
@@ -121,277 +130,251 @@ function axes(x, y, w, h, xlabel, ylabel) {
 const files = {};
 
 /* =================================================================
-   1. Spectrogram. Spindle Sentinel: 3.2kHz vibration, 128 bins.
-   A real spectrogram has horizontal harmonic bands and a broadband
-   smear at the fault event, so the generator builds both rather
-   than emitting uniform noise.
+   1. Eval accuracy climb. PathOS: three training iterations against
+   the base model's yes/no accuracy on histopathology VQA. Each
+   iteration is annotated with what actually moved it, because the
+   number alone hides that the win was GRPO killing the hedging, not
+   a bigger model.
    ================================================================= */
 {
-  const r = rng(1013);
-  const x0 = 48, y0 = 90, w = W - 96, h = 400;
-  const cols = 120, rows = 40;
-  const cw = w / cols, ch = h / rows;
-  const [hot] = HUES.amber;
-  let cells = "";
-  // Fault event occupies a band of columns; energy is broadband there.
-  const faultStart = 74, faultEnd = 92;
-  for (let c = 0; c < cols; c++) {
-    const inFault = c >= faultStart && c <= faultEnd;
-    for (let row = 0; row < rows; row++) {
-      // rows counted from the bottom = low frequency
-      const f = row / rows;
-      // Harmonics at 1x, 2x, 3x of the rotation frequency.
-      let e = 0;
-      for (const hn of [0.08, 0.17, 0.26, 0.41]) {
-        e += Math.exp(-Math.pow((f - hn) / 0.022, 2)) * 0.85;
-      }
-      e += Math.exp(-f * 3.2) * 0.5; // low-frequency floor
-      if (inFault) e += (0.55 + r() * 0.4) * Math.exp(-Math.pow((f - 0.6) / 0.34, 2));
-      e += r() * 0.12;
-      const a = Math.min(1, e);
-      if (a < 0.06) continue;
-      const y = y0 + h - (row + 1) * ch;
-      cells += `<rect x="${(x0 + c * cw).toFixed(1)}" y="${y.toFixed(1)}" width="${(cw + 0.6).toFixed(1)}" height="${(ch + 0.6).toFixed(1)}" fill="${hot}" opacity="${a.toFixed(3)}"/>`;
-    }
-  }
-  // The detector's decision marker over the fault window.
-  const mx = x0 + faultStart * cw;
-  const mw = (faultEnd - faultStart + 1) * cw;
-  const marker = `<g>
-    <rect x="${mx.toFixed(1)}" y="${y0 - 14}" width="${mw.toFixed(1)}" height="${h + 28}" fill="none" stroke="${INK}" stroke-width="1.5" stroke-dasharray="4 4" opacity="0.75"/>
-    <text x="${(mx + mw / 2).toFixed(1)}" y="${y0 - 22}" text-anchor="middle" font-family="Geist Mono, ui-monospace, monospace" font-size="16" letter-spacing="1.2" fill="${INK}">FAULT  p=0.94</text>
-  </g>`;
-  files["poster-spindle.svg"] = plate(
-    `<g>${cells}</g>${marker}${axes(x0, y0, w, h, "TIME  12.4s WINDOW", "3.2kHz")}${caption("FIG.01  SPECTROGRAM", "Bearing fault signature", "outer-race defect, 1,480 RPM, 128 mel bins")}`,
-    { grid: false }
-  );
-}
-
-/* =================================================================
-   2. Retrieval graph. Grounded: hybrid BM25 + embedding fusion.
-   Query node on the left, candidate chunks fanned right, edge
-   weight = fused score, and the ones under threshold drawn faint
-   because the refusal behaviour is the interesting part.
-   ================================================================= */
-{
-  const r = rng(4409);
-  const [hot, cold] = HUES.cyan;
-  const qx = 190, qy = H / 2 - 40;
-  const nodes = [];
-  for (let i = 0; i < 11; i++) {
-    const t = i / 10;
-    nodes.push({
-      x: 640 + r() * 380,
-      y: 120 + t * 400 + (r() - 0.5) * 46,
-      s: Math.max(0.08, 1 - t * 1.05 + (r() - 0.5) * 0.16),
-    });
-  }
-  let edges = "", dots = "";
-  for (const n of nodes) {
-    const above = n.s >= 0.42;
-    const cx = (qx + n.x) / 2;
-    edges += `<path d="M${qx + 26} ${qy} C ${cx} ${qy}, ${cx} ${n.y}, ${(n.x - 16).toFixed(1)} ${n.y.toFixed(1)}"
-      fill="none" stroke="${above ? hot : cold}" stroke-width="${(0.8 + n.s * 3.4).toFixed(2)}" opacity="${above ? 0.8 : 0.3}"/>`;
-    const rad = 7 + n.s * 12;
-    dots += `<circle cx="${n.x.toFixed(1)}" cy="${n.y.toFixed(1)}" r="${rad.toFixed(1)}" fill="${above ? hot : "none"}" fill-opacity="0.22" stroke="${above ? hot : cold}" stroke-width="1.6" opacity="${above ? 1 : 0.5}"/>
-      <text x="${(n.x + rad + 12).toFixed(1)}" y="${(n.y + 5).toFixed(1)}" font-family="Geist Mono, ui-monospace, monospace" font-size="15" fill="${above ? INK : DIM}" opacity="${above ? 1 : 0.65}">${n.s.toFixed(2)}</text>`;
-  }
-  const thresh = `<g>
-    <path d="M600 ${120 + 0.42 / 1.05 * 400}H${W - 40}" stroke="${INK}" stroke-width="1" stroke-dasharray="5 5" opacity="0.4"/>
-  </g>`;
-  const q = `<g>
-    <circle cx="${qx}" cy="${qy}" r="26" fill="${INK}"/>
-    <text x="${qx}" y="${qy + 6}" text-anchor="middle" font-family="Geist Mono, ui-monospace, monospace" font-size="17" fill="${GROUND}">?</text>
-    <text x="${qx}" y="${qy + 62}" text-anchor="middle" font-family="Geist Mono, ui-monospace, monospace" font-size="16" letter-spacing="1.2" fill="${DIM}">QUERY</text>
-  </g>`;
-  files["poster-grounded.svg"] = plate(
-    `${edges}${thresh}${q}${dots}${caption("FIG.02  HYBRID RETRIEVAL", "Reciprocal rank fusion", "11 candidates, 4 above threshold, rest refused")}`
-  );
-}
-
-/* =================================================================
-   3. Confusion matrix. Review Triage, 5 classes.
-   Strong diagonal, and the neutral/mild-negative pair deliberately
-   confusable, because that is the finding the copy talks about.
-   ================================================================= */
-{
-  const [hot] = HUES.lime;
-  const labels = ["ANGRY", "NEG", "NEUT", "POS", "PRAISE"];
-  // Row-normalised, hand-set so the story in the copy is true.
-  const m = [
-    [0.93, 0.05, 0.01, 0.01, 0.0],
-    [0.06, 0.81, 0.11, 0.02, 0.0],
-    [0.01, 0.14, 0.7, 0.13, 0.02],
-    [0.0, 0.02, 0.12, 0.82, 0.04],
-    [0.0, 0.0, 0.02, 0.07, 0.91],
-  ];
-  const x0 = 300, y0 = 96, cell = 78;
-  let cells = "";
-  for (let i = 0; i < 5; i++) {
-    for (let j = 0; j < 5; j++) {
-      const v = m[i][j];
-      const x = x0 + j * cell, y = y0 + i * cell;
-      cells += `<rect x="${x}" y="${y}" width="${cell - 3}" height="${cell - 3}" rx="2" fill="${hot}" opacity="${(0.06 + v * 0.9).toFixed(3)}"/>
-        <text x="${x + (cell - 3) / 2}" y="${y + (cell - 3) / 2 + 6}" text-anchor="middle" font-family="Geist Mono, ui-monospace, monospace" font-size="16" fill="${v > 0.45 ? GROUND : v > 0.1 ? INK : DIM}">${v === 0 ? "." : v.toFixed(2).slice(1)}</text>`;
-    }
-  }
-  let axisText = "";
-  labels.forEach((l, i) => {
-    axisText += `<text x="${x0 - 16}" y="${y0 + i * cell + cell / 2}" text-anchor="end" font-family="Geist Mono, ui-monospace, monospace" font-size="15" letter-spacing="1" fill="${DIM}">${l}</text>`;
-    axisText += `<text x="${x0 + i * cell + (cell - 3) / 2}" y="${y0 - 16}" text-anchor="middle" font-family="Geist Mono, ui-monospace, monospace" font-size="15" letter-spacing="1" fill="${DIM}">${l}</text>`;
-  });
-  // Ring the confusable pair the write-up names.
-  const ring = `<rect x="${x0 + 1 * cell - 4}" y="${y0 + 2 * cell - 4}" width="${cell + 2}" height="${cell + 2}" rx="4" fill="none" stroke="${HUES.rose[0]}" stroke-width="2"/>
-    <text x="${x0 + 2 * cell + 22}" y="${y0 + 2 * cell + 46}" font-family="Geist Mono, ui-monospace, monospace" font-size="15" fill="${HUES.rose[0]}">&#8592; humans disagree here too</text>`;
-  files["poster-sentiment.svg"] = plate(
-    `${cells}${axisText}${ring}
-     <text x="${x0 - 16}" y="${y0 + 5 * cell + 34}" text-anchor="end" font-family="Geist Mono, ui-monospace, monospace" font-size="15" letter-spacing="1.2" fill="${DIM}">TRUE</text>
-     <text x="${x0 + 5 * cell + 16}" y="${y0 - 16}" font-family="Geist Mono, ui-monospace, monospace" font-size="15" letter-spacing="1.2" fill="${DIM}">PREDICTED</text>
-     ${caption("FIG.03  CONFUSION MATRIX", "Row-normalised, 5 classes", "12,000 reviews, held-out 20% split, macro F1 0.91")}`,
-    { grid: false }
-  );
-}
-
-/* =================================================================
-   4. Data grid. Tabular Cleanroom: nulls, dtype coercion, leakage.
-   Reads as a spreadsheet with the repaired cells marked, which is
-   what the project actually did.
-   ================================================================= */
-{
-  const r = rng(777);
-  const [hot] = HUES.violet;
-  const x0 = 48, y0 = 92, cols = 14, rows = 16;
-  const cw = (W - 96) / cols, ch = 24;
-  let cells = "";
-  for (let i = 0; i < rows; i++) {
-    for (let j = 0; j < cols; j++) {
-      const x = x0 + j * cw, y = y0 + i * ch;
-      const roll = r();
-      const state = roll < 0.07 ? "null" : roll < 0.13 ? "fixed" : "ok";
-      const fill = state === "null" ? HUES.rose[1] : state === "fixed" ? hot : "rgba(255,255,255,0.045)";
-      const op = state === "ok" ? 1 : 0.5;
-      cells += `<rect x="${x.toFixed(1)}" y="${y}" width="${(cw - 3).toFixed(1)}" height="${ch - 3}" fill="${fill}" opacity="${op}"/>`;
-      if (state === "null") {
-        cells += `<text x="${(x + (cw - 3) / 2).toFixed(1)}" y="${y + 15}" text-anchor="middle" font-family="Geist Mono, ui-monospace, monospace" font-size="12" fill="${HUES.rose[0]}">NaN</text>`;
-      } else if (state === "ok") {
-        const bw = (cw - 12) * (0.35 + r() * 0.6);
-        cells += `<rect x="${(x + 4).toFixed(1)}" y="${y + 9}" width="${bw.toFixed(1)}" height="3" fill="${DIM}" opacity="0.55"/>`;
-      }
-    }
-  }
-  // Header strip with column names.
-  let head = `<rect x="${x0}" y="${y0 - 28}" width="${W - 96}" height="24" fill="rgba(255,255,255,0.07)"/>`;
-  for (let j = 0; j < cols; j++) {
-    head += `<text x="${(x0 + j * cw + 4).toFixed(1)}" y="${y0 - 11}" font-family="Geist Mono, ui-monospace, monospace" font-size="12" letter-spacing="0.6" fill="${DIM}">c${String(j).padStart(2, "0")}</text>`;
-  }
-  const legend = `<g font-family="Geist Mono, ui-monospace, monospace" font-size="15" letter-spacing="0.8">
-    <rect x="48" y="${y0 + rows * ch + 22}" width="13" height="13" fill="${HUES.rose[1]}"/>
-    <text x="70" y="${y0 + rows * ch + 33}" fill="${DIM}">MISSING  4.1%</text>
-    <rect x="250" y="${y0 + rows * ch + 22}" width="13" height="13" fill="${hot}" opacity="0.5"/>
-    <text x="272" y="${y0 + rows * ch + 33}" fill="${DIM}">COERCED  6.8%</text>
-    <text x="490" y="${y0 + rows * ch + 33}" fill="${DIM}">LEAKAGE CHECKS  PASS 12/12</text>
-  </g>`;
-  files["poster-cleanroom.svg"] = plate(
-    `${head}${cells}${legend}${caption("FIG.04  FEATURE TABLE", "Five sources, one table", "manifest of every transform, equivalence-tested")}`,
-    { grid: false }
-  );
-}
-
-/* =================================================================
-   5. Quantization ladder. Edge Ladder: accuracy against throughput
-   at four precisions. A paired-bar chart because the whole point is
-   that the two move in opposite directions.
-   ================================================================= */
-{
-  const [hot] = HUES.orange;
+  const [hot] = HUES.rose;
   const steps = [
-    { n: "FP32", acc: 0.914, thr: 1.0 },
-    { n: "FP16", acc: 0.913, thr: 1.7 },
-    { n: "INT8", acc: 0.91, thr: 2.7 },
-    { n: "INT4", acc: 0.853, thr: 3.9 },
+    { n: "BASE\nGEMMA 4", v: 0.50, note: "no pathology tuning" },
+    { n: "PATHOS\nv1", v: 0.32, note: "82% of misses were hedges" },
+    { n: "PATHOS\nv2", v: 0.44, note: "answer tags + GRPO" },
+    { n: "PATHOS\nv3", v: 0.88, note: "distilled inference tricks" },
   ];
-  const x0 = 130, y0 = 96, h = 380, bw = 66, gap = 190;
+  const x0 = 130, y0 = 96, h = 380, bw = 130, gap = 250;
   let bars = "";
   steps.forEach((s, i) => {
     const cx = x0 + i * gap;
-    const accH = ((s.acc - 0.80) / 0.13) * h;
-    const thrH = (s.thr / 4.2) * h;
-    bars += `<rect x="${cx}" y="${y0 + h - accH}" width="${bw}" height="${accH.toFixed(1)}" fill="${INK}" opacity="0.9"/>`;
-    bars += `<rect x="${cx + bw + 8}" y="${y0 + h - thrH}" width="${bw}" height="${thrH.toFixed(1)}" fill="${hot}" opacity="0.85"/>`;
+    const barH = s.v * h;
+    const isLast = i === steps.length - 1;
+    bars += `<rect x="${cx}" y="${(y0 + h - barH).toFixed(1)}" width="${bw}" height="${barH.toFixed(1)}" fill="${isLast ? hot : INK}" opacity="${isLast ? 0.92 : 0.35 + i * 0.08}"/>`;
     bars += `<g font-family="Geist Mono, ui-monospace, monospace" font-size="15" fill="${DIM}">
-      <text x="${cx + bw + 4}" y="${y0 + h + 26}" text-anchor="middle" letter-spacing="1.2" fill="${INK}">${s.n}</text>
-      <text x="${cx + bw / 2}" y="${y0 + h - accH - 12}" text-anchor="middle" fill="${INK}">${s.acc.toFixed(3)}</text>
-      <text x="${cx + bw + 8 + bw / 2}" y="${y0 + h - thrH - 12}" text-anchor="middle" fill="${hot}">${s.thr.toFixed(1)}x</text>
+      <text x="${cx + bw / 2}" y="${(y0 + h - barH - 16).toFixed(1)}" text-anchor="middle" font-size="22" fill="${isLast ? hot : INK}">${Math.round(s.v * 100)}%</text>
+      ${s.n.split("\n").map((l, li) => `<text x="${cx + bw / 2}" y="${y0 + h + 28 + li * 20}" text-anchor="middle" letter-spacing="1" fill="${INK}">${l}</text>`).join("")}
+      <text x="${cx + bw / 2}" y="${y0 + h + 28 + s.n.split("\n").length * 20 + 4}" text-anchor="middle" font-size="13" fill="${DIM}">${s.note}</text>
     </g>`;
   });
-  // Mark the step where the trade stops being free.
-  const cliffX = x0 + 3 * gap - 26;
-  const cliff = `<path d="M${cliffX} ${y0 - 8}V${y0 + h + 8}" stroke="${HUES.rose[0]}" stroke-width="1.5" stroke-dasharray="5 4"/>
-    <text x="${cliffX + 10}" y="${y0 + 12}" font-family="Geist Mono, ui-monospace, monospace" font-size="15" fill="${HUES.rose[0]}">6.1pt drop. no.</text>`;
-  const legend = `<g font-family="Geist Mono, ui-monospace, monospace" font-size="15" letter-spacing="0.8">
-    <rect x="48" y="${y0 - 40}" width="13" height="13" fill="${INK}"/><text x="70" y="${y0 - 29}" fill="${DIM}">ACCURACY</text>
-    <rect x="210" y="${y0 - 40}" width="13" height="13" fill="${hot}"/><text x="232" y="${y0 - 29}" fill="${DIM}">THROUGHPUT</text>
-  </g>`;
-  files["poster-ladder.svg"] = plate(
-    `${legend}${bars}${cliff}${axes(x0 - 30, y0, W - 160, h, "PRECISION", "")}${caption("FIG.05  QUANTIZATION LADDER", "One model, four precisions", "same eval set, same hardware, batch 1")}`,
+  files["poster-pathos.svg"] = plate(
+    `${bars}${axes(x0 - 30, y0, W - 160, h, "", "YES/NO ACCURACY")}${caption("FIG.01  EVAL ACCURACY", "Single forward pass, no proxy", "100-sample PathVQA validation set")}`,
     { grid: false }
   );
 }
 
 /* =================================================================
-   6. Eval grid. Promptproof: 60 golden cases as a pass/fail wall,
-   with one column of regressions from the prompt edit that broke
-   JSON parsing. A build gate rendered as an object.
+   2. Request path. Udte-Bhawre: one strict vertical chain, no side
+   branches. The tray dispatches to a session, every session's tool
+   calls cross the ArmorIQ gate, MCP servers are the only thing on
+   the other side of it, and MCP is what touches both the local
+   machine and MongoDB. Every stage is full-width and centred so
+   nothing has to jog sideways to reach the next one.
    ================================================================= */
 {
-  const r = rng(31337);
-  const [hot] = HUES.teal;
-  const cols = 12, rows = 5, cell = 74;
-  const x0 = (W - cols * cell) / 2, y0 = 120;
-  let cells = "";
-  let idx = 0;
-  for (let i = 0; i < rows; i++) {
-    for (let j = 0; j < cols; j++) {
-      idx++;
-      // Column 7 is the regression the harness caught.
-      const fail = j === 7 && i !== 2;
-      const x = x0 + j * cell, y = y0 + i * cell;
-      cells += `<rect x="${x}" y="${y}" width="${cell - 6}" height="${cell - 6}" rx="3"
-        fill="${fail ? HUES.rose[1] : hot}" opacity="${fail ? 0.65 : (0.22 + r() * 0.3).toFixed(3)}"
-        stroke="${fail ? HUES.rose[0] : "none"}" stroke-width="${fail ? 1.5 : 0}"/>`;
-      cells += fail
-        ? `<path d="M${x + 22} ${y + 22}l${cell - 50} ${cell - 50}M${x + cell - 28} ${y + 22}l-${cell - 50} ${cell - 50}" stroke="${HUES.rose[0]}" stroke-width="2"/>`
-        : `<path d="M${x + 20} ${y + 34}l10 11 18 -21" stroke="${INK}" stroke-width="2" fill="none" opacity="0.75"/>`;
-    }
-  }
-  const banner = `<g>
-    <rect x="48" y="46" width="${W - 96}" height="42" rx="6" fill="${HUES.rose[1]}" opacity="0.35" stroke="${HUES.rose[0]}" stroke-width="1"/>
-    <text x="68" y="73" font-family="Geist Mono, ui-monospace, monospace" font-size="19" letter-spacing="1" fill="${HUES.rose[0]}">BUILD FAILED  56/60 PASS  schema assertion, 4 cases</text>
+  const [hot] = HUES.cyan;
+  const [guard] = HUES.teal;
+  const [db] = HUES.violet;
+  const cx = W / 2;
+  const stageW = 340;
+  const stageX = cx - stageW / 2;
+
+  const rowGap = 126; // centre-to-centre distance between stages
+  let y = 50;
+
+  const tray = { y, h: 54 };
+  y += rowGap;
+  const sessRow = { y, h: 44 };
+  y += rowGap;
+  const gateRow = { y, h: 50 };
+  y += rowGap;
+  const mcpRow = { y, h: 50 };
+  y += rowGap;
+  const leafRow = { y, h: 56 };
+
+  let out = "";
+
+  // Straight connecting spine, drawn first so every node sits on
+  // top of it and no stage has to route around another.
+  out += `<path d="M${cx} ${tray.y + tray.h}V${leafRow.y}" stroke="${DIM}" stroke-width="1.5" opacity="0.35"/>`;
+
+  // 1. Tray / Control Centre, with MongoDB attached directly beside
+  // it as a short, single-hop connection: it is the one relationship
+  // in this diagram that is not part of the request path downward,
+  // so it gets a different shape (sideways, one edge) rather than
+  // being folded into the vertical chain where it does not belong.
+  out += `<g>
+    <rect x="${stageX}" y="${tray.y}" width="${stageW}" height="${tray.h}" rx="10" fill="${hot}" opacity="0.16" stroke="${hot}" stroke-width="1.5"/>
+    <text x="${cx}" y="${tray.y + 24}" text-anchor="middle" font-family="Geist Mono, ui-monospace, monospace" font-size="16" letter-spacing="1" fill="${INK}">TRAY / CONTROL CENTRE</text>
+    <text x="${cx}" y="${tray.y + 44}" text-anchor="middle" font-family="Geist Mono, ui-monospace, monospace" font-size="12" fill="${DIM}">Electron main + renderer</text>
   </g>`;
-  files["poster-promptproof.svg"] = plate(
-    `${banner}${cells}${caption("FIG.06  GOLDEN SET", "The gate, not the discussion", "60 cases, run in CI on every prompt edit")}`,
+
+  const dbW = 200, dbGap = 46, dbX = stageX - dbGap - dbW, dbMidY = tray.y + tray.h / 2;
+  out += `<path d="M${dbX + dbW + 6} ${dbMidY}H${stageX - 6}" stroke="${db}" stroke-width="1.8" opacity="0.6"/>
+    <path d="M${dbX + dbW + 20} ${dbMidY - 6}l-12 6 12 6" fill="none" stroke="${db}" stroke-width="1.8"/>`;
+  out += `<g>
+    <rect x="${dbX}" y="${tray.y}" width="${dbW}" height="${tray.h}" rx="10" fill="${db}" opacity="0.14" stroke="${db}" stroke-width="1.5"/>
+    <text x="${dbX + dbW / 2}" y="${tray.y + 24}" text-anchor="middle" font-family="Geist Mono, ui-monospace, monospace" font-size="15" letter-spacing="1" fill="${INK}">MONGODB</text>
+    <text x="${dbX + dbW / 2}" y="${tray.y + 44}" text-anchor="middle" font-family="Geist Mono, ui-monospace, monospace" font-size="11" fill="${DIM}">agents + conversations</text>
+  </g>`;
+
+  // 2. Sessions, one row, fed straight down from the tray.
+  const sessions = ["GEMINI", "CLAUDE", "CODEX", "CUSTOM"];
+  const sessW = 176, sessGap = 36;
+  const rowW = sessions.length * sessW + (sessions.length - 1) * sessGap;
+  const sessX0 = cx - rowW / 2;
+
+  // 3. The ArmorIQ gate: shorter than the session row on purpose, so
+  // it reads as a distinct checkpoint rather than a slab stretching
+  // the full width. Every session's edge still visibly funnels into
+  // it, just converging rather than dropping straight down.
+  const gateW = 460, gateX = cx - gateW / 2;
+
+  sessions.forEach((n, i) => {
+    const x = sessX0 + i * (sessW + sessGap);
+    const scx = x + sessW / 2;
+    const entryX = gateX + 30 + (i * (gateW - 60)) / (sessions.length - 1);
+    out += `<path d="M${cx} ${tray.y + tray.h} C ${cx} ${(tray.y + tray.h + sessRow.y) / 2}, ${scx} ${(tray.y + tray.h + sessRow.y) / 2}, ${scx} ${sessRow.y}" fill="none" stroke="${hot}" stroke-width="1.8" opacity="0.55"/>`;
+    out += `<rect x="${x}" y="${sessRow.y}" width="${sessW}" height="${sessRow.h}" rx="8" fill="none" stroke="${hot}" stroke-width="1.5"/>
+      <text x="${scx}" y="${sessRow.y + sessRow.h / 2 + 5}" text-anchor="middle" font-family="Geist Mono, ui-monospace, monospace" font-size="15" letter-spacing="1" fill="${INK}">${n}</text>`;
+    out += `<path d="M${scx} ${sessRow.y + sessRow.h} C ${scx} ${(sessRow.y + sessRow.h + gateRow.y) / 2}, ${entryX} ${(sessRow.y + sessRow.h + gateRow.y) / 2}, ${entryX} ${gateRow.y}" fill="none" stroke="${guard}" stroke-width="1.8" opacity="0.6"/>`;
+  });
+
+  let hatch = "";
+  for (let hx = gateX + 14; hx < gateX + gateW - 10; hx += 16) {
+    hatch += `<path d="M${hx} ${gateRow.y + gateRow.h - 8}l10 -${gateRow.h - 16}" stroke="${guard}" stroke-width="1" opacity="0.22"/>`;
+  }
+  out += `<g>
+    <rect x="${gateX}" y="${gateRow.y}" width="${gateW}" height="${gateRow.h}" rx="10" fill="${guard}" opacity="0.14" stroke="${guard}" stroke-width="1.5"/>
+    ${hatch}
+    <text x="${cx}" y="${gateRow.y + gateRow.h / 2 - 2}" text-anchor="middle" font-family="Geist Mono, ui-monospace, monospace" font-size="16" letter-spacing="1.2" fill="${INK}">ARMORIQ SDK</text>
+    <text x="${cx}" y="${gateRow.y + gateRow.h / 2 + 18}" text-anchor="middle" font-family="Geist Mono, ui-monospace, monospace" font-size="12" letter-spacing="0.6" fill="${DIM}">cryptographic intent verification, every call</text>
+  </g>`;
+
+  // 4. MCP servers.
+  out += `<path d="M${cx} ${gateRow.y + gateRow.h}V${mcpRow.y}" stroke="${guard}" stroke-width="2" opacity="0.75"/>
+    <path d="M${cx - 6} ${mcpRow.y - 12}l6 12 6 -12" fill="none" stroke="${guard}" stroke-width="2"/>`;
+  out += `<g>
+    <rect x="${cx - 260 / 2}" y="${mcpRow.y}" width="260" height="${mcpRow.h}" rx="8" fill="none" stroke="${DIM}" stroke-width="1.5"/>
+    <text x="${cx}" y="${mcpRow.y + mcpRow.h / 2 + 5}" text-anchor="middle" font-family="Geist Mono, ui-monospace, monospace" font-size="16" letter-spacing="1" fill="${INK}">MCP SERVERS</text>
+  </g>`;
+
+  // 5. The one thing MCP is allowed to touch on the local machine.
+  const leafW = 260, leafX = cx - leafW / 2, lcx = cx;
+  out += `<path d="M${cx} ${mcpRow.y + mcpRow.h}V${leafRow.y}" stroke="${DIM}" stroke-width="1.5" stroke-dasharray="3 4"/>`;
+  out += `<g>
+    <rect x="${leafX}" y="${leafRow.y}" width="${leafW}" height="${leafRow.h}" rx="8" fill="${DIM}" opacity="0.08" stroke="${DIM}" stroke-width="1.5"/>
+    <text x="${lcx}" y="${leafRow.y + 24}" text-anchor="middle" font-family="Geist Mono, ui-monospace, monospace" font-size="15" letter-spacing="1" fill="${INK}">LOCAL SYSTEM</text>
+    <text x="${lcx}" y="${leafRow.y + 44}" text-anchor="middle" font-family="Geist Mono, ui-monospace, monospace" font-size="11" fill="${DIM}">files, terminal, screen capture</text>
+  </g>`;
+
+  files["poster-udtebhawre.svg"] = plate(
+    `${out}${caption("FIG.02  REQUEST PATH", "MongoDB off to one side", "tray to session to ArmorIQ to MCP to local system, one column")}`
+  );
+}
+
+/* =================================================================
+   3. Pipeline. AuraArchive: audio in, structured blog out, with the
+   review gate drawn as a real stage rather than an implied one,
+   because the review state is what the schema is built around.
+   ================================================================= */
+{
+  const [hot] = HUES.amber;
+  const stages = [
+    { n: "AUDIO", s: "upload" },
+    { n: "GEMINI 2.5", s: "transcribe + reason" },
+    { n: "DRAFT", s: "structured JSON" },
+    { n: "REVIEW", s: "human gate" },
+    { n: "PUBLISHED", s: "public feed" },
+  ];
+  const y = H / 2 - 20, bw = 190, bh = 84, gap = 42;
+  const totalW = stages.length * bw + (stages.length - 1) * gap;
+  const x0 = (W - totalW) / 2;
+  let boxes = "", arrows = "";
+  stages.forEach((s, i) => {
+    const x = x0 + i * (bw + gap);
+    const isGate = s.n === "REVIEW";
+    boxes += `<g>
+      <rect x="${x}" y="${y}" width="${bw}" height="${bh}" rx="8" fill="${isGate ? hot : "none"}" opacity="${isGate ? 0.22 : 1}" stroke="${isGate ? hot : LINE}" stroke-width="${isGate ? 1.5 : 1}"/>
+      <text x="${x + bw / 2}" y="${y + 34}" text-anchor="middle" font-family="Geist Mono, ui-monospace, monospace" font-size="17" letter-spacing="1" fill="${INK}">${s.n}</text>
+      <text x="${x + bw / 2}" y="${y + 58}" text-anchor="middle" font-family="Geist Mono, ui-monospace, monospace" font-size="13" fill="${DIM}">${s.s}</text>
+    </g>`;
+    if (i < stages.length - 1) {
+      const ax = x + bw;
+      arrows += `<path d="M${ax + 8} ${y + bh / 2}h${gap - 16}" stroke="${hot}" stroke-width="1.5"/>
+        <path d="M${ax + gap - 20} ${y + bh / 2 - 5}l12 5-12 5" fill="none" stroke="${hot}" stroke-width="1.5"/>`;
+    }
+  });
+  files["poster-auraarchive.svg"] = plate(
+    `${arrows}${boxes}${caption("FIG.03  AUDIO TO BLOG", "Draft, then a human gate", "resilient JSON parsing across the whole run")}`,
     { grid: false }
   );
 }
+
+/* =================================================================
+   4. Agent orchestration. Legal-Advisory (NyayaSetu): the complete
+   pass, not just the fan-in. A query enters on the left, three
+   specialists work it in parallel, Senior Counsel synthesises, and
+   an answer exits on the right, because the point of the system is
+   the whole pipeline staying truth-grounded end to end, not just
+   the final synthesis step.
+   ================================================================= */
+{
+  const [hot] = HUES.violet;
+  const midY = H / 2 - 10;
+  const specialists = [
+    { n: "LEGAL CLERK", s: "static law, Qdrant", y: 150 },
+    { n: "AMENDMENT WATCHDOG", s: "live judgments, web search", y: midY },
+    { n: "EVIDENCE AUDITOR", s: "video / audio, Gemini", y: 470 },
+  ];
+  const inX = 150, specX0 = 300, specW = 230, hubX = 830, hubR = 78, outX = 1080;
+  let edges = "", nodes = "";
+  specialists.forEach((s) => {
+    // Input to each specialist.
+    edges += `<path d="M${inX + 44} ${midY} C ${(inX + specX0) / 2 + 40} ${midY}, ${(inX + specX0) / 2 + 40} ${s.y}, ${specX0 - 10} ${s.y}" fill="none" stroke="${DIM}" stroke-width="1.5" opacity="0.5"/>`;
+    // Specialist to Senior Counsel.
+    edges += `<path d="M${specX0 + specW} ${s.y} C ${(specX0 + specW + hubX) / 2} ${s.y}, ${(specX0 + specW + hubX) / 2} ${midY}, ${hubX - hubR - 6} ${midY}" fill="none" stroke="${hot}" stroke-width="1.8" opacity="0.55"/>`;
+    nodes += `<g>
+      <rect x="${specX0}" y="${s.y - 26}" width="${specW}" height="52" rx="8" fill="none" stroke="${hot}" stroke-width="1.5"/>
+      <text x="${specX0 + specW / 2}" y="${s.y - 2}" text-anchor="middle" font-family="Geist Mono, ui-monospace, monospace" font-size="15" letter-spacing="0.6" fill="${INK}">${s.n}</text>
+      <text x="${specX0 + specW / 2}" y="${s.y + 17}" text-anchor="middle" font-family="Geist Mono, ui-monospace, monospace" font-size="12" fill="${DIM}">${s.s}</text>
+    </g>`;
+  });
+  const input = `<g>
+    <circle cx="${inX}" cy="${midY}" r="44" fill="none" stroke="${DIM}" stroke-width="1.5"/>
+    <text x="${inX}" y="${midY - 3}" text-anchor="middle" font-family="Geist Mono, ui-monospace, monospace" font-size="14" fill="${INK}">USER</text>
+    <text x="${inX}" y="${midY + 15}" text-anchor="middle" font-family="Geist Mono, ui-monospace, monospace" font-size="14" fill="${INK}">QUERY</text>
+  </g>`;
+  const hub = `<g>
+    <circle cx="${hubX}" cy="${midY}" r="${hubR}" fill="${hot}" opacity="0.18" stroke="${hot}" stroke-width="1.5"/>
+    <text x="${hubX}" y="${midY - 4}" text-anchor="middle" font-family="Geist Mono, ui-monospace, monospace" font-size="15" letter-spacing="0.8" fill="${INK}">SENIOR</text>
+    <text x="${hubX}" y="${midY + 16}" text-anchor="middle" font-family="Geist Mono, ui-monospace, monospace" font-size="15" letter-spacing="0.8" fill="${INK}">COUNSEL</text>
+  </g>`;
+  const outEdge = `<path d="M${hubX + hubR} ${midY}h${outX - hubX - hubR - 46}" stroke="${hot}" stroke-width="1.8" opacity="0.7"/>
+    <path d="M${outX - 54} ${midY - 6}l12 6-12 6" fill="none" stroke="${hot}" stroke-width="1.8"/>`;
+  const output = `<g>
+    <rect x="${outX - 40}" y="${midY - 34}" width="150" height="68" rx="8" fill="${hot}" opacity="0.16" stroke="${hot}" stroke-width="1.5"/>
+    <text x="${outX + 35}" y="${midY - 6}" text-anchor="middle" font-family="Geist Mono, ui-monospace, monospace" font-size="14" fill="${INK}">GROUNDED</text>
+    <text x="${outX + 35}" y="${midY + 14}" text-anchor="middle" font-family="Geist Mono, ui-monospace, monospace" font-size="14" fill="${INK}">ADVICE</text>
+  </g>`;
+  files["poster-nyayasetu.svg"] = plate(
+    `${edges}${input}${nodes}${outEdge}${hub}${output}${caption("FIG.04  AGENT ORCHESTRATION", "Query in, verdict out", "LangGraph state machine, three specialists, truth-grounded synthesis")}`
+  );
+}
+
 
 /* =================================================================
    Lab visuals. Squarer, quieter: these sit in a 2-up grid, so they
    have to read at half the width of a poster.
    ================================================================= */
 const LW = 900, LH = 600;
-function labPlate(children) {
-  return `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ${LW} ${LH}" width="${LW}" height="${LH}" role="img">
-  ${defs()}
-  <rect width="${LW}" height="${LH}" fill="url(#plate)"/>
-  ${children}
-  <rect width="${LW}" height="${LH}" filter="url(#grain)" opacity="0.85"/>
-  <rect x="0.5" y="0.5" width="${LW - 1}" height="${LH - 1}" fill="none" stroke="${LINE}"/>
-</svg>`;
+function labPlate(name, children) {
+  emitThemed(files, name, children, LW, LH, { grid: false });
 }
 function labCaption(t, s) {
   return `<g font-family="Geist Mono, ui-monospace, monospace">
-    <text x="36" y="${LH - 46}" font-size="24" fill="${INK}" letter-spacing="-0.2">${t}</text>
-    <text x="36" y="${LH - 22}" font-size="15" fill="${DIM}" letter-spacing="0.8">${s}</text>
+    <text x="36" y="${LH - 46}" font-size="24" fill="var(--lp-ink)" letter-spacing="-0.2">${t}</text>
+    <text x="36" y="${LH - 22}" font-size="15" fill="var(--lp-dim)" letter-spacing="0.8">${s}</text>
   </g>`;
 }
 
@@ -421,9 +404,9 @@ function labCaption(t, s) {
       }
     }
   }
-  files["lab-attention.svg"] = labPlate(
+  labPlate("lab-attention",
     `${cells}
-     <text x="${x0 + n * cell + 24}" y="${y0 + 18}" font-family="Geist Mono, ui-monospace, monospace" font-size="14" fill="${DIM}">causal mask</text>
+     <text x="${x0 + n * cell + 24}" y="${y0 + 18}" font-family="Geist Mono, ui-monospace, monospace" font-size="14" fill="var(--lp-dim)">causal mask</text>
      <text x="${x0 + n * cell + 24}" y="${y0 + cell * 1.2}" font-family="Geist Mono, ui-monospace, monospace" font-size="14" fill="${hot}">sink on token 0</text>
      ${labCaption("Attention, one head", "14 tokens, layer 6, softmax rows sum to 1")}`
   );
@@ -438,12 +421,12 @@ function labCaption(t, s) {
     const w = 15 + t.length * 13.5;
     if (x + w > LW - 36) { x = 36; y += 62; }
     out += `<rect x="${x}" y="${y}" width="${w}" height="44" rx="5" fill="${hot}" opacity="${i % 2 ? 0.16 : 0.28}" stroke="${hot}" stroke-opacity="0.45"/>
-      <text x="${x + w / 2}" y="${y + 29}" text-anchor="middle" font-family="Geist Mono, ui-monospace, monospace" font-size="17" fill="${INK}">${t.replace(/ /g, "&#183;").replace(/,/g, "&#44;")}</text>
-      <text x="${x + w / 2}" y="${y + 60}" text-anchor="middle" font-family="Geist Mono, ui-monospace, monospace" font-size="12" fill="${DIM}">${1000 + i * 137}</text>`;
+      <text x="${x + w / 2}" y="${y + 29}" text-anchor="middle" font-family="Geist Mono, ui-monospace, monospace" font-size="17" fill="var(--lp-ink)">${t.replace(/ /g, "&#183;").replace(/,/g, "&#44;")}</text>
+      <text x="${x + w / 2}" y="${y + 60}" text-anchor="middle" font-family="Geist Mono, ui-monospace, monospace" font-size="12" fill="var(--lp-dim)">${1000 + i * 137}</text>`;
     x += w + 8;
   });
-  files["lab-tokenizer.svg"] = labPlate(
-    `<text x="36" y="70" font-family="Geist Mono, ui-monospace, monospace" font-size="15" letter-spacing="1.2" fill="${DIM}">14 TOKENS  /  62 CHARS  /  4.4 CHARS PER TOKEN</text>
+  labPlate("lab-tokenizer",
+    `<text x="36" y="70" font-family="Geist Mono, ui-monospace, monospace" font-size="15" letter-spacing="1.2" fill="var(--lp-dim)">14 TOKENS  /  62 CHARS  /  4.4 CHARS PER TOKEN</text>
      ${out}${labCaption("Subword boundaries", "BPE, where the model actually splits your words")}`
   );
 }
@@ -474,10 +457,10 @@ function labCaption(t, s) {
     rings += `<circle cx="${p[0].toFixed(1)}" cy="${p[1].toFixed(1)}" r="9" fill="none" stroke="${hot}" stroke-width="1.6"/>
       <path d="M${q[0]} ${q[1]}L${p[0].toFixed(1)} ${p[1].toFixed(1)}" stroke="${hot}" stroke-width="1" opacity="0.45"/>`;
   });
-  files["lab-embedding.svg"] = labPlate(
+  labPlate("lab-embedding",
     `${dots}${rings}
-     <circle cx="${q[0]}" cy="${q[1]}" r="7" fill="${INK}"/>
-     <text x="${q[0] + 14}" y="${q[1] - 10}" font-family="Geist Mono, ui-monospace, monospace" font-size="14" fill="${INK}">query</text>
+     <circle cx="${q[0]}" cy="${q[1]}" r="7" fill="var(--lp-ink)"/>
+     <text x="${q[0] + 14}" y="${q[1] - 10}" font-family="Geist Mono, ui-monospace, monospace" font-size="14" fill="var(--lp-ink)">query</text>
      ${labCaption("Nearest neighbours", "UMAP to 2D, k=5, cosine distance")}`
   );
 }
@@ -494,16 +477,16 @@ function labCaption(t, s) {
     const t = (i / bins) * 6 - 3;
     const v = Math.exp(-t * t / 1.4) + r() * 0.03;
     const bh = v * h * 0.92;
-    hist += `<rect x="${(x0 + (i * w) / bins).toFixed(1)}" y="${(y0 + h - bh).toFixed(1)}" width="${(w / bins - 2).toFixed(1)}" height="${bh.toFixed(1)}" fill="${DIM}" opacity="0.35"/>`;
+    hist += `<rect x="${(x0 + (i * w) / bins).toFixed(1)}" y="${(y0 + h - bh).toFixed(1)}" width="${(w / bins - 2).toFixed(1)}" height="${bh.toFixed(1)}" fill="var(--lp-dim)" opacity="0.35"/>`;
   }
   let buckets = "";
   for (let k = 0; k < 16; k++) {
     const x = x0 + (k / 15) * w;
     buckets += `<path d="M${x.toFixed(1)} ${y0}V${y0 + h}" stroke="${hot}" stroke-width="1.2" opacity="0.6"/>`;
   }
-  files["lab-quantization.svg"] = labPlate(
+  labPlate("lab-quantization",
     `${hist}${buckets}
-     <text x="${x0}" y="${y0 - 16}" font-family="Geist Mono, ui-monospace, monospace" font-size="15" letter-spacing="1.2" fill="${DIM}">WEIGHT DISTRIBUTION  vs  16 INT4 BUCKETS</text>
+     <text x="${x0}" y="${y0 - 16}" font-family="Geist Mono, ui-monospace, monospace" font-size="15" letter-spacing="1.2" fill="var(--lp-dim)">WEIGHT DISTRIBUTION  vs  16 INT4 BUCKETS</text>
      <text x="${x0 + w / 2}" y="${y0 + h + 30}" text-anchor="middle" font-family="Geist Mono, ui-monospace, monospace" font-size="14" fill="${hot}">the tails round to the same bucket. that is the 6.1 points.</text>
      ${labCaption("Where precision goes", "one linear layer, 4.2M weights, symmetric scale")}`
   );
@@ -619,7 +602,7 @@ const PW = 1000, PH = 500;
     draw: (r, hue) => {
       let s = "";
       // A big number, then the baseline that deflates it.
-      s += `<text x="60" y="230" font-family="Geist Mono, ui-monospace, monospace" font-size="150" fill="${INK}" letter-spacing="-6">0.94</text>`;
+      s += `<text x="60" y="230" font-family="Geist Mono, ui-monospace, monospace" font-size="150" fill="var(--lp-ink)" letter-spacing="-6">0.94</text>`;
       s += `<path d="M60 258H430" stroke="${HUES.rose[0]}" stroke-width="3"/>`;
       s += `<text x="60" y="310" font-family="Geist Mono, ui-monospace, monospace" font-size="22" fill="${HUES.rose[0]}">majority class is 0.93</text>`;
       for (let i = 0; i < 40; i++) {
@@ -650,7 +633,7 @@ const PW = 1000, PH = 500;
       let s = "";
       [1, 0.62, 0.38, 0.19].forEach((v, i) => {
         s += `<rect x="${120 + i * 200}" y="${380 - v * 260}" width="130" height="${v * 260}" fill="${hue[0]}" opacity="${0.85 - i * 0.15}"/>`;
-        s += `<text x="${185 + i * 200}" y="410" text-anchor="middle" font-family="Geist Mono, ui-monospace, monospace" font-size="19" fill="${DIM}">${["FP32", "FP16", "INT8", "INT4"][i]}</text>`;
+        s += `<text x="${185 + i * 200}" y="410" text-anchor="middle" font-family="Geist Mono, ui-monospace, monospace" font-size="19" fill="var(--lp-dim)">${["FP32", "FP16", "INT8", "INT4"][i]}</text>`;
       });
       return s;
     },
@@ -664,23 +647,39 @@ const PW = 1000, PH = 500;
       for (let i = 0; i < 9; i++) {
         const y = 110 + i * 32;
         const ok = i < 4;
-        s += `<rect x="330" y="${y}" width="${ok ? 380 : 180}" height="18" rx="9" fill="${ok ? hue[0] : DIM}" opacity="${ok ? 0.75 : 0.25}"/>`;
+        s += `<rect x="330" y="${y}" width="${ok ? 380 : 180}" height="18" rx="9" fill="${ok ? hue[0] : "var(--lp-dim)"}" opacity="${ok ? 0.75 : 0.25}"/>`;
       }
-      s += `<path d="M320 ${110 + 4 * 32 - 8}H760" stroke="${INK}" stroke-width="1.5" stroke-dasharray="5 5"/>`;
-      s += `<text x="770" y="${110 + 4 * 32 - 3}" font-family="Geist Mono, ui-monospace, monospace" font-size="17" fill="${INK}">threshold</text>`;
+      s += `<path d="M320 ${110 + 4 * 32 - 8}H760" stroke="var(--lp-ink)" stroke-width="1.5" stroke-dasharray="5 5"/>`;
+      s += `<text x="770" y="${110 + 4 * 32 - 3}" font-family="Geist Mono, ui-monospace, monospace" font-size="17" fill="var(--lp-ink)">threshold</text>`;
+      return s;
+    },
+  },
+  {
+    f: "cover-breakpoints.svg",
+    hue: HUES.teal,
+    label: "FOUR WALLS, FOUR WAYS THROUGH",
+    draw: (r, hue) => {
+      let s = "";
+      const steps = ["MEMORY", "REFUSAL", "THE GAP", "THE DEVICE"];
+      steps.forEach((label2, i) => {
+        const x = 100 + i * 210;
+        const h = 90 + i * 55;
+        s += `<rect x="${x}" y="${380 - h}" width="150" height="${h}" fill="${hue[0]}" opacity="${0.35 + i * 0.15}"/>`;
+        s += `<circle cx="${x + 75}" cy="${380 - h}" r="5" fill="var(--lp-ink)"/>`;
+        s += `<text x="${x + 75}" y="${410}" text-anchor="middle" font-family="Geist Mono, ui-monospace, monospace" font-size="16" fill="var(--lp-dim)">${label2}</text>`;
+        s += `<text x="${x + 75}" y="${380 - h - 14}" text-anchor="middle" font-family="Geist Mono, ui-monospace, monospace" font-size="17" fill="var(--lp-ink)">0${i + 1}</text>`;
+      });
       return s;
     },
   },
 ].forEach(({ f, hue, label, draw }) => {
   const r = rng(99);
-  files[f] = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ${PW} ${PH}" width="${PW}" height="${PH}" role="img">
-  ${defs()}
-  <rect width="${PW}" height="${PH}" fill="url(#plate)"/>
-  ${draw(r, hue)}
-  <text x="60" y="${PH - 40}" font-family="Geist Mono, ui-monospace, monospace" font-size="17" letter-spacing="1.6" fill="${DIM}">${label}</text>
-  <rect width="${PW}" height="${PH}" filter="url(#grain)" opacity="0.85"/>
-  <rect x="0.5" y="0.5" width="${PW - 1}" height="${PH - 1}" fill="none" stroke="${LINE}"/>
-</svg>`;
+  emitThemed(
+    files, f.replace(/\.svg$/, ""),
+    `${draw(r, hue)}
+     <text x="60" y="${PH - 40}" font-family="Geist Mono, ui-monospace, monospace" font-size="17" letter-spacing="1.6" fill="var(--lp-dim)">${label}</text>`,
+    PW, PH, { grid: false }
+  );
 });
 
 /* =================================================================
@@ -696,7 +695,7 @@ files["og.svg"] = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 630
   <g font-family="Geist Mono, ui-monospace, monospace">
     <text x="216" y="120" font-size="20" letter-spacing="2" fill="${DIM}">EST. 2006</text>
   </g>
-  <text x="216" y="330" font-family="Geist, system-ui, sans-serif" font-size="86" font-weight="500" fill="${INK}" letter-spacing="-3">Ashutosh Rana</text>
+  <text x="216" y="330" font-family="Geist, system-ui, sans-serif" font-size="86" font-weight="500" fill="${INK}" letter-spacing="-3">Dhairya Pandya</text>
   <text x="216" y="386" font-family="Geist Mono, ui-monospace, monospace" font-size="26" fill="${DIM}" letter-spacing="0.5">AI Engineer  /  measure it, or it did not happen</text>
   <g font-family="Geist Mono, ui-monospace, monospace" font-size="19" fill="${DIM}" letter-spacing="1.2">
     <text x="216" y="530">6 SYSTEMS</text>
@@ -705,6 +704,156 @@ files["og.svg"] = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 630
   </g>
   <rect width="1200" height="630" filter="url(#grain)" opacity="0.85"/>
 </svg>`;
+
+/* =================================================================
+   Blog diagrams: light-aware plate.
+
+   Every other generated image in this file is deliberately always
+   dark, because it is meant to be an instrument reading, framed
+   like a scope trace regardless of what the page around it is
+   doing. A diagram embedded inside a paragraph of prose is not
+   that: it is part of the page, so it switches to a white canvas
+   under `prefers-color-scheme: light` the same way the site's own
+   chrome does. CSS custom properties on the root <svg>, read via
+   var() in every fill, are what make that possible for a static
+   file loaded through a plain <img> tag: an embedded SVG document
+   gets its own rendering context and cannot see the host page's
+   [data-theme] toggle, only the OS-level media query, so that is
+   the signal these respond to.
+   ================================================================= */
+
+/**
+ * mode "auto" ships one file that follows the OS-level
+ * prefers-color-scheme media query, which is the correct no-JS
+ * baseline. It CANNOT follow the page's manual [data-theme] toggle,
+ * because an <img>-loaded SVG is its own document and never sees
+ * the host page's DOM. mode "dark"/"light" instead hardcode the
+ * palette with no media query at all, so a tiny client script
+ * (initThemedDiagrams in scripts/site.ts) can swap an <img>'s src
+ * between the auto file and one of these forced ones whenever the
+ * visitor has an EXPLICIT stored theme that might disagree with
+ * their OS. Three files per diagram is the cost of an <img> tag
+ * actually following a toggle it structurally cannot observe.
+ */
+function lightPlate(children, w, h, { grid = true, mode = "auto" } = {}) {
+  const g = grid
+    ? (() => {
+        const lines = [];
+        for (let x = 40; x < w; x += 40) lines.push(`M${x} 0V${h}`);
+        for (let y = 40; y < h; y += 40) lines.push(`M0 ${y}H${w}`);
+        return `<path d="${lines.join("")}" stroke="var(--lp-faint)" stroke-width="1" fill="none"/>`;
+      })()
+    : "";
+  const vars = (p) =>
+    `--lp-bg-a: ${p.a}; --lp-bg-b: ${p.b}; --lp-ink: ${p.ink}; --lp-dim: ${p.dim}; --lp-line: ${p.line}; --lp-faint: ${p.faint};`;
+  const style =
+    mode === "auto"
+      ? `svg.lp { ${vars(LP_DARK)} } @media (prefers-color-scheme: light) { svg.lp { ${vars(LP_LIGHT)} } }`
+      : `svg.lp { ${vars(mode === "light" ? LP_LIGHT : LP_DARK)} }`;
+  return `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ${w} ${h}" width="${w}" height="${h}" role="img" class="lp">
+  <style>${style}</style>
+  <defs>
+    <linearGradient id="lpg" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="var(--lp-bg-a)"/>
+      <stop offset="1" stop-color="var(--lp-bg-b)"/>
+    </linearGradient>
+    <filter id="lpgrain" x="0" y="0" width="100%" height="100%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.8" numOctaves="3" seed="7" result="n"/>
+      <feColorMatrix in="n" type="saturate" values="0"/>
+      <feComponentTransfer><feFuncA type="linear" slope="0.055"/></feComponentTransfer>
+    </filter>
+  </defs>
+  <rect width="${w}" height="${h}" fill="url(#lpg)"/>
+  ${g}
+  ${children}
+  <rect width="${w}" height="${h}" filter="url(#lpgrain)" opacity="0.9"/>
+  <rect x="0.5" y="0.5" width="${w - 1}" height="${h - 1}" fill="none" stroke="var(--lp-line)"/>
+</svg>`;
+}
+
+/** Writes the auto file plus forced -dark and -light companions so
+ * the client script has something to swap to. `name` excludes the
+ * .svg extension. */
+function emitThemed(files, name, children, w, h, opts = {}) {
+  files[`${name}.svg`] = lightPlate(children, w, h, { ...opts, mode: "auto" });
+  files[`${name}-dark.svg`] = lightPlate(children, w, h, { ...opts, mode: "dark" });
+  files[`${name}-light.svg`] = lightPlate(children, w, h, { ...opts, mode: "light" });
+}
+
+/* -- Shared noise vs. real coupling: a before/after ranking. Two
+   loud-but-unrelated columns start on top; correcting for each
+   column's own noise sends them to the middle and lets a quiet,
+   genuinely coupled pair take the top spot. The intuition is the
+   whole point, so the picture is a ranking flipping, not a formula. -- */
+{
+  const [hot] = HUES.rose;
+  const [ok] = HUES.cyan;
+  const pairs = [
+    { name: "A · B", raw: 0.91, fix: 0.34, note: "both just noisy" },
+    { name: "C · D", raw: 0.78, fix: 0.29, note: "both just noisy" },
+    { name: "E · F", raw: 0.41, fix: 0.83, note: "quiet, but moves together" },
+    { name: "G · H", raw: 0.35, fix: 0.22, note: "" },
+  ];
+  const colX = [140, 620], y0 = 110, rowH = 74;
+  let s = "";
+  s += `<text x="${colX[0]}" y="70" font-family="Geist Mono, ui-monospace, monospace" font-size="17" letter-spacing="1" fill="var(--lp-dim)">RAW MUTUAL INFORMATION</text>`;
+  s += `<text x="${colX[1]}" y="70" font-family="Geist Mono, ui-monospace, monospace" font-size="17" letter-spacing="1" fill="var(--lp-dim)">AFTER SUBTRACTING NOISE</text>`;
+  const rawOrder = [...pairs].sort((a, b) => b.raw - a.raw);
+  const fixOrder = [...pairs].sort((a, b) => b.fix - a.fix);
+  rawOrder.forEach((p, i) => {
+    const y = y0 + i * rowH;
+    const c = p.note.includes("quiet") ? ok : p.note ? hot : "var(--lp-dim)";
+    s += `<rect x="${colX[0]}" y="${y}" width="${240 * p.raw}" height="26" rx="5" fill="${c}" opacity="0.75"/>
+      <text x="${colX[0]}" y="${y - 8}" font-family="Geist Mono, ui-monospace, monospace" font-size="14" fill="var(--lp-ink)">${p.name}</text>`;
+  });
+  fixOrder.forEach((p, i) => {
+    const y = y0 + i * rowH;
+    const c = p.note.includes("quiet") ? ok : p.note ? hot : "var(--lp-dim)";
+    s += `<rect x="${colX[1]}" y="${y}" width="${240 * p.fix}" height="26" rx="5" fill="${c}" opacity="0.75"/>
+      <text x="${colX[1]}" y="${y - 8}" font-family="Geist Mono, ui-monospace, monospace" font-size="14" fill="var(--lp-ink)">${p.name}${p.note ? "  " + p.note : ""}</text>`;
+  });
+  // connecting lines showing where each pair moved to
+  pairs.forEach((p) => {
+    const ri = rawOrder.indexOf(p), fi = fixOrder.indexOf(p);
+    const y1 = y0 + ri * rowH + 13, y2 = y0 + fi * rowH + 13;
+    const c = p.note.includes("quiet") ? ok : p.note ? hot : "var(--lp-line)";
+    s += `<path d="M${colX[0] + 246} ${y1} C ${(colX[0] + colX[1]) / 2} ${y1}, ${(colX[0] + colX[1]) / 2} ${y2}, ${colX[1] - 6} ${y2}" fill="none" stroke="${c}" stroke-width="1.5" opacity="0.5"/>`;
+  });
+  emitThemed(files, "diag-coevolution", s, 1000, 420, { grid: false });
+}
+for (const variant of ["", "-dark", "-light"]) {
+  files[`cover-coevolution${variant}.svg`] = files[`diag-coevolution${variant}.svg`];
+}
+
+/* -- The blend's report card, written by itself: a score measured
+   the leaky way sitting next to the same blend measured honestly.
+   One bar drops. That is the entire finding, so that is the entire
+   picture. -- */
+{
+  const [hot] = HUES.violet;
+  const [ok] = HUES.lime;
+  const rows = [
+    { n: "MODEL A", v: 0.71, c: "var(--lp-dim)" },
+    { n: "MODEL B", v: 0.69, c: "var(--lp-dim)" },
+    { n: "MODEL C", v: 0.66, c: "var(--lp-dim)" },
+    { n: "BLEND, SCORED ON ITS OWN FIT ROWS", v: 0.83, c: hot },
+    { n: "BLEND, SCORED ON A HELD-OUT SPLIT", v: 0.74, c: ok },
+  ];
+  const x0 = 340, y0 = 90, rowH = 56, maxW = 560;
+  let s = "";
+  rows.forEach((r, i) => {
+    const y = y0 + i * rowH;
+    s += `<text x="${x0 - 16}" y="${y + 18}" text-anchor="end" font-family="Geist Mono, ui-monospace, monospace" font-size="14" fill="var(--lp-ink)">${r.n}</text>`;
+    s += `<rect x="${x0}" y="${y}" width="${maxW * r.v}" height="26" rx="5" fill="${r.c}" opacity="0.8"/>`;
+    s += `<text x="${x0 + maxW * r.v + 10}" y="${y + 18}" font-family="Geist Mono, ui-monospace, monospace" font-size="14" fill="${r.c === "var(--lp-dim)" ? "var(--lp-dim)" : r.c}">${r.v.toFixed(2)}</text>`;
+  });
+  s += `<path d="M${x0} ${y0 + 3 * rowH - 10}H${x0 + maxW + 70}" stroke="var(--lp-line)" stroke-width="1" stroke-dasharray="4 4"/>`;
+  s += `<text x="${x0}" y="${y0 + 5 * rowH + 26}" font-family="Geist Mono, ui-monospace, monospace" font-size="13" fill="var(--lp-dim)">same weights, same models. only the rows they were graded on changed.</text>`;
+  emitThemed(files, "diag-stack-honesty", s, 1000, 420, { grid: false });
+}
+for (const variant of ["", "-dark", "-light"]) {
+  files[`cover-stack${variant}.svg`] = files[`diag-stack-honesty${variant}.svg`];
+}
 
 /* ---- write ------------------------------------------------------ */
 let bytes = 0;

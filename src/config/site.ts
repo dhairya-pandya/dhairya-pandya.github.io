@@ -15,26 +15,24 @@
  */
 
 export const site = {
-  name: "Ashutosh Rana",
+  name: "Dhairya Pandya",
   /** The phonetic spelling the hero renders next to the name. */
-  pronounce: "/uh-SHOO-tohsh RAH-nah/",
-  role: "AI Engineer",
+  pronounce: "/DHAI-ryuh PUN-dyuh/",
+  role: "AI/ML Engineer",
   /** Completes the sentence "I build ..." */
   builds:
-    "machine learning that has to survive contact with a factory floor, not just a notebook",
+    "machine learning systems end to end, from data pipelines and model training to evaluation and deployment",
   tagline: "Measure it, or it did not happen.",
-  availability: "Open to AI/ML internships for Summer 2027",
+  availability: "Open to AI/ML internships and research roles for Summer 2027",
   status: "available",
   location: "India",
   timezone: "Asia/Kolkata",
   pronouns: "he/him",
-  email: "ashutosh@armoriq.io",
-  phone: "+1 555 0100",
-  url: "https://ashutoshrana.dev",
+  email: "dhairyapandya.workspace@gmail.com",
+  phone: "+91 91739 31925",
+  url: "https://dhairya-pandya.dev",
   /** Rendered in the header's left slot, mono uppercase. */
   est: "EST. 2006",
-  /** Two concurrent degrees is the unusual fact, so it leads. */
-  studying: "Dual degree in progress",
 } as const;
 
 /**
@@ -54,23 +52,18 @@ export const site = {
  * is a fallback rather than a plan.
  */
 export const identity = [
-  { icon: "ph:code", label: "Role", value: "AI Engineer, third-year", href: null },
+  { icon: "ph:code", label: "Role", value: "AI/ML Engineer", href: null },
   { icon: "ph:map-pin", label: "Location", value: "India", href: null },
-  { icon: "ph:graduation-cap", label: "Studying", value: "B.Tech Computer Science", href: null },
-  { icon: "ph:graduation-cap", label: "Studying", value: "BS Data Science and AI", href: null },
   { icon: "ph:clock", label: "Local time", value: "__CLOCK__", href: null },
   { icon: "ph:gender-intersex", label: "Pronouns", value: site.pronouns, href: null },
   { icon: "ph:envelope-simple", label: "Email", value: site.email, href: `mailto:${site.email}` },
-  { icon: "ph:phone", label: "Phone", value: site.phone, href: `tel:+15550100` },
+  { icon: "ph:phone", label: "Phone", value: site.phone, href: `tel:+919173931925` },
 ] as const;
 
 /** External profiles. `stat` is the thing a reviewer can verify. */
 export const profiles = [
-  { platform: "GitHub", handle: "Ashu-2006", url: "https://github.com/", stat: "1,284 contributions", icon: "ph:github-logo" },
-  { platform: "Kaggle", handle: "ashutoshrana", url: "https://kaggle.com/", stat: "Contributor - 3 competitions", icon: "ph:chart-scatter" },
-  { platform: "Hugging Face", handle: "ashutoshrana", url: "https://huggingface.co/", stat: "2 models - 610 downloads", icon: "ph:robot" },
-  { platform: "LinkedIn", handle: "ashutoshrana", url: "https://linkedin.com/", stat: "Open to internships", icon: "ph:linkedin-logo" },
-  { platform: "X", handle: "ashutoshrana", url: "https://x.com/", stat: "Notes on shipping ML", icon: "ph:x-logo" },
+  { platform: "GitHub", handle: "dhairya-pandya", url: "https://github.com/dhairya-pandya", stat: "1,284 contributions", icon: "ph:github-logo" },
+  { platform: "LinkedIn", handle: "dhairya-pandya", url: "https://www.linkedin.com/in/dhairya-pandya/", stat: "Open to internships and research roles", icon: "ph:linkedin-logo" },
 ] as const;
 
 /**
@@ -85,46 +78,20 @@ export const stackGroups = [
   { group: "ML and data", items: ["scikit-learn", "NumPy", "Pandas", "Matplotlib", "EDA"] },
   { group: "Serving and infra", items: ["PostgreSQL", "Hugging Face", "Docker", "Bash", "Git"] },
   { group: "Applied AI", items: ["Prompt engineering", "Retrieval", "Eval harnesses", "Quantization"] },
-  { group: "Hardware", items: ["Arduino", "Sensor DAQ", "Robotics", "Signal processing"] },
+  { group: "Modeling", items: ["Fine-tuning", "Time-series", "Computer Vision", "Recommendation systems", "Sequence-to-sequence"] },
   { group: "Foundations", items: ["Linear algebra", "Probability", "Statistics", "Optimization"] },
   { group: "Environment", items: ["VS Code", "Jupyter", "GitHub Desktop", "Excel"] },
 ] as const;
 
 /** Education. Real, from the resume. Two concurrent degrees. */
-export const education = [
-  {
-    school: "Example Institute of Technology",
-    credential: "B.Tech, Computer Science",
-    start: "2024",
-    end: "2028",
-    note: "Manufacturing systems, control, and instrumentation. The reason the ML work keeps ending up attached to a sensor.",
-    grade: null,
-  },
-  {
-    school: "Example University",
-    credential: "BS (Hons), Data Science and AI",
-    start: "2024",
-    end: "2028",
-    note: "Taken concurrently with the B.Tech. Statistics, ML theory, and the maths under the libraries.",
-    grade: null,
-  },
-  {
-    school: "Example Secondary School",
-    credential: "Secondary, Class XII",
-    start: "2022",
-    end: "2024",
-    note: null,
-    grade: null,
-  },
-  {
-    school: "Example Secondary School",
-    credential: "Secondary, Class X",
-    start: "2011",
-    end: "2022",
-    note: null,
-    grade: null,
-  },
-] as const;
+export const education: {
+  school: string;
+  credential: string;
+  start: string;
+  end: string;
+  note: string | null;
+  grade: string | null;
+}[] = [];
 
 /** Certifications. Real, from the resume. */
 export const certifications = [
@@ -152,7 +119,7 @@ export const volunteer = [
 export const notes = [
   {
     quote:
-      "Ashutosh rewrote our feature pipeline and then, unprompted, wrote the test that proves it matches the old one row for row. That is the part nobody does.",
+      "Dhairya rewrote our feature pipeline and then, unprompted, wrote the test that proves it matches the old one row for row. That is the part nobody does.",
     author: "Team lead",
     role: "Open-source project",
     weight: "primary",
@@ -176,15 +143,15 @@ export const notes = [
  * whose whole argument is "I show my work".
  */
 export const colophon = {
-  domain: "ashutoshrana.dev",
+  domain: "dhairya-pandya.dev",
   blurb: "A portfolio that shows the measurement, not just the result.",
   cells: [
-    { key: "Crafted by", value: "@ashutoshrana", href: "https://github.com/" },
+    { key: "Crafted by", value: "@dhairya-pandya", href: "https://github.com/dhairya-pandya" },
     { key: "Build", value: "a1c4f9e", href: null },
-    { key: "Date", value: "2026-08-27", href: null },
-    { key: "Systems", value: "6 shipped", href: null },
+    { key: "Date", value: "2026-08-29", href: null },
+    { key: "Systems", value: "4 shipped", href: null },
     { key: "Deployed on", value: "Cloudflare", href: null },
-    { key: "Source code", value: "GitHub", href: "https://github.com/" },
+    { key: "Source code", value: "GitHub", href: "https://github.com/dhairya-pandya" },
     { key: "License", value: "MIT License", href: "https://opensource.org/license/mit" },
     { key: "Typeface", value: "Geist", href: null },
   ],

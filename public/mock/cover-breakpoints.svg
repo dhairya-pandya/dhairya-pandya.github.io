@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 500" width="1000" height="500" role="img" class="lp">
+  <style>svg.lp { --lp-bg-a: #141416; --lp-bg-b: #0d0d0e; --lp-ink: #f2f2f2; --lp-dim: #8f8f8f; --lp-line: rgba(255,255,255,0.14); --lp-faint: rgba(255,255,255,0.06); } @media (prefers-color-scheme: light) { svg.lp { --lp-bg-a: #ffffff; --lp-bg-b: #f3f3f1; --lp-ink: #131313; --lp-dim: #6b6b68; --lp-line: rgba(0,0,0,0.14); --lp-faint: rgba(0,0,0,0.06); } }</style>
+  <defs>
+    <linearGradient id="lpg" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="var(--lp-bg-a)"/>
+      <stop offset="1" stop-color="var(--lp-bg-b)"/>
+    </linearGradient>
+    <filter id="lpgrain" x="0" y="0" width="100%" height="100%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.8" numOctaves="3" seed="7" result="n"/>
+      <feColorMatrix in="n" type="saturate" values="0"/>
+      <feComponentTransfer><feFuncA type="linear" slope="0.055"/></feComponentTransfer>
+    </filter>
+  </defs>
+  <rect width="1000" height="500" fill="url(#lpg)"/>
+  
+  <rect x="100" y="290" width="150" height="90" fill="#2dd4bf" opacity="0.35"/><circle cx="175" cy="290" r="5" fill="var(--lp-ink)"/><text x="175" y="410" text-anchor="middle" font-family="Geist Mono, ui-monospace, monospace" font-size="16" fill="var(--lp-dim)">MEMORY</text><text x="175" y="276" text-anchor="middle" font-family="Geist Mono, ui-monospace, monospace" font-size="17" fill="var(--lp-ink)">01</text><rect x="310" y="235" width="150" height="145" fill="#2dd4bf" opacity="0.5"/><circle cx="385" cy="235" r="5" fill="var(--lp-ink)"/><text x="385" y="410" text-anchor="middle" font-family="Geist Mono, ui-monospace, monospace" font-size="16" fill="var(--lp-dim)">REFUSAL</text><text x="385" y="221" text-anchor="middle" font-family="Geist Mono, ui-monospace, monospace" font-size="17" fill="var(--lp-ink)">02</text><rect x="520" y="180" width="150" height="200" fill="#2dd4bf" opacity="0.6499999999999999"/><circle cx="595" cy="180" r="5" fill="var(--lp-ink)"/><text x="595" y="410" text-anchor="middle" font-family="Geist Mono, ui-monospace, monospace" font-size="16" fill="var(--lp-dim)">THE GAP</text><text x="595" y="166" text-anchor="middle" font-family="Geist Mono, ui-monospace, monospace" font-size="17" fill="var(--lp-ink)">03</text><rect x="730" y="125" width="150" height="255" fill="#2dd4bf" opacity="0.7999999999999999"/><circle cx="805" cy="125" r="5" fill="var(--lp-ink)"/><text x="805" y="410" text-anchor="middle" font-family="Geist Mono, ui-monospace, monospace" font-size="16" fill="var(--lp-dim)">THE DEVICE</text><text x="805" y="111" text-anchor="middle" font-family="Geist Mono, ui-monospace, monospace" font-size="17" fill="var(--lp-ink)">04</text>
+     <text x="60" y="460" font-family="Geist Mono, ui-monospace, monospace" font-size="17" letter-spacing="1.6" fill="var(--lp-dim)">FOUR WALLS, FOUR WAYS THROUGH</text>
+  <rect width="1000" height="500" filter="url(#lpgrain)" opacity="0.9"/>
+  <rect x="0.5" y="0.5" width="999" height="499" fill="none" stroke="var(--lp-line)"/>
+</svg>

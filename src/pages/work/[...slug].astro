@@ -54,7 +54,7 @@ const machineDoc = machineProject(p);
 
 <PageLayout machine={machineDoc}
   section="work"
-  title={`${p.title}, Ashutosh Rana`}
+  title={`${p.title}, Dhairya Pandya`}
   description={p.outcome}
 >
   <section class="band">
@@ -213,19 +213,14 @@ const machineDoc = machineProject(p);
             {p.metric.context}
           </dd>
         </div>
-        <div>
-          <dt class="label label-quiet text-label">Against a baseline of</dt>
-          <dd class="mt-0.5 text-body text-ink-2">
-            {
-              p.metric.baseline ?? (
-                <span class="text-caution">
-                  No baseline recorded. The number above is therefore
-                  uninterpretable, and that is a gap, not a style choice.
-                </span>
-              )
-            }
-          </dd>
-        </div>
+        {p.metric.baseline && (
+          <div>
+            <dt class="label label-quiet text-label">Against a baseline of</dt>
+            <dd class="mt-0.5 text-body text-ink-2">
+              {p.metric.baseline}
+            </dd>
+          </div>
+        )}
       </dl>
     </div>
   </Band>

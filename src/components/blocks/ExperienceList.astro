@@ -32,11 +32,11 @@ import { experience, dateRange, humanDuration } from "../../data/work";
             {group.org}
           </h3>
           <p class="flex items-center gap-1.5 text-body text-ink-3">
-            <span>{group.location}</span>
+            {group.location && <span>{group.location}</span>}
             {/* "Remote (Remote)" is the degenerate case: when the
                 location IS the work mode, the parenthetical adds
                 nothing and reads as a bug. */}
-            {group.location !== group.mode && (
+            {group.mode && group.location !== group.mode && (
               <span class="text-ink-4">({group.mode})</span>
             )}
             {group.verified && (
@@ -108,6 +108,57 @@ import { experience, dateRange, humanDuration } from "../../data/work";
                         <li class="bullet prose-measure">{b}</li>
                       ))}
                     </ul>
+                    {role.competitions && (
+                      <ul class="mt-3 space-y-1 border-l border-line-2">
+                        {role.competitions.map((c) => (
+                          <li>
+                            <details class="comp-acc group/comp">
+                              <summary class="row-interactive -ml-px flex cursor-pointer items-center gap-2 border-l border-transparent py-1.5 pl-3 text-body transition-colors duration-fast ease-out hover:border-ink-4">
+                                <span
+                                  class:list={[
+                                    "comp-dot",
+                                    c.status === "ongoing" && "comp-dot--live",
+                                  ]}
+                                  aria-hidden="true"
+                                />
+                                <span class="text-ink">{c.name}</span>
+                                <span class="font-mono text-label text-ink-3">{c.detail}</span>
+                                <span
+                                  class="comp-acc-chevron ml-auto shrink-0 text-ink-4 transition-colors duration-fast ease-out group-hover/comp:text-ink-2"
+                                  aria-hidden="true"
+                                >
+                                  <svg
+                                    viewBox="0 0 16 16"
+                                    class="size-3.5"
+                                    fill="none"
+                                    stroke="currentColor"
+                                    stroke-width="1.5"
+                                    stroke-linecap="round"
+                                  >
+                                    <path d="M4 6.5L8 10.5L12 6.5" />
+                                  </svg>
+                                </span>
+                              </summary>
+                              <div class="comp-acc-panel">
+                                <div class="comp-acc-panel-inner">
+                                  <p class="prose-measure py-1.5 pr-1 pl-[1.375rem] text-body text-ink-2">
+                                    {c.writeup}
+                                    {c.url && (
+                                      <>
+                                        {" "}
+                                        <a href={c.url} target="_blank" rel="noopener" class="link-ref">
+                                          View competition
+                                        </a>
+                                      </>
+                                    )}
+                                  </p>
+                                </div>
+                              </div>
+                            </details>
+                          </li>
+                        ))}
+                      </ul>
+                    )}
                     <ul class="mt-3 flex flex-wrap gap-1.5">
                       {role.chips.map((c) => (
                         <li class="chip">
@@ -125,4 +176,102 @@ import { experience, dateRange, humanDuration } from "../../data/work";
     ))
   }
 </div>
+
+<style>
+  /* Own namespace for the competition-row disclosure, deliberately
+     not reusing .t-acc: that class is styled with a plain descendant
+     selector (.t-acc[open] .t-acc-panel), which does not stop at the
+     nearest ancestor. Nesting a second .t-acc inside the role's own
+     .t-acc would make every competition panel pop open the instant
+     the parent role row opens, regardless of its own [open] state. */
+  .comp-acc-panel {
+    display: grid;
+    grid-template-rows: 0fr;
+    transition: grid-template-rows var(--acc-collapse) var(--acc-ease);
+  }
+  .comp-acc[open] > .comp-acc-panel {
+    grid-template-rows: 1fr;
+    transition: grid-template-rows var(--acc-expand) var(--acc-ease);
+  }
+  .comp-acc-panel-inner {
+    overflow: hidden;
+    opacity: 0;
+    filter: blur(2px);
+    transition:
+      opacity var(--acc-collapse) var(--acc-ease),
+      filter var(--acc-collapse) var(--acc-ease);
+  }
+  .comp-acc[open] > .comp-acc-panel > .comp-acc-panel-inner {
+    opacity: 1;
+    filter: blur(0);
+    transition:
+      opacity var(--acc-expand) var(--acc-ease),
+      filter var(--acc-expand) var(--acc-ease);
+  }
+  .comp-acc-chevron {
+    display: inline-flex;
+    transform: scaleY(1);
+    transform-origin: center;
+    transition: transform var(--acc-chevron) var(--acc-ease);
+  }
+  .comp-acc[open] > summary .comp-acc-chevron {
+    transform: scaleY(-1);
+  }
+  .comp-acc > summary {
+    list-style: none;
+  }
+  .comp-acc > summary::-webkit-details-marker {
+    display: none;
+  }
+  .comp-acc > summary::marker {
+    content: "";
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .comp-acc-panel,
+    .comp-acc-panel-inner,
+    .comp-acc-chevron {
+      transition: none !important;
+    }
+  }
+
+  /* Ranked entry: a plain filled dot. Ongoing entry: the same dot
+     with a pulsing ring, borrowed from the hero's availability
+     indicator, so "still open" reads the same way everywhere it
+     appears on the site. */
+  .comp-dot {
+    position: relative;
+    width: 6px;
+    height: 6px;
+    flex: none;
+    border-radius: 999px;
+    background-color: var(--color-ink-4);
+  }
+  .comp-dot--live {
+    background-color: var(--color-live);
+  }
+  .comp-dot--live::after {
+    content: "";
+    position: absolute;
+    inset: -3px;
+    border-radius: 999px;
+    border: 1px solid var(--color-live);
+    animation: comp-pulse 2.4s var(--ease-in-out) infinite;
+  }
+  @keyframes comp-pulse {
+    0% {
+      opacity: 0.8;
+      transform: scale(0.7);
+    }
+    70%,
+    100% {
+      opacity: 0;
+      transform: scale(1.8);
+    }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .comp-dot--live::after {
+      animation: none;
+    }
+  }
+</style>
 

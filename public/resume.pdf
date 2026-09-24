@@ -18,143 +18,111 @@ endobj
 << /Type /Page /Parent 2 0 R /MediaBox [0 0 595.28 841.89] /Resources << /Font << /F1 3 0 R /F2 4 0 R /F3 5 0 R >> >> /Contents 7 0 R >>
 endobj
 7 0 obj
-<< /Length 7137 >>
+<< /Length 6236 >>
 stream
-BT /F2 20 Tf 0 g 1 0 0 1 52.00 789.89 Tm (Ashutosh Rana) Tj ET
-BT /F3 8.5 Tf 0.4 g 1 0 0 1 52.00 774.89 Tm (AI Engineer  /  Dual degree in progress) Tj ET
-BT /F3 8.5 Tf 0.25 g 1 0 0 1 52.00 761.89 Tm (ashutosh@armoriq.io   /   +1 555 0100   /   India   /   ashutoshrana.dev) Tj ET
+BT /F2 20 Tf 0 g 1 0 0 1 52.00 789.89 Tm (Dhairya Pandya) Tj ET
+BT /F3 8.5 Tf 0.4 g 1 0 0 1 52.00 774.89 Tm (AI/ML Engineer  /  Dual degree in progress) Tj ET
+BT /F3 8.5 Tf 0.25 g 1 0 0 1 52.00 761.89 Tm (dhairyapandya.workspace@gmail.com   /   +91 91739 31925   /   India   /   dhairya-pandya.dev) Tj ET
 0.75 G 0.5 w 52 745.89 m 543.28 745.89 l S
-BT /F1 9.5 Tf 0.15 g 1 0 0 1 52.00 731.89 Tm (AI engineer reading two concurrent degrees, Smart Manufacturing Engineering at Example Institute of Technology) Tj ET
-BT /F1 9.5 Tf 0.15 g 1 0 0 1 52.00 718.89 Tm (and Data Science and AI at Example University. I build machine learning that ends up attached to a sensor or a) Tj ET
-BT /F1 9.5 Tf 0.15 g 1 0 0 1 52.00 705.89 Tm (process rather than to a notebook, and every result I report comes with the baseline it beat and the conditions under) Tj ET
-BT /F1 9.5 Tf 0.15 g 1 0 0 1 52.00 692.89 Tm (which it fails.) Tj ET
-BT /F2 9 Tf 0.1 g 1 0 0 1 52.00 676.89 Tm (Open to AI/ML internships for Summer 2027.) Tj ET
-BT /F2 9 Tf 0 g 1 0 0 1 52.00 656.89 Tm (EXPERIENCE) Tj ET
-0.8 G 0.5 w 52 651.89 m 543.28 651.89 l S
-BT /F2 10 Tf 0 g 1 0 0 1 52.00 637.89 Tm (Undergraduate Research Assistant, Applied ML Lab, Example University) Tj ET
-BT /F3 8.5 Tf 0.45 g 1 0 0 1 329.08 637.89 Tm (Research / India / On-site / 08.2025 - now) Tj ET
-0.55 g 54.00 627.89 1.6 1.6 re f
-BT /F1 9.5 Tf 0.2 g 1 0 0 1 62.00 624.89 Tm (Instrumented three CNC spindles with accelerometers and built the acquisition path from Arduino to a Postgres) Tj ET
-BT /F1 9.5 Tf 0.2 g 1 0 0 1 62.00 612.39 Tm (time-series table.) Tj ET
-0.55 g 54.00 602.89 1.6 1.6 re f
-BT /F1 9.5 Tf 0.2 g 1 0 0 1 62.00 599.89 Tm (Trained a bearing-fault classifier on 41 hours of labelled vibration data. Baseline was a fixed RMS threshold at) Tj ET
-BT /F1 9.5 Tf 0.2 g 1 0 0 1 62.00 587.39 Tm (0.71 F1; the model reached 0.89 F1 on a held-out machine it had never seen.) Tj ET
-0.55 g 54.00 577.89 1.6 1.6 re f
-BT /F1 9.5 Tf 0.2 g 1 0 0 1 62.00 574.89 Tm (Wrote the failure-mode note the lab now hands to new students: the model degrades below 900 RPM because the) Tj ET
-BT /F1 9.5 Tf 0.2 g 1 0 0 1 62.00 562.39 Tm (fault signature falls under the noise floor.) Tj ET
-BT /F2 10 Tf 0 g 1 0 0 1 52.00 542.89 Tm (Competition Contributor, Kaggle) Tj ET
-BT /F3 8.5 Tf 0.45 g 1 0 0 1 369.88 542.89 Tm (Part-time / Remote / 01.2025 - now) Tj ET
-0.55 g 54.00 532.89 1.6 1.6 re f
-BT /F1 9.5 Tf 0.2 g 1 0 0 1 62.00 529.89 Tm (Took part in three competitions, owning data cleaning and preprocessing for a two-person team.) Tj ET
-0.55 g 54.00 520.39 1.6 1.6 re f
-BT /F1 9.5 Tf 0.2 g 1 0 0 1 62.00 517.39 Tm (Merged five source datasets into one feature table and wrote a row-for-row equivalence test against the previous) Tj ET
-BT /F1 9.5 Tf 0.2 g 1 0 0 1 62.00 504.89 Tm (pipeline before switching over.) Tj ET
-0.55 g 54.00 495.39 1.6 1.6 re f
-BT /F1 9.5 Tf 0.2 g 1 0 0 1 62.00 492.39 Tm (Best finish: 539 of 3,300 entrants. The gap to the top 100 was feature engineering, not model choice, which is) Tj ET
-BT /F1 9.5 Tf 0.2 g 1 0 0 1 62.00 479.89 Tm (written up in the notebook.) Tj ET
-BT /F2 10 Tf 0 g 1 0 0 1 52.00 460.39 Tm (Machine Learning Intern, Nuvora Analytics) Tj ET
-BT /F3 8.5 Tf 0.45 g 1 0 0 1 247.48 460.39 Tm (Internship / Ahmedabad, India / Remote / 05.2026 - 07.2026) Tj ET
-0.55 g 54.00 450.39 1.6 1.6 re f
-BT /F1 9.5 Tf 0.2 g 1 0 0 1 62.00 447.39 Tm (Built the review-triage classifier that now routes support tickets. 12,000 labelled reviews, 0.91 macro F1 against a) Tj ET
-BT /F1 9.5 Tf 0.2 g 1 0 0 1 62.00 434.89 Tm (0.68 keyword baseline.) Tj ET
-0.55 g 54.00 425.39 1.6 1.6 re f
-BT /F1 9.5 Tf 0.2 g 1 0 0 1 62.00 422.39 Tm (Quantized the deployed model to INT8, holding accuracy inside 0.4 points and dropping p95 latency from 240ms) Tj ET
-BT /F1 9.5 Tf 0.2 g 1 0 0 1 62.00 409.89 Tm (to 88ms.) Tj ET
-0.55 g 54.00 400.39 1.6 1.6 re f
-BT /F1 9.5 Tf 0.2 g 1 0 0 1 62.00 397.39 Tm (Shipped the eval harness alongside it, so the next person can tell whether a change helped.) Tj ET
-BT /F2 10 Tf 0 g 1 0 0 1 52.00 377.89 Tm (Volunteer Teacher, Example Literacy Program) Tj ET
-BT /F3 8.5 Tf 0.45 g 1 0 0 1 303.58 377.89 Tm (Volunteer / India / On-site / 06.2023 - 04.2024) Tj ET
-0.55 g 54.00 367.89 1.6 1.6 re f
-BT /F1 9.5 Tf 0.2 g 1 0 0 1 62.00 364.89 Tm (Taught basic language proficiency to domestic helpers and homemakers, weekly, across one academic year.) Tj ET
-0.55 g 54.00 355.39 1.6 1.6 re f
-BT /F1 9.5 Tf 0.2 g 1 0 0 1 62.00 352.39 Tm (Twelve learners. Nine could read a utility bill unaided by the end, which was the only outcome we tracked.) Tj ET
-BT /F2 9 Tf 0 g 1 0 0 1 52.00 327.89 Tm (SELECTED SYSTEMS) Tj ET
-0.8 G 0.5 w 52 322.89 m 543.28 322.89 l S
-BT /F2 10 Tf 0 g 1 0 0 1 52.00 308.89 Tm (Spindle Sentinel) Tj ET
-BT /F3 8.5 Tf 0.45 g 1 0 0 1 420.88 308.89 Tm (Deployed / 09.2025 - now) Tj ET
-0.55 g 54.00 298.89 1.6 1.6 re f
-BT /F1 9.5 Tf 0.2 g 1 0 0 1 62.00 295.89 Tm (Bearing-fault detection on live CNC spindles, running in the lab since January and catching two failures before) Tj ET
-BT /F1 9.5 Tf 0.2 g 1 0 0 1 62.00 283.39 Tm (they stopped a machine.) Tj ET
-0.55 g 54.00 273.89 1.6 1.6 re f
-BT /F1 9.5 Tf 0.2 g 1 0 0 1 62.00 270.89 Tm (0.89 macro F1 on a held-out machine, 41h labelled vibration data, 3 fault classes, against 0.71 with a fixed RMS) Tj ET
-BT /F1 9.5 Tf 0.2 g 1 0 0 1 62.00 258.39 Tm (threshold.) Tj ET
-0.55 g 54.00 248.89 1.6 1.6 re f
-BT /F1 9.5 Tf 0.2 g 1 0 0 1 62.00 245.89 Tm (Python / scikit-learn / Arduino / PostgreSQL / Spectrograms) Tj ET
-BT /F2 10 Tf 0 g 1 0 0 1 52.00 226.39 Tm (Grounded) Tj ET
-BT /F3 8.5 Tf 0.45 g 1 0 0 1 425.98 226.39 Tm (Shipped / 02.2026 - now) Tj ET
-0.55 g 54.00 216.39 1.6 1.6 re f
-BT /F1 9.5 Tf 0.2 g 1 0 0 1 62.00 213.39 Tm (Retrieval over four semesters of lecture notes that answers with citations, or says it does not know.) Tj ET
-0.55 g 54.00 203.89 1.6 1.6 re f
-BT /F1 9.5 Tf 0.2 g 1 0 0 1 62.00 200.89 Tm (0.84 faithfulness on 120 hand-labelled QA pairs, against 0.52 with embedding-only retrieval. Refusal rate on) Tj ET
-BT /F1 9.5 Tf 0.2 g 1 0 0 1 62.00 188.39 Tm (unanswerable questions went from 0 to 88 percent.) Tj ET
-0.55 g 54.00 178.89 1.6 1.6 re f
-BT /F1 9.5 Tf 0.2 g 1 0 0 1 62.00 175.89 Tm (Python / BM25 / Embeddings / RRF / FastAPI) Tj ET
-BT /F2 10 Tf 0 g 1 0 0 1 52.00 156.39 Tm (Review Triage) Tj ET
-BT /F3 8.5 Tf 0.45 g 1 0 0 1 400.48 156.39 Tm (Deployed / 05.2026 - 07.2026) Tj ET
-0.55 g 54.00 146.39 1.6 1.6 re f
-BT /F1 9.5 Tf 0.2 g 1 0 0 1 62.00 143.39 Tm (Sentiment and intent classifier routing incoming support reviews, replacing a keyword rule set.) Tj ET
-0.55 g 54.00 133.89 1.6 1.6 re f
-BT /F1 9.5 Tf 0.2 g 1 0 0 1 62.00 130.89 Tm (0.91 macro F1 on 12,000 labelled reviews across 5 classes, against 0.68 for the rules it replaced. INT8 serving cut) Tj ET
-BT /F1 9.5 Tf 0.2 g 1 0 0 1 62.00 118.39 Tm (p95 latency from 240ms to 88ms for 0.4 points of accuracy.) Tj ET
-0.55 g 54.00 108.89 1.6 1.6 re f
-BT /F1 9.5 Tf 0.2 g 1 0 0 1 62.00 105.89 Tm (Python / Hugging Face / Fine-tuning / INT8 / Docker) Tj ET
-BT /F3 7.5 Tf 0.55 g 1 0 0 1 185.14 34.00 Tm (Ashutosh Rana  /  page 1 of 2  /  ashutoshrana.dev) Tj ET
+BT /F1 9.5 Tf 0.15 g 1 0 0 1 52.00 731.89 Tm (AI/ML engineer focused end to end on machine learning: data pipelines, model training, evaluation, and deployment.) Tj ET
+BT /F1 9.5 Tf 0.15 g 1 0 0 1 52.00 718.89 Tm (Every result I report comes with the baseline it beat and the conditions under which it fails.) Tj ET
+BT /F2 9 Tf 0.1 g 1 0 0 1 52.00 702.89 Tm (Open to AI/ML internships and research roles for Summer 2027.) Tj ET
+BT /F2 9 Tf 0 g 1 0 0 1 52.00 682.89 Tm (EXPERIENCE) Tj ET
+0.8 G 0.5 w 52 677.89 m 543.28 677.89 l S
+BT /F2 10 Tf 0 g 1 0 0 1 52.00 663.89 Tm (ML Engineer, Shipd) Tj ET
+BT /F3 8.5 Tf 0.45 g 1 0 0 1 369.88 663.89 Tm (Freelance / Remote / 03.2026 - now) Tj ET
+0.55 g 54.00 653.89 1.6 1.6 re f
+BT /F1 9.5 Tf 0.2 g 1 0 0 1 62.00 650.89 Tm (Building ML evaluation benchmarks and data solutions for AI labs to reinforce and improve the engineering) Tj ET
+BT /F1 9.5 Tf 0.2 g 1 0 0 1 62.00 638.39 Tm (capabilities of frontier models.) Tj ET
+0.55 g 54.00 628.89 1.6 1.6 re f
+BT /F1 9.5 Tf 0.2 g 1 0 0 1 62.00 625.89 Tm (Finished in top-three positions for more than 20 challenges spanning NLP, time-series, fine-tuning, computer) Tj ET
+BT /F1 9.5 Tf 0.2 g 1 0 0 1 62.00 613.39 Tm (vision, sequence-to-sequence, from-scratch modelling, and recommendation systems.) Tj ET
+BT /F2 10 Tf 0 g 1 0 0 1 52.00 593.89 Tm (Competitions Expert \(in progress\), Kaggle) Tj ET
+BT /F3 8.5 Tf 0.45 g 1 0 0 1 415.78 593.89 Tm (Part-time / 01.2025 - now) Tj ET
+0.55 g 54.00 583.89 1.6 1.6 re f
+BT /F1 9.5 Tf 0.2 g 1 0 0 1 62.00 580.89 Tm (Finished 539th on Santa 2025, Christmas Tree Packing Challenge, a geometric optimization problem scored on) Tj ET
+BT /F1 9.5 Tf 0.2 g 1 0 0 1 62.00 568.39 Tm (normalized bounding-box area.) Tj ET
+0.55 g 54.00 558.89 1.6 1.6 re f
+BT /F1 9.5 Tf 0.2 g 1 0 0 1 62.00 555.89 Tm (Currently competing in BioHub Cell Tracking, still open.) Tj ET
+BT /F2 9 Tf 0 g 1 0 0 1 52.00 531.39 Tm (SELECTED SYSTEMS) Tj ET
+0.8 G 0.5 w 52 526.39 m 543.28 526.39 l S
+BT /F2 10 Tf 0 g 1 0 0 1 52.00 512.39 Tm (PathOS) Tj ET
+BT /F3 8.5 Tf 0.45 g 1 0 0 1 425.98 512.39 Tm (Shipped / 05.2026 - now) Tj ET
+0.55 g 54.00 502.39 1.6 1.6 re f
+BT /F1 9.5 Tf 0.2 g 1 0 0 1 62.00 499.39 Tm (Offline AI pathologist for H&E histopathology screening, running the first-pass slide read on a laptop with no GPU) Tj ET
+BT /F1 9.5 Tf 0.2 g 1 0 0 1 62.00 486.89 Tm (and no internet.) Tj ET
+0.55 g 54.00 477.39 1.6 1.6 re f
+BT /F1 9.5 Tf 0.2 g 1 0 0 1 62.00 474.39 Tm (88% yes/no accuracy on a 100-sample PathVQA validation set, against ~50% from the base Gemma 4 E2B with) Tj ET
+BT /F1 9.5 Tf 0.2 g 1 0 0 1 62.00 461.89 Tm (no pathology tuning.) Tj ET
+0.55 g 54.00 452.39 1.6 1.6 re f
+BT /F1 9.5 Tf 0.2 g 1 0 0 1 62.00 449.39 Tm (Won the Ollama Prize, Special Technology Track, Gemma 4 Good Hackathon \(Kaggle x Google DeepMind\),) Tj ET
+BT /F1 9.5 Tf 0.2 g 1 0 0 1 62.00 436.89 Tm (against 1,600+ teams.) Tj ET
+0.55 g 54.00 427.39 1.6 1.6 re f
+BT /F1 9.5 Tf 0.2 g 1 0 0 1 62.00 424.39 Tm (Gemma 4 / Unsloth / GRPO / LoRA / GGUF / Ollama) Tj ET
+BT /F2 10 Tf 0 g 1 0 0 1 52.00 404.89 Tm (Udte Bhawre) Tj ET
+BT /F3 8.5 Tf 0.45 g 1 0 0 1 405.58 404.89 Tm (Shipped / 04.2026 - 05.2026) Tj ET
+0.55 g 54.00 394.89 1.6 1.6 re f
+BT /F1 9.5 Tf 0.2 g 1 0 0 1 62.00 391.89 Tm (Cross-platform desktop AI companion living in the taskbar, with concurrent Gemini, Claude and Codex sessions) Tj ET
+BT /F1 9.5 Tf 0.2 g 1 0 0 1 62.00 379.39 Tm (behind one MCP tool layer.) Tj ET
+0.55 g 54.00 369.89 1.6 1.6 re f
+BT /F1 9.5 Tf 0.2 g 1 0 0 1 62.00 366.89 Tm (2nd prize, team getalife\(\), Hackbyte 4.0, IIITDM Jabalpur.) Tj ET
+0.55 g 54.00 357.39 1.6 1.6 re f
+BT /F1 9.5 Tf 0.2 g 1 0 0 1 62.00 354.39 Tm (Electron / Node.js / MongoDB / Gemini / MCP) Tj ET
+BT /F2 10 Tf 0 g 1 0 0 1 52.00 334.89 Tm (AuraArchive) Tj ET
+BT /F3 8.5 Tf 0.45 g 1 0 0 1 456.58 334.89 Tm (Shipped / 02.2026) Tj ET
+0.55 g 54.00 324.89 1.6 1.6 re f
+BT /F1 9.5 Tf 0.2 g 1 0 0 1 62.00 321.89 Tm (Audio-to-blog platform: FastAPI plus Gemini 2.5 Flash turn a recorded discussion into a structured article, gated) Tj ET
+BT /F1 9.5 Tf 0.2 g 1 0 0 1 62.00 309.39 Tm (behind human review before it publishes.) Tj ET
+0.55 g 54.00 299.89 1.6 1.6 re f
+BT /F1 9.5 Tf 0.2 g 1 0 0 1 62.00 296.89 Tm (Won Best Use of Gemini, HackBit, built with Nirvan Jain.) Tj ET
+0.55 g 54.00 287.39 1.6 1.6 re f
+BT /F1 9.5 Tf 0.2 g 1 0 0 1 62.00 284.39 Tm (FastAPI / Gemini 2.5 Flash / Qdrant / Python) Tj ET
+BT /F2 10 Tf 0 g 1 0 0 1 52.00 264.89 Tm (NyayaSetu) Tj ET
+BT /F3 8.5 Tf 0.45 g 1 0 0 1 405.58 264.89 Tm (Shipped / 01.2026 - 03.2026) Tj ET
+0.55 g 54.00 254.89 1.6 1.6 re f
+BT /F1 9.5 Tf 0.2 g 1 0 0 1 62.00 251.89 Tm (Multi-agent legal intelligence system bridging static IPC/BNS statutes with live Supreme Court judgments, to cut) Tj ET
+BT /F1 9.5 Tf 0.2 g 1 0 0 1 62.00 239.39 Tm (hallucination in legal AI.) Tj ET
+0.55 g 54.00 229.89 1.6 1.6 re f
+BT /F1 9.5 Tf 0.2 g 1 0 0 1 62.00 226.89 Tm (4 specialized LangGraph agents \(retrieval, live-judgment verification, multimodal evidence review, synthesis\), built) Tj ET
+BT /F1 9.5 Tf 0.2 g 1 0 0 1 62.00 214.39 Tm (for Convolve 4.0, a Pan-IIT hackathon.) Tj ET
+0.55 g 54.00 204.89 1.6 1.6 re f
+BT /F1 9.5 Tf 0.2 g 1 0 0 1 62.00 201.89 Tm (LangGraph / LangChain / Streamlit / Qdrant / Gemini 2.5 Flash) Tj ET
+BT /F2 9 Tf 0 g 1 0 0 1 52.00 177.39 Tm (SKILLS AND TOOLS) Tj ET
+0.8 G 0.5 w 52 172.39 m 543.28 172.39 l S
+BT /F2 10 Tf 0 g 1 0 0 1 52.00 158.39 Tm (Languages) Tj ET
+0.55 g 54.00 148.39 1.6 1.6 re f
+BT /F1 9.5 Tf 0.2 g 1 0 0 1 62.00 145.39 Tm (Python, Java, C++, C, SQL) Tj ET
+BT /F2 10 Tf 0 g 1 0 0 1 52.00 125.89 Tm (ML and data) Tj ET
+0.55 g 54.00 115.89 1.6 1.6 re f
+BT /F1 9.5 Tf 0.2 g 1 0 0 1 62.00 112.89 Tm (scikit-learn, NumPy, Pandas, Matplotlib, exploratory data analysis) Tj ET
+BT /F3 7.5 Tf 0.55 g 1 0 0 1 178.39 34.00 Tm (Dhairya Pandya  /  page 1 of 2  /  dhairya-pandya.dev) Tj ET
 endstream
 endobj
 8 0 obj
 << /Type /Page /Parent 2 0 R /MediaBox [0 0 595.28 841.89] /Resources << /Font << /F1 3 0 R /F2 4 0 R /F3 5 0 R >> >> /Contents 9 0 R >>
 endobj
 9 0 obj
-<< /Length 3392 >>
+<< /Length 1287 >>
 stream
-BT /F2 10 Tf 0 g 1 0 0 1 52.00 789.89 Tm (Edge Ladder) Tj ET
-BT /F3 8.5 Tf 0.45 g 1 0 0 1 415.78 789.89 Tm (Prototype / 03.2026 - now) Tj ET
+BT /F2 10 Tf 0 g 1 0 0 1 52.00 789.89 Tm (Serving and infra) Tj ET
 0.55 g 54.00 779.89 1.6 1.6 re f
-BT /F1 9.5 Tf 0.2 g 1 0 0 1 62.00 776.89 Tm (A measured comparison of four precisions on one model, so the accuracy-for-latency trade stops being a guess.) Tj ET
-0.55 g 54.00 767.39 1.6 1.6 re f
-BT /F1 9.5 Tf 0.2 g 1 0 0 1 62.00 764.39 Tm (INT8 gives 2.7x throughput for 0.4 points of accuracy. INT4 gives 3.9x for 6.1 points, which no product should) Tj ET
-BT /F1 9.5 Tf 0.2 g 1 0 0 1 62.00 751.89 Tm (accept.) Tj ET
-0.55 g 54.00 742.39 1.6 1.6 re f
-BT /F1 9.5 Tf 0.2 g 1 0 0 1 62.00 739.39 Tm (PyTorch / Quantization / Benchmarking) Tj ET
-BT /F2 9 Tf 0 g 1 0 0 1 52.00 714.89 Tm (EDUCATION) Tj ET
-0.8 G 0.5 w 52 709.89 m 543.28 709.89 l S
-BT /F2 10 Tf 0 g 1 0 0 1 52.00 695.89 Tm (B.Tech, Computer Science, Example Institute of Technology) Tj ET
-BT /F3 8.5 Tf 0.45 g 1 0 0 1 487.18 695.89 Tm (2024 - 2028) Tj ET
-0.55 g 54.00 685.89 1.6 1.6 re f
-BT /F1 9.5 Tf 0.2 g 1 0 0 1 62.00 682.89 Tm (Manufacturing systems, control and instrumentation. Taken concurrently with the degree below.) Tj ET
-BT /F2 10 Tf 0 g 1 0 0 1 52.00 663.39 Tm (BS \(Hons\), Data Science and AI, Example University) Tj ET
-BT /F3 8.5 Tf 0.45 g 1 0 0 1 487.18 663.39 Tm (2024 - 2028) Tj ET
-0.55 g 54.00 653.39 1.6 1.6 re f
-BT /F1 9.5 Tf 0.2 g 1 0 0 1 62.00 650.39 Tm (Statistics, ML theory, and the mathematics under the libraries.) Tj ET
-BT /F2 10 Tf 0 g 1 0 0 1 52.00 630.89 Tm (Example Secondary School) Tj ET
-BT /F3 8.5 Tf 0.45 g 1 0 0 1 385.18 630.89 Tm (Class XII 2024  /  Class X 2022) Tj ET
-BT /F2 9 Tf 0 g 1 0 0 1 52.00 605.89 Tm (SKILLS AND TOOLS) Tj ET
-0.8 G 0.5 w 52 600.89 m 543.28 600.89 l S
-BT /F2 10 Tf 0 g 1 0 0 1 52.00 586.89 Tm (Languages) Tj ET
-0.55 g 54.00 576.89 1.6 1.6 re f
-BT /F1 9.5 Tf 0.2 g 1 0 0 1 62.00 573.89 Tm (Python, Java, C++, C, SQL) Tj ET
-BT /F2 10 Tf 0 g 1 0 0 1 52.00 554.39 Tm (ML and data) Tj ET
-0.55 g 54.00 544.39 1.6 1.6 re f
-BT /F1 9.5 Tf 0.2 g 1 0 0 1 62.00 541.39 Tm (scikit-learn, NumPy, Pandas, Matplotlib, exploratory data analysis) Tj ET
-BT /F2 10 Tf 0 g 1 0 0 1 52.00 521.89 Tm (Serving and infra) Tj ET
-0.55 g 54.00 511.89 1.6 1.6 re f
-BT /F1 9.5 Tf 0.2 g 1 0 0 1 62.00 508.89 Tm (PostgreSQL, Hugging Face, Docker, Bash, Git) Tj ET
-BT /F2 10 Tf 0 g 1 0 0 1 52.00 489.39 Tm (Applied AI) Tj ET
-0.55 g 54.00 479.39 1.6 1.6 re f
-BT /F1 9.5 Tf 0.2 g 1 0 0 1 62.00 476.39 Tm (Prompt engineering, retrieval, eval harnesses, quantization) Tj ET
-BT /F2 10 Tf 0 g 1 0 0 1 52.00 456.89 Tm (Hardware) Tj ET
-0.55 g 54.00 446.89 1.6 1.6 re f
-BT /F1 9.5 Tf 0.2 g 1 0 0 1 62.00 443.89 Tm (Arduino, sensor data acquisition, robotics, signal processing) Tj ET
-BT /F2 10 Tf 0 g 1 0 0 1 52.00 424.39 Tm (Foundations) Tj ET
-0.55 g 54.00 414.39 1.6 1.6 re f
-BT /F1 9.5 Tf 0.2 g 1 0 0 1 62.00 411.39 Tm (Linear algebra, probability, statistics, optimization) Tj ET
-BT /F2 9 Tf 0 g 1 0 0 1 52.00 386.89 Tm (CERTIFICATIONS) Tj ET
-0.8 G 0.5 w 52 381.89 m 543.28 381.89 l S
-BT /F2 10 Tf 0 g 1 0 0 1 52.00 367.89 Tm (Kaggle) Tj ET
-BT /F3 8.5 Tf 0.45 g 1 0 0 1 522.88 367.89 Tm (2025) Tj ET
-0.55 g 54.00 357.89 1.6 1.6 re f
-BT /F1 9.5 Tf 0.2 g 1 0 0 1 62.00 354.89 Tm (Python / Intro to Machine Learning / Pandas) Tj ET
-BT /F3 7.5 Tf 0.55 g 1 0 0 1 185.14 34.00 Tm (Ashutosh Rana  /  page 2 of 2  /  ashutoshrana.dev) Tj ET
+BT /F1 9.5 Tf 0.2 g 1 0 0 1 62.00 776.89 Tm (PostgreSQL, Hugging Face, Docker, Bash, Git) Tj ET
+BT /F2 10 Tf 0 g 1 0 0 1 52.00 757.39 Tm (Applied AI) Tj ET
+0.55 g 54.00 747.39 1.6 1.6 re f
+BT /F1 9.5 Tf 0.2 g 1 0 0 1 62.00 744.39 Tm (Prompt engineering, retrieval, eval harnesses, quantization) Tj ET
+BT /F2 10 Tf 0 g 1 0 0 1 52.00 724.89 Tm (Modeling) Tj ET
+0.55 g 54.00 714.89 1.6 1.6 re f
+BT /F1 9.5 Tf 0.2 g 1 0 0 1 62.00 711.89 Tm (Fine-tuning, time-series, computer vision, recommendation systems, sequence-to-sequence) Tj ET
+BT /F2 10 Tf 0 g 1 0 0 1 52.00 692.39 Tm (Foundations) Tj ET
+0.55 g 54.00 682.39 1.6 1.6 re f
+BT /F1 9.5 Tf 0.2 g 1 0 0 1 62.00 679.39 Tm (Linear algebra, probability, statistics, optimization) Tj ET
+BT /F2 9 Tf 0 g 1 0 0 1 52.00 654.89 Tm (CERTIFICATIONS) Tj ET
+0.8 G 0.5 w 52 649.89 m 543.28 649.89 l S
+BT /F2 10 Tf 0 g 1 0 0 1 52.00 635.89 Tm (Kaggle) Tj ET
+BT /F3 8.5 Tf 0.45 g 1 0 0 1 522.88 635.89 Tm (2025) Tj ET
+0.55 g 54.00 625.89 1.6 1.6 re f
+BT /F1 9.5 Tf 0.2 g 1 0 0 1 62.00 622.89 Tm (Python / Intro to Machine Learning / Pandas) Tj ET
+BT /F3 7.5 Tf 0.55 g 1 0 0 1 178.39 34.00 Tm (Dhairya Pandya  /  page 2 of 2  /  dhairya-pandya.dev) Tj ET
 endstream
 endobj
 xref
@@ -167,10 +135,10 @@ xref
 0000000320 00000 n 
 0000000415 00000 n 
 0000000567 00000 n 
-0000007756 00000 n 
-0000007908 00000 n 
+0000006855 00000 n 
+0000007007 00000 n 
 trailer
-<< /Size 10 /Root 1 0 R /Info << /Title (Ashutosh Rana - Resume) /Author (Ashutosh Rana) /Producer (scripts/gen-resume-pdf.mjs) >> >>
+<< /Size 10 /Root 1 0 R /Info << /Title (Dhairya Pandya - Resume) /Author (Dhairya Pandya) /Producer (scripts/gen-resume-pdf.mjs) >> >>
 startxref
-11352
+8346
 %%EOF

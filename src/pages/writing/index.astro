@@ -19,6 +19,7 @@ import { getCollection } from "astro:content";
 import { Icon } from "astro-icon/components";
 import PageLayout from "../../layouts/PageLayout.astro";
 import Band from "../../components/ui/Band.astro";
+import PostCards from "../../components/blocks/PostCards.astro";
 import { machineWritingIndex } from "../../lib/machine";
 
 const posts = (await getCollection("posts")).sort(
@@ -40,8 +41,19 @@ const fmt = (d: Date) =>
     .replace(/\//g, ".");
 
 /* One card model for both kinds. Essays lead (they are dated and
-   current), explainers follow in their curated order. */
+   current), explainers follow in their curated order. The Medium
+   piece is pinned first: it is the longest, most-worked write-up
+   on the site, just not one Astro renders. */
 const cards = [
+  {
+    slug: "four-breakpoints-fine-tuning-gemma-4-e2b",
+    title: "Four Breakpoints: Fine-Tuning Gemma 4 E2B",
+    blurb:
+      "The four walls we hit building PathOS under Gemma 4 Good Hackathon constraints: a memory ceiling that ruled out full fine-tuning, a refusal-hedging habit baked into the base model, a 55-point dev-to-deployment accuracy gap, and fitting all of it onto an edge device with no GPU.",
+    visual: "/mock/cover-breakpoints.svg",
+    meta: "29.08.2026 / 17 min / Medium",
+    href: "https://medium.com/@dhairyapandya2006/four-breakpoints-fine-tuning-gemma-4-e2b-0380d8aed3b5",
+  },
   ...live.map((p) => ({
     slug: p.id,
     title: p.data.title,
@@ -75,7 +87,7 @@ const machineDoc = machineWritingIndex(
 <PageLayout
   machine={machineDoc}
   section="writing"
-  title="Writing, Ashutosh Rana"
+  title="Writing, Dhairya Pandya"
   description="Essays on measurement and one-idea explainers of the mechanisms underneath, each with a figure that carries the explanation."
 >
   <Band
@@ -84,37 +96,7 @@ const machineDoc = machineWritingIndex(
     note="Essays on measurement, and one-idea explainers of the mechanisms underneath. Each carries a figure, because drawing something is how I find out whether I understood it."
     as="h1"
   >
-    <ul class="grid gap-4 sm:grid-cols-2">
-      {
-        cards.map((card, i) => (
-          <li class="reveal" style={`--enter-index:${i}`}>
-            <a href={`/writing/${card.slug}`} class="t-tilt group block">
-              <div class="t-tilt-card overflow-hidden rounded-xl border border-line-2 bg-surface">
-                <img
-                  src={card.visual}
-                  alt=""
-                  width="900"
-                  height="600"
-                  loading={i < 2 ? "eager" : "lazy"}
-                  decoding="async"
-                  class="block aspect-[9/5] w-full border-b border-line-2 bg-surface object-cover"
-                />
-                <div class="p-3.5">
-                  <p class="relative inline-block text-ink">
-                    <span class="link-draw-child relative">{card.title}</span>
-                  </p>
-                  <p class="mt-1 line-clamp-2 text-ink-3">{card.blurb}</p>
-                  <p class="numeric mt-2.5 text-label tracking-[0.04em] text-ink-4 uppercase">
-                    {card.meta}
-                  </p>
-                </div>
-                <span class="t-tilt-glare" aria-hidden="true" />
-              </div>
-            </a>
-          </li>
-        ))
-      }
-    </ul>
+    <PostCards cards={cards} />
   </Band>
 
   {
@@ -149,80 +131,3 @@ const machineDoc = machineWritingIndex(
     )
   }
 </PageLayout>
-
-<style>
-  /*
-   * transitions.dev / 19-card-tilt. The pointer is tracked on the
-   * flat outer wrapper, not the card that rotates: binding it to the
-   * rotating element makes the edges slip under the cursor and the
-   * hover flickers.
-   */
-  .t-tilt {
-    perspective: 900px;
-  }
-  .t-tilt-card {
-    position: relative;
-    transform: rotateX(var(--rx, 0deg)) rotateY(var(--ry, 0deg));
-    transform-style: preserve-3d;
-    transition:
-      transform var(--duration-moderate) var(--ease-out),
-      border-color var(--motion-hover);
-    will-change: transform;
-  }
-  .t-tilt:hover .t-tilt-card {
-    border-color: var(--color-ink-4);
-  }
-  .t-tilt-glare {
-    position: absolute;
-    inset: 0;
-    border-radius: inherit;
-    pointer-events: none;
-    opacity: 0;
-    transition: opacity var(--motion-hover);
-    background: radial-gradient(
-      220px circle at var(--gx, 50%) var(--gy, 50%),
-      rgb(255 255 255 / 0.09),
-      transparent 65%
-    );
-  }
-  .t-tilt:hover .t-tilt-glare {
-    opacity: 1;
-  }
-
-  @media (prefers-reduced-motion: reduce) {
-    .t-tilt-card {
-      transform: none !important;
-      transition: border-color var(--motion-hover);
-    }
-    .t-tilt-glare {
-      display: none;
-    }
-  }
-</style>
-
-<script>
-  const MAX = 5; /* degrees. Past about 6 the text starts to smear. */
-
-  if (!window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
-    document.querySelectorAll<HTMLElement>(".t-tilt").forEach((wrap) => {
-      const card = wrap.querySelector<HTMLElement>(".t-tilt-card");
-      const glare = wrap.querySelector<HTMLElement>(".t-tilt-glare");
-      if (!card) return;
-
-      wrap.addEventListener("pointermove", (e) => {
-        const r = wrap.getBoundingClientRect();
-        const px = (e.clientX - r.left) / r.width;
-        const py = (e.clientY - r.top) / r.height;
-        card.style.setProperty("--ry", `${(px - 0.5) * 2 * MAX}deg`);
-        card.style.setProperty("--rx", `${-(py - 0.5) * 2 * MAX}deg`);
-        glare?.style.setProperty("--gx", `${px * 100}%`);
-        glare?.style.setProperty("--gy", `${py * 100}%`);
-      });
-
-      wrap.addEventListener("pointerleave", () => {
-        card.style.setProperty("--ry", "0deg");
-        card.style.setProperty("--rx", "0deg");
-      });
-    });
-  }
-</script>

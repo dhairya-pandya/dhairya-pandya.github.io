@@ -49,6 +49,7 @@ function initTheme() {
     } catch {
       /* private mode: the toggle still works for this session */
     }
+    syncThemedDiagrams();
   };
 
   document.querySelectorAll<HTMLElement>("[data-theme-toggle]").forEach((btn) => {
@@ -68,7 +69,44 @@ function initTheme() {
       } catch {
         /* no storage: attribute was never set, nothing to do */
       }
+      syncThemedDiagrams();
     });
+
+  /* Writing-section diagrams (gen-mock.mjs, /mock/cover-*, diag-*,
+     lab-*) are static SVGs loaded through a plain <img>: each one is
+     its own document and structurally cannot see this page's
+     [data-theme] attribute, only prefers-color-scheme. The base file
+     already follows the OS via CSS, which is the correct no-JS
+     baseline; this only has to step in when the visitor has an
+     EXPLICIT stored theme that might disagree with the OS, by
+     swapping to the -dark or -light sibling file gen-mock.mjs wrote
+     for exactly this. Following the system needs no override, so the
+     base file is restored. */
+  const themedDiagramSelector =
+    'img[src^="/mock/cover-"], img[src^="/mock/diag-"], img[src^="/mock/lab-"]';
+  function syncThemedDiagrams() {
+    const explicit = effective_stored();
+    document
+      .querySelectorAll<HTMLImageElement>(themedDiagramSelector)
+      .forEach((img) => {
+        const base = (img.getAttribute("src") || "").replace(
+          /-(dark|light)\.svg$/,
+          ".svg"
+        );
+        if (!base) return;
+        const target = explicit
+          ? base.replace(/\.svg$/, `-${explicit}.svg`)
+          : base;
+        if (img.getAttribute("src") !== target) img.setAttribute("src", target);
+      });
+  }
+  function effective_stored(): "dark" | "light" | null {
+    return root.dataset.theme === "dark" || root.dataset.theme === "light"
+      ? root.dataset.theme
+      : null;
+  }
+
+  syncThemedDiagrams();
 }
 
 /* ============================================================

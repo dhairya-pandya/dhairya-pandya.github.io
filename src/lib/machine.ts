@@ -76,7 +76,7 @@ function experienceBlock(): string {
           [
             `### ${r.title}, ${g.org}`,
             "",
-            `- ${r.employment} | ${g.location} | ${g.mode}`,
+            `- ${[r.employment, g.location, g.mode].filter(Boolean).join(" | ")}`,
             `- ${dateRange(r.start, r.end)} (${humanDuration(r.start, r.end)})`,
             `- Stack: ${r.chips.join(", ")}`,
             "",
@@ -233,7 +233,7 @@ export function machineResume(): string {
   return doc(
     `${site.name}, resume`,
     [
-      `${site.role}. ${site.studying}.`,
+      `${site.role}.`,
       `${site.availability}`,
       "",
       "## Contact",

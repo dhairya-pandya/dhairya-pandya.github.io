@@ -35,17 +35,9 @@ const initial =
 
   <ul class="mt-4 space-y-3">
     <li class="bullet prose-measure">
-      I am <strong class="font-medium text-ink">{site.name}</strong>, an AI
-      engineer in {site.location}, reading two degrees at once:{" "}
-      <span class="text-ink">Computer Science</span> at Example Institute of
-      Technology and <span class="text-ink">Data Science and AI</span> at
-      Example University.
-    </li>
-    <li class="bullet prose-measure">
-      The combination is the point. Most of my machine learning ends up attached
-      to a sensor, a machine, or a process that will keep running whether or not
-      the model is right, which is a different discipline from getting a good
-      number in a notebook.
+      I am <strong class="font-medium text-ink">{site.name}</strong>, an AI/ML
+      engineer in {site.location}, working across the full lifecycle of a
+      model: data, training, evaluation, and deployment.
     </li>
     <li class="bullet prose-measure">
       What I actually care about is measurement. Every project on this site
@@ -53,9 +45,13 @@ const initial =
       fails. A metric without those three is a decoration.
     </li>
     <li class="bullet prose-measure">
-      Currently: bearing-fault detection on live CNC spindles at the{" "}
-      <span class="text-ink">Smart Manufacturing Lab</span>, and looking for an
-      AI/ML internship for summer 2027.
+      Currently: building ML evaluation benchmarks and data solutions for AI
+      labs at <span class="text-ink">Shipd</span>, and looking for an AI/ML
+      internship for summer 2027.
+    </li>
+    <li class="bullet prose-measure">
+      Also open to research roles: alignment, model evals, and getting
+      capable models to run where the infrastructure genuinely isn't.
     </li>
   </ul>
 </div>
@@ -85,7 +81,7 @@ const initial =
 
 <script>
   /* Correct the greeting to the VISITOR's clock. The server can
-     only know Ashutosh's timezone, and this line is addressed to
+     only know Dhairya's timezone, and this line is addressed to
      whoever is reading it. */
   const el = document.querySelector<HTMLElement>("[data-greeting]");
   if (el) {

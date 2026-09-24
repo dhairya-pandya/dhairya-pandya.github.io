@@ -13,13 +13,15 @@ import PageLayout from "../layouts/PageLayout.astro";
 import Band from "../components/ui/Band.astro";
 import Hero from "../components/blocks/Hero.astro";
 import IdentityGrid from "../components/blocks/IdentityGrid.astro";
-import Heatmap from "../components/blocks/Heatmap.astro";
+import AchievementBanner from "../components/blocks/AchievementBanner.astro";
 import Greeting from "../components/blocks/Greeting.astro";
 import ExperienceList from "../components/blocks/ExperienceList.astro";
 import ProjectRows from "../components/blocks/ProjectRows.astro";
 import StackTable from "../components/blocks/StackTable.astro";
 import FannedStrip from "../components/blocks/FannedStrip.astro";
-import PostRows from "../components/blocks/PostRows.astro";
+import TopBanner from "../components/blocks/TopBanner.astro";
+import FloatingCard from "../components/blocks/FloatingCard.astro";
+import PostCards from "../components/blocks/PostCards.astro";
 import { projects } from "../data/work";
 import { machineHome } from "../lib/machine";
 
@@ -33,13 +35,55 @@ const featured = [...projects]
 const posts = (await getCollection("posts"))
   .sort((a, b) => b.data.date.getTime() - a.data.date.getTime())
   .filter((p) => p.data.status === "live")
-  .slice(0, 3);
+  .slice(0, 2);
+
+const fmt = (d: Date) =>
+  new Intl.DateTimeFormat("en-GB", { day: "2-digit", month: "2-digit", year: "numeric" })
+    .format(d)
+    .replace(/\//g, ".");
+
+/* The Medium piece is pinned first: longest write-up on the site,
+   just not one Astro renders. */
+const postCards = [
+  {
+    slug: "four-breakpoints-fine-tuning-gemma-4-e2b",
+    title: "Four Breakpoints: Fine-Tuning Gemma 4 E2B",
+    blurb:
+      "The four walls we hit building PathOS under Gemma 4 Good Hackathon constraints: a memory ceiling, a refusal-hedging habit, a 55-point dev-to-deployment gap, and an edge device with no GPU.",
+    visual: "/mock/cover-breakpoints.svg",
+    meta: "29.08.2026 / 17 min / Medium",
+    href: "https://medium.com/@dhairyapandya2006/four-breakpoints-fine-tuning-gemma-4-e2b-0380d8aed3b5",
+  },
+  ...posts.map((p) => ({
+    slug: p.id,
+    title: p.data.title,
+    blurb: p.data.description,
+    visual: p.data.cover,
+    meta: `${fmt(p.data.date)} / ${p.data.readingTime}`,
+  })),
+];
 
 const notes = [
-  { src: "/mock/note-lab.svg", alt: "The spindle test rig on its first instrumented run" },
-  { src: "/mock/note-board.svg", alt: "An Arduino board mid-repair on a desk" },
-  { src: "/mock/note-plot.svg", alt: "A training curve on a laptop screen, finally converging" },
-  { src: "/mock/note-campus.svg", alt: "The walk back from the lab at dusk" },
+  {
+    src: "/notes/note-htf.jpg",
+    alt: "Team CureCode at Hack the Future, heads down at the table",
+    note: "Hack The Future, MoSPI & IIT Gandhinagar",
+  },
+  {
+    src: "/notes/note-hackbyte.jpg",
+    alt: "Team getalife() taking 2nd prize at Hackbyte 4.0, IIITDM Jabalpur",
+    note: "Hackbyte 4.0 — victory moment",
+  },
+  {
+    src: "/notes/note-hackbit.jpg",
+    alt: "After the Hackbyte 4.0 ceremony, prizes still in hand",
+    note: "HackBit — Best Use of Gemini",
+  },
+  {
+    src: "/notes/note-hackbyte-floor.jpg",
+    alt: "Deep into the overnight hackathon floor at Hackbyte 4.0, mid build",
+    note: "Hackbyte 4.0 — surviving the judging rounds at 3 AM",
+  },
 ];
 
 /* MACHINE view of this page, built from the same objects the
@@ -50,6 +94,7 @@ const machineDoc = machineHome(
 ---
 
 <PageLayout machine={machineDoc} section="home">
+  <TopBanner />
   <Hero />
 
   {/* Identity. No heading: the grid's own icons label every row,
@@ -59,17 +104,24 @@ const machineDoc = machineHome(
   </Band>
 
   <Band>
-    <Heatmap fig={1} />
+    <AchievementBanner />
   </Band>
 
   <Band>
     <Greeting />
+    <FloatingCard
+      src="/travel/pagoda.jpg"
+      alt="A lit pagoda under the evening moon"
+      side="right"
+      top="2.75rem"
+      tilt={-4}
+    />
   </Band>
 
   <Band
     id="experience"
     title="Experience"
-    note="Four places, one of them unpaid and one of them a leaderboard. Expand a row for what actually changed."
+    note="Two places, one of them a leaderboard. Expand a row for what actually changed."
   >
     <ExperienceList />
   </Band>
@@ -78,7 +130,7 @@ const machineDoc = machineHome(
     id="work"
     title="Selected systems"
     count={projects.length}
-    note="Every entry states its baseline and the conditions under which it fails. Three of six shown."
+    note={`Every entry states its baseline and the conditions under which it fails. ${featured.length} of ${projects.length} shown.`}
     action={{ label: "All systems", href: "/work" }}
   >
     <ProjectRows items={featured} openFirst posters />
@@ -92,11 +144,10 @@ const machineDoc = machineHome(
 
   {/* Field notes. The one non-instrument block: a small stack of
       prints, deliberately physical against an otherwise ruled page. */}
-  <Band id="notes" title="Field notes" note="Photos from the lab and the walk home.">
+  <Band id="notes" title="Hackathons" note="Snapshots from the floor, the stage, and the 3 AM judging rounds.">
     <FannedStrip
       items={notes}
-      caption="Shot on a phone, in a lab, mostly at the wrong time of day."
-      action={{ label: "More", href: "/writing" }}
+      caption="Four events, four teams, one habit of showing up."
     />
   </Band>
 
@@ -106,7 +157,7 @@ const machineDoc = machineHome(
     note="Mostly about measurement, and about the ways a good number can be a lie."
     action={{ label: "All writing", href: "/writing" }}
   >
-    <PostRows items={posts} />
+    <PostCards cards={postCards} />
   </Band>
 
   <Band id="stack" title="Stack" note="Grouped by the job, not by the language.">

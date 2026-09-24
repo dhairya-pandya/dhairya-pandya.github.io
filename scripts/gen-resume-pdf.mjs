@@ -105,54 +105,35 @@ const BOTTOM = 64; // reserve for the footer
    project count drift apart, which is the drift that would
    actually matter. */
 const RESUME = {
-  name: "Ashutosh Rana",
-  role: "AI Engineer",
+  name: "Dhairya Pandya",
+  role: "AI/ML Engineer",
   contact: [
-    "ashutosh@armoriq.io",
-    "+1 555 0100",
+    "dhairyapandya.workspace@gmail.com",
+    "+91 91739 31925",
     "India",
-    "ashutoshrana.dev",
+    "dhairya-pandya.dev",
   ],
   summary:
-    "AI engineer reading two concurrent degrees, Smart Manufacturing Engineering at Example Institute of Technology and Data Science and AI at Example University. I build machine learning that ends up attached to a sensor or a process rather than to a notebook, and every result I report comes with the baseline it beat and the conditions under which it fails.",
-  availability: "Open to AI/ML internships for Summer 2027.",
+    "AI/ML engineer focused end to end on machine learning: data pipelines, model training, evaluation, and deployment. Every result I report comes with the baseline it beat and the conditions under which it fails.",
+  availability: "Open to AI/ML internships and research roles for Summer 2027.",
   sections: [
     {
       title: "Experience",
       entries: [
         {
-          head: "Undergraduate Research Assistant, Applied ML Lab, Example University",
-          meta: "Research / India / On-site / 08.2025 - now",
+          head: "ML Engineer, Shipd",
+          meta: "Freelance / Remote / 03.2026 - now",
           bullets: [
-            "Instrumented three CNC spindles with accelerometers and built the acquisition path from Arduino to a Postgres time-series table.",
-            "Trained a bearing-fault classifier on 41 hours of labelled vibration data. Baseline was a fixed RMS threshold at 0.71 F1; the model reached 0.89 F1 on a held-out machine it had never seen.",
-            "Wrote the failure-mode note the lab now hands to new students: the model degrades below 900 RPM because the fault signature falls under the noise floor.",
+            "Building ML evaluation benchmarks and data solutions for AI labs to reinforce and improve the engineering capabilities of frontier models.",
+            "Finished in top-three positions for more than 20 challenges spanning NLP, time-series, fine-tuning, computer vision, sequence-to-sequence, from-scratch modelling, and recommendation systems.",
           ],
         },
         {
-          head: "Competition Contributor, Kaggle",
-          meta: "Part-time / Remote / 01.2025 - now",
+          head: "Competitions Expert (in progress), Kaggle",
+          meta: "Part-time / 01.2025 - now",
           bullets: [
-            "Took part in three competitions, owning data cleaning and preprocessing for a two-person team.",
-            "Merged five source datasets into one feature table and wrote a row-for-row equivalence test against the previous pipeline before switching over.",
-            "Best finish: 539 of 3,300 entrants. The gap to the top 100 was feature engineering, not model choice, which is written up in the notebook.",
-          ],
-        },
-        {
-          head: "Machine Learning Intern, Nuvora Analytics",
-          meta: "Internship / Ahmedabad, India / Remote / 05.2026 - 07.2026",
-          bullets: [
-            "Built the review-triage classifier that now routes support tickets. 12,000 labelled reviews, 0.91 macro F1 against a 0.68 keyword baseline.",
-            "Quantized the deployed model to INT8, holding accuracy inside 0.4 points and dropping p95 latency from 240ms to 88ms.",
-            "Shipped the eval harness alongside it, so the next person can tell whether a change helped.",
-          ],
-        },
-        {
-          head: "Volunteer Teacher, Example Literacy Program",
-          meta: "Volunteer / India / On-site / 06.2023 - 04.2024",
-          bullets: [
-            "Taught basic language proficiency to domestic helpers and homemakers, weekly, across one academic year.",
-            "Twelve learners. Nine could read a utility bill unaided by the end, which was the only outcome we tracked.",
+            "Finished 539th on Santa 2025, Christmas Tree Packing Challenge, a geometric optimization problem scored on normalized bounding-box area.",
+            "Currently competing in BioHub Cell Tracking, still open.",
           ],
         },
       ],
@@ -161,62 +142,41 @@ const RESUME = {
       title: "Selected systems",
       entries: [
         {
-          head: "Spindle Sentinel",
-          meta: "Deployed / 09.2025 - now",
+          head: "PathOS",
+          meta: "Shipped / 05.2026 - now",
           bullets: [
-            "Bearing-fault detection on live CNC spindles, running in the lab since January and catching two failures before they stopped a machine.",
-            "0.89 macro F1 on a held-out machine, 41h labelled vibration data, 3 fault classes, against 0.71 with a fixed RMS threshold.",
-            "Python / scikit-learn / Arduino / PostgreSQL / Spectrograms",
+            "Offline AI pathologist for H&E histopathology screening, running the first-pass slide read on a laptop with no GPU and no internet.",
+            "88% yes/no accuracy on a 100-sample PathVQA validation set, against ~50% from the base Gemma 4 E2B with no pathology tuning.",
+            "Won the Ollama Prize, Special Technology Track, Gemma 4 Good Hackathon (Kaggle x Google DeepMind), against 1,600+ teams.",
+            "Gemma 4 / Unsloth / GRPO / LoRA / GGUF / Ollama",
           ],
         },
         {
-          head: "Grounded",
-          meta: "Shipped / 02.2026 - now",
+          head: "Udte Bhawre",
+          meta: "Shipped / 04.2026 - 05.2026",
           bullets: [
-            "Retrieval over four semesters of lecture notes that answers with citations, or says it does not know.",
-            "0.84 faithfulness on 120 hand-labelled QA pairs, against 0.52 with embedding-only retrieval. Refusal rate on unanswerable questions went from 0 to 88 percent.",
-            "Python / BM25 / Embeddings / RRF / FastAPI",
+            "Cross-platform desktop AI companion living in the taskbar, with concurrent Gemini, Claude and Codex sessions behind one MCP tool layer.",
+            "2nd prize, team getalife(), Hackbyte 4.0, IIITDM Jabalpur.",
+            "Electron / Node.js / MongoDB / Gemini / MCP",
           ],
         },
         {
-          head: "Review Triage",
-          meta: "Deployed / 05.2026 - 07.2026",
+          head: "AuraArchive",
+          meta: "Shipped / 02.2026",
           bullets: [
-            "Sentiment and intent classifier routing incoming support reviews, replacing a keyword rule set.",
-            "0.91 macro F1 on 12,000 labelled reviews across 5 classes, against 0.68 for the rules it replaced. INT8 serving cut p95 latency from 240ms to 88ms for 0.4 points of accuracy.",
-            "Python / Hugging Face / Fine-tuning / INT8 / Docker",
+            "Audio-to-blog platform: FastAPI plus Gemini 2.5 Flash turn a recorded discussion into a structured article, gated behind human review before it publishes.",
+            "Won Best Use of Gemini, HackBit, built with Nirvan Jain.",
+            "FastAPI / Gemini 2.5 Flash / Qdrant / Python",
           ],
         },
         {
-          head: "Edge Ladder",
-          meta: "Prototype / 03.2026 - now",
+          head: "NyayaSetu",
+          meta: "Shipped / 01.2026 - 03.2026",
           bullets: [
-            "A measured comparison of four precisions on one model, so the accuracy-for-latency trade stops being a guess.",
-            "INT8 gives 2.7x throughput for 0.4 points of accuracy. INT4 gives 3.9x for 6.1 points, which no product should accept.",
-            "PyTorch / Quantization / Benchmarking",
+            "Multi-agent legal intelligence system bridging static IPC/BNS statutes with live Supreme Court judgments, to cut hallucination in legal AI.",
+            "4 specialized LangGraph agents (retrieval, live-judgment verification, multimodal evidence review, synthesis), built for Convolve 4.0, a Pan-IIT hackathon.",
+            "LangGraph / LangChain / Streamlit / Qdrant / Gemini 2.5 Flash",
           ],
-        },
-      ],
-    },
-    {
-      title: "Education",
-      entries: [
-        {
-          head: "B.Tech, Computer Science, Example Institute of Technology",
-          meta: "2024 - 2028",
-          bullets: [
-            "Manufacturing systems, control and instrumentation. Taken concurrently with the degree below.",
-          ],
-        },
-        {
-          head: "BS (Hons), Data Science and AI, Example University",
-          meta: "2024 - 2028",
-          bullets: ["Statistics, ML theory, and the mathematics under the libraries."],
-        },
-        {
-          head: "Example Secondary School",
-          meta: "Class XII 2024  /  Class X 2022",
-          bullets: [],
         },
       ],
     },
@@ -227,7 +187,7 @@ const RESUME = {
         { head: "ML and data", meta: "", bullets: ["scikit-learn, NumPy, Pandas, Matplotlib, exploratory data analysis"] },
         { head: "Serving and infra", meta: "", bullets: ["PostgreSQL, Hugging Face, Docker, Bash, Git"] },
         { head: "Applied AI", meta: "", bullets: ["Prompt engineering, retrieval, eval harnesses, quantization"] },
-        { head: "Hardware", meta: "", bullets: ["Arduino, sensor data acquisition, robotics, signal processing"] },
+        { head: "Modeling", meta: "", bullets: ["Fine-tuning, time-series, computer vision, recommendation systems, sequence-to-sequence"] },
         { head: "Foundations", meta: "", bullets: ["Linear algebra, probability, statistics, optimization"] },
       ],
     },
@@ -345,7 +305,7 @@ for (const section of RESUME.sections) {
 pages.push(ops);
 const total = pages.length;
 pages.forEach((pageOps, i) => {
-  const label = `${RESUME.name}  /  page ${i + 1} of ${total}  /  ashutoshrana.dev`;
+  const label = `${RESUME.name}  /  page ${i + 1} of ${total}  /  dhairya-pandya.dev`;
   const w = widthOf(label, "mono", 7.5);
   pageOps.push(
     `BT /F3 7.5 Tf 0.55 g 1 0 0 1 ${((PAGE_W - w) / 2).toFixed(2)} ${(M - 18).toFixed(2)} Tm (${esc(label)}) Tj ET`
@@ -415,7 +375,7 @@ const problems = [];
 if (!site.includes(RESUME.name)) problems.push("name does not match site.ts");
 if (!site.includes(RESUME.contact[0])) problems.push("email does not match site.ts");
 const projectCount = (work.match(/^\s{4}slug: "/gm) || []).length;
-if (projectCount !== 6) problems.push(`work.ts has ${projectCount} projects, expected 6`);
+if (projectCount !== 4) problems.push(`work.ts has ${projectCount} projects, expected 4`);
 
 if (problems.length) {
   console.error("resume PDF drift check FAILED:");

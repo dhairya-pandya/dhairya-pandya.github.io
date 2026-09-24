@@ -1,0 +1,45 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 750" width="1200" height="750" role="img">
+  <defs>
+    <linearGradient id="plate" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#141416"/>
+      <stop offset="1" stop-color="#0d0d0e"/>
+    </linearGradient>
+    <filter id="grain" x="0" y="0" width="100%" height="100%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.8" numOctaves="3" seed="7" result="n"/>
+      <feColorMatrix in="n" type="saturate" values="0"/>
+      <feComponentTransfer><feFuncA type="linear" slope="0.055"/></feComponentTransfer>
+    </filter>
+    
+  </defs>
+  <rect width="1200" height="750" fill="url(#plate)"/>
+  
+  <rect x="130" y="286.0" width="130" height="190.0" fill="#f2f2f2" opacity="0.35"/><g font-family="Geist Mono, ui-monospace, monospace" font-size="15" fill="#8f8f8f">
+      <text x="195" y="270.0" text-anchor="middle" font-size="22" fill="#f2f2f2">50%</text>
+      <text x="195" y="504" text-anchor="middle" letter-spacing="1" fill="#f2f2f2">BASE</text><text x="195" y="524" text-anchor="middle" letter-spacing="1" fill="#f2f2f2">GEMMA 4</text>
+      <text x="195" y="548" text-anchor="middle" font-size="13" fill="#8f8f8f">no pathology tuning</text>
+    </g><rect x="380" y="354.4" width="130" height="121.6" fill="#f2f2f2" opacity="0.43"/><g font-family="Geist Mono, ui-monospace, monospace" font-size="15" fill="#8f8f8f">
+      <text x="445" y="338.4" text-anchor="middle" font-size="22" fill="#f2f2f2">32%</text>
+      <text x="445" y="504" text-anchor="middle" letter-spacing="1" fill="#f2f2f2">PATHOS</text><text x="445" y="524" text-anchor="middle" letter-spacing="1" fill="#f2f2f2">v1</text>
+      <text x="445" y="548" text-anchor="middle" font-size="13" fill="#8f8f8f">82% of misses were hedges</text>
+    </g><rect x="630" y="308.8" width="130" height="167.2" fill="#f2f2f2" opacity="0.51"/><g font-family="Geist Mono, ui-monospace, monospace" font-size="15" fill="#8f8f8f">
+      <text x="695" y="292.8" text-anchor="middle" font-size="22" fill="#f2f2f2">44%</text>
+      <text x="695" y="504" text-anchor="middle" letter-spacing="1" fill="#f2f2f2">PATHOS</text><text x="695" y="524" text-anchor="middle" letter-spacing="1" fill="#f2f2f2">v2</text>
+      <text x="695" y="548" text-anchor="middle" font-size="13" fill="#8f8f8f">answer tags + GRPO</text>
+    </g><rect x="880" y="141.6" width="130" height="334.4" fill="#fb7185" opacity="0.92"/><g font-family="Geist Mono, ui-monospace, monospace" font-size="15" fill="#8f8f8f">
+      <text x="945" y="125.6" text-anchor="middle" font-size="22" fill="#fb7185">88%</text>
+      <text x="945" y="504" text-anchor="middle" letter-spacing="1" fill="#f2f2f2">PATHOS</text><text x="945" y="524" text-anchor="middle" letter-spacing="1" fill="#f2f2f2">v3</text>
+      <text x="945" y="548" text-anchor="middle" font-size="13" fill="#8f8f8f">distilled inference tricks</text>
+    </g><g>
+    <path d="M100 96V476H1140" stroke="rgba(255,255,255,0.10)" stroke-width="1.5" fill="none"/>
+    <g font-family="Geist Mono, ui-monospace, monospace" font-size="15" letter-spacing="1.2" fill="#8f8f8f">
+      <text x="1140" y="502" text-anchor="end"></text>
+      <text x="90" y="86" text-anchor="start">YES/NO ACCURACY</text>
+    </g>
+  </g><g font-family="Geist Mono, ui-monospace, monospace">
+    <text x="48" y="658" font-size="19" letter-spacing="1.6" fill="#8f8f8f">FIG.01  EVAL ACCURACY</text>
+    <text x="48" y="692" font-size="30" letter-spacing="-0.2" fill="#f2f2f2">Single forward pass, no proxy</text>
+    <text x="48" y="720" font-size="17" letter-spacing="0.5" fill="#8f8f8f">100-sample PathVQA validation set</text>
+  </g>
+  <rect width="1200" height="750" filter="url(#grain)" opacity="0.9"/>
+  <rect x="0.5" y="0.5" width="1199" height="749" fill="none" stroke="rgba(255,255,255,0.10)"/>
+</svg>

@@ -21,107 +21,87 @@
 
 export type Maturity = "deployed" | "shipped" | "prototype" | "archived";
 
+export interface Competition {
+  name: string;
+  detail: string;
+  status: "ranked" | "ongoing";
+  writeup: string;
+  url?: string;
+}
+
 export interface Role {
   title: string;
   icon: string;
-  employment: "Full-time" | "Part-time" | "Internship" | "Research" | "Volunteer";
+  employment: "Full-time" | "Part-time" | "Internship" | "Research" | "Volunteer" | "Freelance";
   /** YYYY-MM. */
   start: string;
   /** YYYY-MM, or null for ongoing. */
   end: string | null;
   bullets: string[];
   chips: string[];
+  /** Individual competitions, for roles that are a string of entries rather than one job. */
+  competitions?: Competition[];
 }
 
 export interface OrgGroup {
   org: string;
-  location: string;
-  mode: "Remote" | "On-site" | "Hybrid";
+  location?: string;
+  mode?: "Remote" | "On-site" | "Hybrid";
   verified: boolean;
   roles: Role[];
 }
 
 export const experience: OrgGroup[] = [
   {
-    org: "Applied ML Lab, Example University",
-    location: "India",
-    mode: "On-site",
-    verified: true,
-    roles: [
-      {
-        title: "Undergraduate Research Assistant",
-        icon: "ph:cpu",
-        employment: "Research",
-        start: "2025-08",
-        end: null,
-        bullets: [
-          "Instrumented three CNC spindles with accelerometers and built the acquisition path from Arduino to a Postgres time-series table.",
-          "Trained a bearing-fault classifier on 41 hours of labelled vibration data. Baseline was a fixed RMS threshold at 0.71 F1; the model reached 0.89 F1 on a held-out machine it had never seen.",
-          "Wrote the failure-mode note the lab now hands to new students: the model degrades badly below 900 RPM because the fault signature falls under the noise floor.",
-        ],
-        chips: ["Python", "scikit-learn", "Arduino", "PostgreSQL", "Signal processing"],
-      },
-    ],
-  },
-  {
-    org: "Kaggle",
+    org: "Shipd",
     location: "Remote",
     mode: "Remote",
     verified: true,
     roles: [
       {
-        title: "Competition Contributor",
+        title: "ML Engineer",
+        icon: "ph:cpu",
+        employment: "Freelance",
+        start: "2026-03",
+        end: null,
+        bullets: [
+          "Building ML evaluation benchmarks and data solutions for AI labs to reinforce and improve the engineering capabilities of frontier models.",
+          "Finished in top-three positions for more than 20 challenges spanning NLP, time-series, fine-tuning, computer vision, sequence-to-sequence, from-scratch modelling, and recommendation systems.",
+        ],
+        chips: ["Evaluation", "Benchmarks", "NLP", "Time-series", "Computer Vision", "Recommendation Systems"],
+      },
+    ],
+  },
+  {
+    org: "Kaggle",
+    verified: true,
+    roles: [
+      {
+        title: "Competitions Expert (in progress)",
         icon: "ph:chart-scatter",
         employment: "Part-time",
         start: "2025-01",
         end: null,
-        bullets: [
-          "Took part in three competitions, owning data cleaning and preprocessing for a two-person team.",
-          "Merged five source datasets into one feature table and wrote a row-for-row equivalence test against the previous pipeline before switching over.",
-          "Best finish: 539 of 3,300 entrants. The gap to the top 100 was feature engineering, not model choice, which is written up in the notebook.",
+        bullets: [],
+        chips: ["Pandas", "NumPy", "EDA", "Optimization", "Jupyter"],
+        competitions: [
+          {
+            name: "Santa 2025 — Christmas Tree Packing Challenge",
+            detail: "Ranked 539th",
+            status: "ranked",
+            url: "https://www.kaggle.com/competitions/santa-2025",
+            writeup:
+              "Finished 539th. A geometric optimization problem: pack 1 to 200 trees into the smallest possible square box, scored on the normalized bounding-box area across every puzzle size.",
+          },
+          {
+            name: "Biohub — Cell Tracking During Development",
+            detail: "Under 200",
+            status: "ongoing",
+            url: "https://www.kaggle.com/competitions/biohub-cell-tracking-during-development",
+            writeup:
+              "Detecting and tracking zebrafish cells through 3D space and time as the embryo develops. Sitting under 200 on the leaderboard right now.",
+          },
         ],
-        chips: ["Pandas", "NumPy", "EDA", "Feature engineering", "Jupyter"],
-      },
-    ],
-  },
-  {
-    org: "Nuvora Analytics",
-    location: "Ahmedabad, India",
-    mode: "Remote",
-    verified: false,
-    roles: [
-      {
-        title: "Machine Learning Intern",
-        icon: "ph:briefcase",
-        employment: "Internship",
-        start: "2026-05",
-        end: "2026-07",
-        bullets: [
-          "Built the review-triage classifier that now routes support tickets. 12,000 labelled reviews, 0.91 macro F1 against a 0.68 keyword baseline.",
-          "Cut inference cost by quantizing the deployed model to INT8, which held accuracy inside 0.4 points and dropped p95 latency from 240ms to 88ms.",
-          "Shipped the eval harness alongside it, so the next person can tell whether a change helped.",
-        ],
-        chips: ["Python", "Hugging Face", "Docker", "Quantization", "Eval"],
-      },
-    ],
-  },
-  {
-    org: "Example Literacy Program",
-    location: "India",
-    mode: "On-site",
-    verified: true,
-    roles: [
-      {
-        title: "Volunteer Teacher",
-        icon: "ph:hand-heart",
-        employment: "Volunteer",
-        start: "2023-06",
-        end: "2024-04",
-        bullets: [
-          "Taught basic language proficiency to domestic helpers and homemakers, weekly, across one academic year.",
-          "Twelve learners. Nine could read a utility bill unaided by the end, which was the only outcome we actually tracked.",
-        ],
-        chips: ["Teaching", "Curriculum", "Community"],
       },
     ],
   },
@@ -149,170 +129,119 @@ export interface Project {
 
 export const projects: Project[] = [
   {
-    slug: "spindle-sentinel",
-    title: "Spindle Sentinel",
-    icon: "ph:waveform",
-    poster: "/mock/poster-spindle.svg",
-    start: "2025-09",
+    slug: "pathos",
+    title: "PathOS",
+    icon: "ph:microscope",
+    poster: "/mock/poster-pathos.svg",
+    start: "2026-05",
     end: null,
-    maturity: "deployed",
+    maturity: "shipped",
     outcome:
-      "Bearing-fault detection on live CNC spindles, running in the lab since January and catching two failures before they stopped a machine.",
+      "An offline AI pathologist that runs the first-pass H&E screen on a laptop with no GPU and no internet, built for labs where the queue is the real bottleneck.",
     bullets: [
-      "Accelerometer to Arduino to Postgres, sampled at 3.2kHz and downsampled to 128-bin spectrograms for the classifier.",
-      "Gradient-boosted trees on spectral features beat a small CNN here, which was the surprise. With 41 hours of data the CNN overfit the three machines it was trained on.",
-      "Deployed as a cron job, not a service. It has to survive a lab network that drops out, so it batches and retries rather than streaming.",
-      "Known failure: below 900 RPM the fault signature sits under the noise floor and recall falls to 0.41. The threshold is documented in the readme rather than hidden.",
+      "Fine-tuned Gemma 4 E2B on 19.5K histopathology examples, then GRPO with four reward functions to remove the hedging: v1 refused 82% of the time it got a yes/no question wrong instead of answering.",
+      "Closed a 55-point gap between the raw model (~35%) and the full inference pipeline with voting, retrieval and retry (~90%+) by distilling those test-time techniques back into the weights.",
+      "Exported to GGUF for llama.cpp: runs at Q8_0 on a laptop or Q4_K_M on a Raspberry Pi 5, no Python environment, one command through Ollama.",
+      "Won the Ollama Prize in the Special Technology Track at the Gemma 4 Good Hackathon (Kaggle x Google DeepMind), against 1,600+ teams.",
     ],
-    chips: ["Python", "scikit-learn", "Arduino", "PostgreSQL", "Spectrograms", "Cron"],
+    chips: ["Gemma 4", "Unsloth", "GRPO", "LoRA", "GGUF", "Ollama"],
     metric: {
-      value: "0.89",
-      label: "macro F1",
-      context: "held-out machine, 41h labelled vibration data, 3 fault classes",
-      baseline: "0.71 with a fixed RMS threshold",
+      value: "88%",
+      label: "yes/no accuracy",
+      context: "100-sample PathVQA validation set, single forward pass",
+      baseline: "~50% from the base Gemma 4 E2B with no pathology tuning",
     },
     evidence: [
-      { kind: "repo", label: "Source", url: "https://github.com/" },
-      { kind: "writeup", label: "Failure modes", url: "https://github.com/" },
-      { kind: "notebook", label: "Training run", url: "https://kaggle.com/" },
+      { kind: "repo", label: "Source", url: "https://github.com/dhairya-pandya/PathOS-Gemma4" },
+      { kind: "model", label: "Model", url: "https://huggingface.co/dhairyapandya/pathos-gemma4-distilled-rl-4B-GGUF" },
+      { kind: "writeup", label: "Writeup", url: "https://kaggle.com/competitions/gemma-4-good-hackathon/writeups/pathos-getalife" },
     ],
     featured: true,
   },
   {
-    slug: "grounded",
-    title: "Grounded",
-    icon: "ph:books",
-    poster: "/mock/poster-grounded.svg",
+    slug: "udte-bhawre",
+    title: "Udte Bhawre",
+    icon: "ph:terminal-window",
+    poster: "/mock/poster-udtebhawre.svg",
+    start: "2026-04",
+    end: "2026-05",
+    maturity: "shipped",
+    outcome:
+      "A cross-platform desktop AI companion that lives in the taskbar, built in a single overnight sprint at Hackbyte 4.0.",
+    bullets: [
+      "Electron tray app with multiple concurrent AI sessions (Gemini, Claude, Codex) rather than one chat window, each a distinct 'character' with its own role.",
+      "Model Context Protocol integration gives every session direct tool access to the local system instead of copy-pasted shell commands, with every prompt routed through the ArmorIQ SDK for cryptographic intent verification before a tool call executes.",
+      "A Control Centre dashboard manages agent settings, conversation history and multi-terminal sessions from one place, backed by MongoDB for persistence.",
+      "2nd prize, team getalife(), judged live on stage at IIITDM Jabalpur.",
+    ],
+    chips: ["Electron", "Node.js", "MongoDB", "Gemini", "MCP"],
+    metric: {
+      value: "2nd",
+      label: "prize, Hackbyte 4.0",
+      context: "IIITDM Jabalpur, team getalife()",
+      baseline: null,
+    },
+    evidence: [
+      { kind: "repo", label: "Source", url: "https://github.com/rounak-agl/Udte-Bhawre" },
+    ],
+    featured: true,
+  },
+  {
+    slug: "auraarchive",
+    title: "AuraArchive",
+    icon: "ph:microphone",
+    poster: "/mock/poster-auraarchive.svg",
     start: "2026-02",
-    end: null,
+    end: "2026-02",
     maturity: "shipped",
     outcome:
-      "Retrieval over four semesters of lecture notes that answers with citations, or says it does not know.",
+      "An audio-to-blog platform that turns a raw recorded discussion into a structured, publishable article, with a human review gate before anything goes live.",
     bullets: [
-      "Hybrid retrieval: BM25 for the exact notation students actually search for, embeddings for the paraphrases. Reciprocal rank fusion over both.",
-      "Refuses rather than guesses. If the top chunk scores under threshold the answer is 'not in these notes', which is the whole reason anyone trusts it.",
-      "Evaluated on 120 hand-written question and answer pairs, not on vibes. Faithfulness is scored by whether every claim maps to a retrieved span.",
-      "Chunking by heading beat fixed-size chunking by 11 points of recall, because lecture notes are already structured and fixed windows cut definitions in half.",
+      "FastAPI backend with Google Gemini 2.5 Flash doing the transcription and reasoning in one multimodal pass, guaranteed to return valid structured JSON.",
+      "Every draft moves through processing, review and published states in Qdrant rather than going straight to a public feed unreviewed.",
+      "Resilient parsing layer handles the AI's formatting inconsistencies, nested JSON and markdown-fenced blocks, so a malformed response doesn't drop the draft.",
+      "Won Best Use of Gemini at HackBit, built with Nirvan Jain.",
     ],
-    chips: ["Python", "BM25", "Embeddings", "RRF", "FastAPI", "Eval"],
+    chips: ["FastAPI", "Gemini 2.5 Flash", "Qdrant", "Python"],
     metric: {
-      value: "0.84",
-      label: "faithfulness",
-      context: "120 hand-labelled QA pairs across 4 semesters of notes",
-      baseline: "0.52 with embedding-only retrieval",
+      value: "Winner",
+      label: "Best Use of Gemini, HackBit",
+      context: "with Nirvan Jain",
+      baseline: null,
     },
     evidence: [
-      { kind: "demo", label: "Live", url: "https://example.dev/" },
-      { kind: "repo", label: "Source", url: "https://github.com/" },
-      { kind: "writeup", label: "Eval method", url: "https://github.com/" },
+      { kind: "repo", label: "Source", url: "https://github.com/dhairya-pandya/AuraArchive" },
+      { kind: "demo", label: "Demo video", url: "https://youtube.com/shorts/dO3vPy0-mNw" },
     ],
-    featured: false,
+    featured: true,
   },
   {
-    slug: "review-triage",
-    title: "Review Triage",
-    icon: "ph:chat-centered-text",
-    poster: "/mock/poster-sentiment.svg",
-    start: "2026-05",
-    end: "2026-07",
-    maturity: "deployed",
-    outcome:
-      "Sentiment and intent classifier that routes incoming support reviews, replacing a keyword rule set.",
-    bullets: [
-      "Started as a coursework sentiment model, then earned its way into production at an internship because the keyword baseline was misrouting a third of angry customers.",
-      "Fine-tuned a small encoder rather than calling an API. 12,000 labelled rows was enough, and the cost per million classifications is two orders of magnitude lower.",
-      "Quantized to INT8 for serving: p95 latency 240ms to 88ms, accuracy down 0.4 points. That trade was written down and agreed before it shipped.",
-      "The confusion matrix is the artifact worth reading. Neutral and mildly-negative are the class pair the model cannot separate, and that is also the pair humans disagree on.",
-    ],
-    chips: ["Python", "Hugging Face", "Fine-tuning", "INT8", "Docker"],
-    metric: {
-      value: "0.91",
-      label: "macro F1",
-      context: "12,000 labelled reviews, 5 classes, held-out 20% split",
-      baseline: "0.68 with the keyword rule set it replaced",
-    },
-    evidence: [
-      { kind: "model", label: "Model card", url: "https://huggingface.co/" },
-      { kind: "repo", label: "Source", url: "https://github.com/" },
-    ],
-    featured: false,
-  },
-  {
-    slug: "tabular-cleanroom",
-    title: "Tabular Cleanroom",
-    icon: "ph:table",
-    poster: "/mock/poster-cleanroom.svg",
-    start: "2025-01",
-    end: "2025-11",
+    slug: "nyayasetu",
+    title: "NyayaSetu",
+    icon: "ph:scales",
+    poster: "/mock/poster-nyayasetu.svg",
+    start: "2026-01",
+    end: "2026-03",
     maturity: "shipped",
     outcome:
-      "The preprocessing pipeline behind three Kaggle entries, built so a teammate could rerun it without asking anything.",
+      "A multi-agent legal intelligence system that bridges static IPC/BNS statutes with live Supreme Court judgments, built to cut hallucination in legal AI rather than just retrieve faster.",
     bullets: [
-      "Five source datasets, one feature table. Joins, dtype coercion, leakage checks and a manifest of every transform applied.",
-      "Ships with an equivalence test against the previous notebook, row for row. Rewriting a pipeline without one is how a leaderboard drop becomes unexplainable.",
-      "Best finish 539 of 3,300. The write-up is honest about why: the gap to the top hundred was feature engineering, not the model.",
+      "Four LangGraph agents with separate jobs: a Legal Clerk retrieves static law over hybrid dense and sparse search in Qdrant, an Amendment Watchdog checks whether it has since changed, an Evidence Auditor reads submitted video or audio, and a Senior Counsel synthesises the final answer.",
+      "Prioritises Supreme Court judgments over outdated statute text when the two disagree, instead of quoting whichever the retriever ranks first.",
+      "Multimodal: can watch crime footage and listen to audio evidence directly, not just read text filings.",
+      "Built for Convolve 4.0, a Pan-IIT AI/ML hackathon, and deployed live rather than left as a notebook.",
     ],
-    chips: ["Pandas", "NumPy", "EDA", "pytest", "Jupyter"],
+    chips: ["LangGraph", "LangChain", "Streamlit", "Qdrant", "Gemini 2.5 Flash"],
     metric: {
-      value: "539 / 3,300",
-      label: "leaderboard",
-      context: "public tabular competition, 2 person team, 4 month run",
-      baseline: "1,904 on the starter notebook",
+      value: "4",
+      label: "specialized agents",
+      context: "LangGraph state machine, Convolve 4.0 Pan-IIT hackathon",
+      baseline: null,
     },
     evidence: [
-      { kind: "notebook", label: "Notebook", url: "https://kaggle.com/" },
-      { kind: "repo", label: "Source", url: "https://github.com/" },
+      { kind: "repo", label: "Source", url: "https://github.com/dhairya-pandya/Legal-Advisory-Multi-Agent-System" },
+      { kind: "demo", label: "Live", url: "https://legal-advisory-counsel.streamlit.app/" },
     ],
-    featured: false,
-  },
-  {
-    slug: "edge-ladder",
-    title: "Edge Ladder",
-    icon: "ph:steps",
-    poster: "/mock/poster-ladder.svg",
-    start: "2026-03",
-    end: null,
-    maturity: "prototype",
-    outcome:
-      "A measured comparison of quantization steps on the same model, so the accuracy-for-latency trade stops being a guess.",
-    bullets: [
-      "FP32, FP16, INT8 and INT4 on one classifier, same eval set, same hardware, reported together.",
-      "INT8 is nearly free here: 0.4 points of accuracy for 2.7x throughput. INT4 is not: 6.1 points, which no product would accept.",
-      "Still a prototype because it has only been run on one model family. Generalising from one architecture is exactly the mistake the project exists to avoid.",
-    ],
-    chips: ["PyTorch", "Quantization", "Benchmarking", "Matplotlib"],
-    metric: {
-      value: "2.7x",
-      label: "throughput at INT8",
-      context: "same eval set and hardware, batch 1, 1,000 warm requests",
-      baseline: "FP32 at 1.0x, 0.4pt accuracy cost",
-    },
-    evidence: [{ kind: "repo", label: "Source", url: "https://github.com/" }],
-    featured: false,
-  },
-  {
-    slug: "promptproof",
-    title: "Promptproof",
-    icon: "ph:test-tube",
-    poster: "/mock/poster-promptproof.svg",
-    start: "2026-06",
-    end: null,
-    maturity: "prototype",
-    outcome:
-      "A small harness that fails a build when a prompt change makes the output worse.",
-    bullets: [
-      "Golden set of 60 cases with assertions, run in CI. A prompt edit that drops any assertion is a red build, not a discussion.",
-      "Built because a one-word prompt change silently broke JSON parsing for a week on another project.",
-      "Deliberately not a framework. It is 200 lines, and the moment it needs a plugin system it has lost the argument.",
-    ],
-    chips: ["Python", "pytest", "CI", "Prompt engineering"],
-    metric: {
-      value: "60",
-      label: "golden cases",
-      context: "assertions on schema, refusal behaviour and citation presence",
-      baseline: "no regression gate before this",
-    },
-    evidence: [],
     featured: false,
   },
 ];

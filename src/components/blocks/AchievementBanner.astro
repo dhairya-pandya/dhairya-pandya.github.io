@@ -1,0 +1,174 @@
+---
+/**
+ * Achievement banner, homepage-only.
+ *
+ * The one deliberate chroma accent on an otherwise monochrome page,
+ * for the same reason FannedStrip breaks the ruled grid: this is
+ * not a routine content type, it is the single most important
+ * result on the page. Sits at the same column width as every other
+ * section, not full-bleed, so it reads as this page's version of a
+ * section rather than an interruption of it.
+ */
+import { Icon } from "astro-icon/components";
+
+const links = [
+  { label: "Kaggle", href: "https://lnkd.in/gUkKQWdB", icon: "ph:file-text", brand: "kaggle" },
+  { label: "Huggingface", href: "https://lnkd.in/gnHQt99t", icon: "ph:robot", brand: "huggingface" },
+  { label: "Medium", href: "https://lnkd.in/gk2ZVxQv", icon: "ph:article" },
+];
+---
+
+<div class="achv">
+  <span class="achv-eyebrow">
+    <Icon name="ph:trophy-fill" class="size-4" aria-hidden="true" />
+    International Award
+  </span>
+
+  <h2 class="achv-title">Gemma 4 Good Hackathon, Ollama Prize</h2>
+  <p class="achv-sub">
+    Team <strong>getalife();</strong> won it, hosted by Kaggle and Google
+    DeepMind. We built <strong class="achv-accent">PathOS</strong>, an
+    offline histopathology screening tool that runs entirely on-device.
+  </p>
+  <p class="achv-sub">
+    We used GRPO to align the model and knowledge distillation to close
+    the gap between test-time scores and real deployment performance.
+    Judges called out both the alignment work and the fully on-device
+    pipeline.
+  </p>
+
+  <ul class="achv-links">
+    {
+      links.map((l) => (
+        <li>
+          <a
+            href={l.href}
+            target="_blank"
+            rel="noopener"
+            class:list={["achv-link", l.brand && `achv-link--${l.brand}`]}
+          >
+            <Icon name={l.icon} class="size-4" aria-hidden="true" />
+            {l.label}
+            <svg viewBox="0 0 16 16" class="size-3" fill="none" stroke="currentColor" stroke-width="1.5">
+              <path d="M6 4h6v6M12 4L4 12" />
+            </svg>
+          </a>
+        </li>
+      ))
+    }
+  </ul>
+</div>
+
+<style>
+  .achv {
+    --gold: #a16207;
+    --gold-glow: #eab308;
+    padding-block: 1rem;
+  }
+  @media (prefers-color-scheme: dark) {
+    .achv {
+      --gold: var(--gold-glow);
+    }
+  }
+  :global([data-theme="dark"]) .achv {
+    --gold: var(--gold-glow);
+  }
+
+  .achv-eyebrow {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4375rem;
+    font-family: var(--font-mono);
+    font-size: var(--text-label);
+    letter-spacing: var(--text-label--letter-spacing);
+    text-transform: uppercase;
+    color: var(--gold);
+  }
+
+  .achv-title {
+    margin-top: 0.5rem;
+    font-size: clamp(1.5rem, 3.2vw, 2rem);
+    line-height: 1.2;
+    letter-spacing: -0.015em;
+    font-weight: 600;
+    color: var(--color-ink);
+  }
+  .achv-sub {
+    max-width: var(--measure-prose);
+    text-wrap: pretty;
+    margin-top: 0.5rem;
+    font-size: var(--text-body);
+    color: var(--color-ink-2);
+  }
+  .achv-sub strong {
+    color: var(--color-ink);
+    font-weight: 600;
+  }
+  .achv-accent {
+    color: var(--gold);
+  }
+
+  .achv-links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin-top: 1rem;
+  }
+  .achv-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4375rem;
+    padding: 0.375rem 0.75rem;
+    border-radius: 999px;
+    border: 1px solid var(--color-line);
+    font-size: var(--text-body);
+    color: var(--color-ink);
+    background-color: var(--color-ground);
+    transition:
+      background-color var(--motion-hover),
+      color var(--motion-hover),
+      border-color var(--motion-hover);
+  }
+  .achv-link svg:last-child {
+    color: var(--color-ink-4);
+    transition:
+      transform var(--motion-hover),
+      color var(--motion-hover);
+  }
+  /* Inverted contrast on hover, rather than a tint: this is the
+     one row on the page that gets to act like a button rather than
+     a link, since it is the exit door off an award you want people
+     to actually click through on. */
+  .achv-link:hover {
+    background-color: var(--color-ink);
+    border-color: var(--color-ink);
+    color: var(--color-ground);
+  }
+  .achv-link:hover svg:last-child {
+    color: var(--color-ground);
+    transform: translate(1px, -1px);
+  }
+  /* Kaggle's own blue on hover instead of the generic invert, since
+     the platform has a recognizable brand color and borrowing it
+     makes the button legible as "this one goes to Kaggle" before
+     the label is even read. */
+  .achv-link--kaggle:hover {
+    background-color: #20beff;
+    border-color: #20beff;
+    color: #ffffff;
+  }
+  .achv-link--kaggle:hover svg:last-child {
+    color: #ffffff;
+  }
+  /* Hugging Face's own yellow, same reasoning as Kaggle's blue.
+     Black text and icon, since the brand yellow is too light for
+     white to read on. */
+  .achv-link--huggingface:hover {
+    background-color: #ffd21e;
+    border-color: #ffd21e;
+    color: #131313;
+  }
+  .achv-link--huggingface:hover svg:last-child {
+    color: #131313;
+  }
+</style>

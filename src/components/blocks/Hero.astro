@@ -14,10 +14,19 @@
  */
 import { Icon } from "astro-icon/components";
 import { site } from "../../config/site";
+import FloatingCard from "./FloatingCard.astro";
 
 ---
 
 <section class="band hero-band relative">
+  <FloatingCard
+    src="/travel/buddha.jpg"
+    alt="A white Buddha statue wrapped in flowers, Marble Mountains"
+    side="right"
+    top="6rem"
+    tilt={-3}
+    width="5.5rem"
+  />
 
   <div class="column">
     <div class="t-stagger">
@@ -72,7 +81,8 @@ import { site } from "../../config/site";
       </p>
 
       <div
-        class="t-stagger-line t-stagger-line--5 mt-6 flex flex-wrap items-center gap-2"
+        class="t-stagger-line t-stagger-line--5 mt-6 flex flex-wrap items-center gap-2.5"
+        style="display: flex;"
       >
         {/* Resume is the primary action: for the audience this site is
             for, "show me the resume" is the job to be done, and email
@@ -81,7 +91,7 @@ import { site } from "../../config/site";
           <Icon name="ph:read-cv-logo" class="size-4" aria-hidden="true" />
           Resume
         </a>
-        <a href="https://github.com/" rel="noopener" target="_blank" class="pill">
+        <a href="https://github.com/dhairya-pandya" rel="noopener" target="_blank" class="pill">
           <Icon name="ph:github-logo" class="size-4" aria-hidden="true" />
           GitHub
         </a>
@@ -111,9 +121,9 @@ import { site } from "../../config/site";
      came from the reference, but with a real photograph the second
      mark only competed with the face. */
   .avatar {
-    width: 3.5rem;
-    height: 3.5rem;
-    border-radius: 1.125rem;
+    width: 4.75rem;
+    height: 4.75rem;
+    border-radius: 1.375rem;
     display: block;
     background-color: var(--color-raised);
   }

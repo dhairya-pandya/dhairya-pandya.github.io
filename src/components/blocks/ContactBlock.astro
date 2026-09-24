@@ -32,18 +32,17 @@ const { full = false } = Astro.props;
    handed to the person kind enough to get in touch. */
 const mailto = `mailto:${site.email}?subject=${encodeURIComponent(
   "Your portfolio"
-)}&body=${encodeURIComponent(`Hi Ashutosh,\n\n`)}`;
+)}&body=${encodeURIComponent(`Hi Dhairya,\n\n`)}`;
 
 const askAbout = [
-  "Why gradient-boosted trees beat a CNN on 41 hours of vibration data",
+  "How to design an evaluation benchmark that actually stresses a model",
   "How to pick a refusal threshold without guessing",
   "What INT4 actually costs, with the histogram",
 ];
 
 const connect = [
-  { label: "LinkedIn", icon: "ph:linkedin-logo", url: "https://linkedin.com/" },
-  { label: "X", icon: "ph:x-logo", url: "https://x.com/" },
-  { label: "GitHub", icon: "ph:github-logo", url: "https://github.com/" },
+  { label: "LinkedIn", icon: "ph:linkedin-logo", url: "https://www.linkedin.com/in/dhairya-pandya/" },
+  { label: "GitHub", icon: "ph:github-logo", url: "https://github.com/dhairya-pandya" },
 ];
 
 const serverTime = new Intl.DateTimeFormat("en-GB", {
@@ -98,14 +97,14 @@ const serverTime = new Intl.DateTimeFormat("en-GB", {
       </span>
 
       <span class="mt-3 block w-full">
-        <span class="field"><span class="field-key">To</span>{site.email}</span>
+        <span class="field"><span class="field-key">To</span><span class="field-value" title={site.email}>{site.email}</span></span>
         <span class="field mt-1.5"
           ><span class="field-key">Subj</span>Your portfolio</span
         >
         <span class="field mt-1.5"><span class="field-key">From</span>you</span>
       </span>
 
-      <span class="mt-3 block text-ink-3">Hi Ashutosh,</span>
+      <span class="mt-3 block text-ink-3">Hi Dhairya,</span>
       <span class="caret" aria-hidden="true"></span>
 
       {/* The block's one CTA, in the site's single emphasis shape. */}
@@ -138,7 +137,7 @@ const serverTime = new Intl.DateTimeFormat("en-GB", {
             <span class="label">Email</span>
             <Icon name="ph:envelope-simple" class="size-4 text-ink-3" aria-hidden="true" />
           </span>
-          <p class="numeric mt-2 text-ink">{site.email}</p>
+          <p class="numeric mt-2 truncate text-ink" title={site.email}>{site.email}</p>
           <button type="button" data-copy-email={site.email} class="pill mt-4 w-fit">
             <Icon name="ph:copy" class="size-4" aria-hidden="true" />
             <span data-copy-label>Copy address</span>
@@ -150,7 +149,7 @@ const serverTime = new Intl.DateTimeFormat("en-GB", {
             <Icon name="ph:phone" class="size-4 text-ink-3" aria-hidden="true" />
           </span>
           <p class="numeric mt-2 text-ink">{site.phone}</p>
-          <a href="tel:+15550100" class="pill mt-4 w-fit">
+          <a href="tel:+919173931925" class="pill mt-4 w-fit">
             <Icon name="ph:phone-call" class="size-4" aria-hidden="true" />
             Call
           </a>
@@ -263,6 +262,12 @@ const serverTime = new Intl.DateTimeFormat("en-GB", {
     min-width: 0;
     color: var(--color-ink-2);
   }
+  .field-value {
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    min-width: 0;
+  }
   .field-key {
     flex: none;
     inline-size: 2.75rem;
@@ -274,7 +279,7 @@ const serverTime = new Intl.DateTimeFormat("en-GB", {
     color: var(--color-ink-4);
   }
 
-  /* A blinking caret after "Hi Ashutosh," so the card reads as a
+  /* A blinking caret after "Hi Dhairya," so the card reads as a
      message already partway written. */
   .caret {
     display: inline-block;
