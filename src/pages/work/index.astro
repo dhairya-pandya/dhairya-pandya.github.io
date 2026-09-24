@@ -2,10 +2,10 @@
 /**
  * Work index.
  *
- * Every system, filterable by maturity with the sliding-pill tabs
- * from transitions.dev (16-tabs-sliding). Filtering is client-side
- * over the rendered rows rather than a route per filter: with six
- * items, a navigation would cost a page load to hide two rows.
+ * Every system as a card, filterable by maturity with the sliding-pill
+ * tabs from transitions.dev (16-tabs-sliding). Filtering is client-side
+ * over the rendered cards rather than a route per filter: with six
+ * items, a navigation would cost a page load to hide two cards.
  *
  * The filter counts are computed at build time and shown in the tab
  * labels, so "Prototype (2)" tells you whether the filter is worth
@@ -13,7 +13,7 @@
  */
 import PageLayout from "../../layouts/PageLayout.astro";
 import Band from "../../components/ui/Band.astro";
-import ProjectRows from "../../components/blocks/ProjectRows.astro";
+import ProjectCards from "../../components/blocks/ProjectCards.astro";
 import { projects, type Maturity } from "../../data/work";
 import { machineWorkIndex } from "../../lib/machine";
 
@@ -48,7 +48,7 @@ const machineDoc = machineWorkIndex();
   <Band
     title="Systems"
     count={projects.length}
-    note="Machine learning that had to survive contact with something real. Expand a row for the measurement and the failure modes."
+    note="Machine learning that had to survive contact with something real. Every card carries its result and the baseline it beat; open one for the failure modes."
     as="h1"
   >
     {/* Summary strip. Three numbers that describe the collection
@@ -118,7 +118,7 @@ const machineDoc = machineWorkIndex();
     </div>
 
     <div data-work-rows>
-      <ProjectRows items={sorted} posters />
+      <ProjectCards items={sorted} />
     </div>
 
     {/* Filtering to zero is reachable, so the state exists. It is
@@ -149,39 +149,36 @@ const machineDoc = machineWorkIndex();
 
 <script>
   /*
-   * Filter the rendered rows. Rows are hidden with the `hidden`
-   * attribute rather than display:none in a class, so the row stays
-   * out of the accessibility tree as well as out of the layout.
+   * Filter the rendered cards. Hidden with the `hidden` attribute
+   * rather than a display:none class, so a filtered-out card leaves the
+   * accessibility tree as well as the layout.
    *
-   * Collapsing a hidden row first means reopening the filter does
-   * not reveal a row that was left expanded off-screen.
+   * Simpler than it was, because cards do not collapse. The row version
+   * had to close a <details> before hiding it, or reopening the filter
+   * revealed a row someone had expanded off-screen. It also had to
+   * toggle a top border, because the rows were separated by
+   * `.rows > * + *` and hiding the first sibling stranded a rule above
+   * the first visible one. A grid separated by gaps has neither
+   * problem: hidden items simply stop taking a cell.
    */
   const group = document.querySelector<HTMLElement>("[data-work-filter]");
   const container = document.querySelector<HTMLElement>("[data-work-rows]");
   const empty = document.querySelector<HTMLElement>("[data-work-empty]");
 
   if (group && container) {
-    const rows = Array.from(
-      container.querySelectorAll<HTMLDetailsElement>("[data-maturity]")
+    const cards = Array.from(
+      container.querySelectorAll<HTMLElement>("[data-maturity]")
     );
 
     group.addEventListener("tabchange", (e) => {
       const value = (e as CustomEvent<{ value: string }>).detail.value;
       let shown = 0;
-      rows.forEach((row) => {
-        const match = value === "all" || row.dataset.maturity === value;
-        if (!match) row.open = false;
-        row.hidden = !match;
+      cards.forEach((card) => {
+        const match = value === "all" || card.dataset.maturity === value;
+        card.hidden = !match;
         if (match) shown++;
       });
       if (empty) empty.hidden = shown > 0;
-      /* The hairline between rows comes from `.rows > * + *`, and a
-         hidden first sibling would leave a stray top rule on the
-         first visible row. Toggling the container's own top border
-         keeps the ruling correct in every filter state. */
-      container
-        .querySelector(".rows")
-        ?.classList.toggle("border-t-0", shown === 0);
     });
   }
 </script>

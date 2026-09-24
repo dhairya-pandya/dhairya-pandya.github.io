@@ -8,6 +8,21 @@
 import ContactBlock from "../blocks/ContactBlock.astro";
 ---
 
+{/*
+  The footer sits on the page's own ground, not a reversed one.
+
+  It was briefly reversed, and reverting that hands the emphasis back to
+  where it belongs. The compose card carries .invert-surface, and
+  .invert-surface flips back when nested, so a reversed footer forced the
+  card to the page palette and the two swapped roles: the whole footer
+  became the loud thing and its one real action became a quiet panel
+  inside it. With the footer neutral the card is top-level again and
+  reads as the single reversed block on the page.
+
+  The top hairline comes back with it. A rule separates two things that
+  share a ground, which is again the case here; while the ground itself
+  changed, the rule was a second separator doing a job already done.
+*/}
 <footer class="relative mt-12 border-t border-line-2">
   <div class="column py-10">
     <div class="flex flex-wrap items-baseline justify-between gap-x-6 gap-y-1">

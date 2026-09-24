@@ -44,7 +44,7 @@ const serverTime = new Intl.DateTimeFormat("en-GB", {
                 class="numeric text-ink" data-clock
                 data-tz={site.timezone}>{serverTime}</span
               >
-              <span class="mx-1.5 text-ink-4">//</span>
+              <span class="mx-1.5 text-ink-3" aria-hidden="true">//</span>
               <span data-tz-offset={site.timezone}>local time</span>
             </span>
           ) : row.href ? (

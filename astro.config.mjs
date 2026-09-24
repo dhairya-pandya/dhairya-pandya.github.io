@@ -33,6 +33,24 @@ export default defineConfig({
     enabled: false,
   },
 
+  /**
+   * Bind the dev server to 127.0.0.1 explicitly.
+   *
+   * Left unset, it listens on ::1 only. On Windows "localhost"
+   * resolves to ::1 first so that URL works, but http://127.0.0.1:4321
+   * is refused outright, which reads as "the site is not running"
+   * rather than as an address-family mismatch.
+   *
+   * Naming the IPv4 loopback fixes both: 127.0.0.1 connects directly,
+   * and "localhost" still resolves because browsers fall back to IPv4
+   * when ::1 refuses. Not `host: true`, which would publish the dev
+   * server to every device on the network.
+   */
+  server: {
+    host: "127.0.0.1",
+    port: 4321,
+  },
+
   vite: {
     plugins: [tailwindcss()],
   },

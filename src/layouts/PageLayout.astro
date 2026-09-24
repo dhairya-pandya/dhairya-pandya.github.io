@@ -32,6 +32,13 @@ interface Props {
   /** Marks the active dock entry. */
   section?: "home" | "work" | "writing" | "contact" | "resume";
   footer?: boolean;
+  /**
+   * Keeps a page out of the index. robots.txt here is allow-all on
+   * purpose, and sitemap.xml is an explicit allowlist, so a route that
+   * should not be found needs to say so in its own head. Used by
+   * /playground: internal design review, not portfolio surface.
+   */
+  noindex?: boolean;
   /** Markdown serialisation of this page, for the MACHINE view. */
   machine: string;
 }
@@ -41,6 +48,7 @@ const {
   description = `${site.role}. I build ${site.builds}`,
   section = "home",
   footer = true,
+  noindex = false,
   machine,
 } = Astro.props;
 
@@ -90,6 +98,11 @@ const personSchema = {
     <title>{title}</title>
     <meta name="description" content={description} />
     <link rel="canonical" href={canonical} />
+    {
+      noindex && (
+        <meta name="robots" content="noindex, nofollow, noarchive, noimageindex" />
+      )
+    }
 
     {/* Icons. The SVG is for browsers that take one; the 32px PNG and
         the .ico cover the rest, and apple-touch-icon is what iOS uses
@@ -104,12 +117,12 @@ const personSchema = {
     <meta
       name="theme-color"
       media="(prefers-color-scheme: light)"
-      content="#fcfcfb"
+      content="#f7f7f5"
     />
     <meta
       name="theme-color"
       media="(prefers-color-scheme: dark)"
-      content="#0b0b0c"
+      content="#131316"
     />
 
     <meta property="og:title" content={title} />

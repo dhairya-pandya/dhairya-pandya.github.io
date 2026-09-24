@@ -89,7 +89,7 @@ const titleOf = (x: typeof item) => (x.entry.data as any).title;
           class="label transition-colors duration-fast ease-out hover:text-ink"
           >Writing</a
         >
-        <span class="label text-ink-4" aria-hidden="true">/</span>
+        <span class="label text-ink-3" aria-hidden="true">/</span>
         <span class="label truncate text-ink">
           {isEssay ? data.readingTime : "explainer"}
         </span>
@@ -107,7 +107,7 @@ const titleOf = (x: typeof item) => (x.entry.data as any).title;
         isEssay ? (
           <div class="mt-4 flex flex-wrap items-center gap-x-3 gap-y-1.5 border-b border-line-2 pb-5">
             <span class="numeric text-label tracking-[0.04em] text-ink-3">{fmt}</span>
-            <span class="text-ink-4" aria-hidden="true">|</span>
+            <span class="text-ink-3" aria-hidden="true">|</span>
             <ul class="flex flex-wrap gap-1.5">
               {data.tags.map((t: string) => (
                 <li class="chip">

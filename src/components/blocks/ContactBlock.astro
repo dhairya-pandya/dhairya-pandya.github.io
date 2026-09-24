@@ -86,7 +86,22 @@ const serverTime = new Intl.DateTimeFormat("en-GB", {
   <div class="gutter mt-9 grid gap-4 sm:grid-cols-2">
     {/* The whole card is the mailto, so the target is the card and
         not one word inside it. */}
-    <a href={mailto} class="reveal contact-card group" style="--enter-index:2">
+    {/*
+      The compose card reverses against the page. It is the block's one
+      real action, and in a design with no shadows and no accent colour
+      a reversed panel is the strongest emphasis available: it separates
+      by ground rather than by weight, so it does not have to compete
+      with the type for attention.
+
+      .invert-surface swaps the token set, so the label, the field keys,
+      the caret and the solid pill inside all follow without a single
+      override here. See the note on the class in theme.css.
+    */}
+    <a
+      href={mailto}
+      class="reveal contact-card invert-surface group"
+      style="--enter-index:2"
+    >
       <span class="contact-head">
         <span class="label">Compose</span>
         <Icon
@@ -276,7 +291,10 @@ const serverTime = new Intl.DateTimeFormat("en-GB", {
     line-height: var(--text-body--line-height);
     letter-spacing: var(--text-label--letter-spacing);
     text-transform: uppercase;
-    color: var(--color-ink-4);
+    /* ink-3, not ink-4. To / Subj / From are the labels that make the
+       compose card legible as an email; ink-4 measured 3.26:1 on the
+       card's surface, under the 4.5:1 AA needs for text. */
+    color: var(--color-ink-3);
   }
 
   /* A blinking caret after "Hi Dhairya," so the card reads as a

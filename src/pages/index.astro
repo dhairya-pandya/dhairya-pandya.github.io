@@ -16,21 +16,21 @@ import IdentityGrid from "../components/blocks/IdentityGrid.astro";
 import AchievementBanner from "../components/blocks/AchievementBanner.astro";
 import Greeting from "../components/blocks/Greeting.astro";
 import ExperienceList from "../components/blocks/ExperienceList.astro";
-import ProjectRows from "../components/blocks/ProjectRows.astro";
+import ProjectCards from "../components/blocks/ProjectCards.astro";
 import StackTable from "../components/blocks/StackTable.astro";
 import FannedStrip from "../components/blocks/FannedStrip.astro";
-import TopBanner from "../components/blocks/TopBanner.astro";
 import FloatingCard from "../components/blocks/FloatingCard.astro";
 import PostCards from "../components/blocks/PostCards.astro";
 import { projects } from "../data/work";
 import { machineHome } from "../lib/machine";
 
-/* Featured first, then by recency. The home page shows three: a
-   short list a reviewer will actually read beats a complete one
-   they will scroll past. */
+/* Featured first, then by recency. Four, not three: the cards sit in a
+   two-column grid, so an odd count leaves the last one alone beside a
+   hole. Four fills two rows exactly, and a short list a reviewer will
+   actually read still beats a complete one they scroll past. */
 const featured = [...projects]
   .sort((a, b) => Number(b.featured) - Number(a.featured) || b.start.localeCompare(a.start))
-  .slice(0, 3);
+  .slice(0, 4);
 
 const posts = (await getCollection("posts"))
   .sort((a, b) => b.data.date.getTime() - a.data.date.getTime())
@@ -94,7 +94,6 @@ const machineDoc = machineHome(
 ---
 
 <PageLayout machine={machineDoc} section="home">
-  <TopBanner />
   <Hero />
 
   {/* Identity. No heading: the grid's own icons label every row,
@@ -133,7 +132,7 @@ const machineDoc = machineHome(
     note={`Every entry states its baseline and the conditions under which it fails. ${featured.length} of ${projects.length} shown.`}
     action={{ label: "All systems", href: "/work" }}
   >
-    <ProjectRows items={featured} openFirst posters />
+    <ProjectCards items={featured} />
     <a slot="footer" href="/work" class="pill">
       See all {projects.length} systems
       <svg viewBox="0 0 16 16" class="size-3.5" fill="none" stroke="currentColor" stroke-width="1.5">

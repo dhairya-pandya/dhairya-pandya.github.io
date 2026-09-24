@@ -37,7 +37,7 @@ import { experience, dateRange, humanDuration } from "../../data/work";
                 location IS the work mode, the parenthetical adds
                 nothing and reads as a bug. */}
             {group.mode && group.location !== group.mode && (
-              <span class="text-ink-4">({group.mode})</span>
+              <span class="text-ink-3">({group.mode})</span>
             )}
             {group.verified && (
               <span
@@ -72,11 +72,11 @@ import { experience, dateRange, humanDuration } from "../../data/work";
                       dates, so it cannot go stale. */}
                   <span class="mt-0.5 flex flex-wrap items-center gap-x-2 gap-y-0.5 font-mono text-label text-ink-3">
                     <span>{role.employment}</span>
-                    <span class="text-ink-4">|</span>
+                    <span class="text-ink-3">|</span>
                     <span class="numeric">
                       {dateRange(role.start, role.end)}
                     </span>
-                    <span class="text-ink-4">|</span>
+                    <span class="text-ink-3">|</span>
                     <span class="numeric">
                       {humanDuration(role.start, role.end)}
                     </span>

@@ -4,8 +4,8 @@
   "description": "I build machine learning systems end to end, from data pipelines and model training to evaluation and deployment.",
   "start_url": "/",
   "display": "standalone",
-  "background_color": "#fcfcfb",
-  "theme_color": "#fcfcfb",
+  "background_color": "#f7f7f5",
+  "theme_color": "#f7f7f5",
   "icons": [
     {
       "src": "/icon-192.png",

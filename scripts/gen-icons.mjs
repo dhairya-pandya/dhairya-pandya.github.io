@@ -60,11 +60,11 @@ if (existsSync(FAVICON)) {
   const size = 512;
   markSource = Buffer.from(
     `<svg xmlns="http://www.w3.org/2000/svg" width="${size}" height="${size}" viewBox="0 0 ${size} ${size}">
-      <rect width="${size}" height="${size}" rx="${Math.round(size * 0.22)}" fill="#131313"/>
+      <rect width="${size}" height="${size}" rx="${Math.round(size * 0.22)}" fill="#1e1e1d"/>
       <text x="50%" y="50%" dy="0.355em" text-anchor="middle"
             font-family="ui-monospace, SFMono-Regular, Menlo, monospace"
             font-weight="600" font-size="${Math.round(size * 0.44)}"
-            fill="#fcfcfb">AR</text>
+            fill="#f7f7f5">AR</text>
     </svg>`
   );
   markOrigin = "generated fallback (no favicon.svg found)";
@@ -187,7 +187,7 @@ const MONO = "Geist Mono, ui-monospace, SFMono-Regular, Menlo, monospace";
 
 const ogBase = Buffer.from(
   `<svg xmlns="http://www.w3.org/2000/svg" width="${s(W)}" height="${s(H)}" viewBox="0 0 ${s(W)} ${s(H)}">
-    <rect width="${s(W)}" height="${s(H)}" fill="#fcfcfb"/>
+    <rect width="${s(W)}" height="${s(H)}" fill="#f7f7f5"/>
 
     <!-- The two column rules: the site's signature, free here. -->
     <g stroke="rgba(0,0,0,0.07)" stroke-width="${SCALE}">
@@ -195,21 +195,21 @@ const ogBase = Buffer.from(
     </g>
 
     <text x="${s(PAD)}" y="${s(292)}" font-family="${SANS}" font-size="${s(70)}"
-          font-weight="500" letter-spacing="${s(-2.2)}" fill="#131313">${escapeXml(NAME)}</text>
+          font-weight="500" letter-spacing="${s(-2.2)}" fill="#1e1e1d">${escapeXml(NAME)}</text>
 
     <text x="${s(PAD)}" y="${s(340)}" font-family="${MONO}" font-size="${s(27)}"
-          fill="#5c5c5a">${escapeXml(ROLE)}  /  ${escapeXml(TAGLINE)}</text>
+          fill="#5a5a58">${escapeXml(ROLE)}  /  ${escapeXml(TAGLINE)}</text>
 
     ${bioLines
       .map(
         (line, i) =>
-          `<text x="${s(PAD)}" y="${s(410 + i * 36)}" font-family="${SANS}" font-size="${s(26)}" fill="#5c5c5a">${escapeXml(line)}</text>`
+          `<text x="${s(PAD)}" y="${s(410 + i * 36)}" font-family="${SANS}" font-size="${s(26)}" fill="#5a5a58">${escapeXml(line)}</text>`
       )
       .join("\n    ")}
 
     <circle cx="${s(PAD + 8)}" cy="${s(541)}" r="${s(8)}" fill="#157f3d"/>
     <text x="${s(PAD + 30)}" y="${s(550)}" font-family="${SANS}" font-size="${s(26)}"
-          fill="#5c5c5a">${escapeXml(AVAILABILITY)}</text>
+          fill="#5a5a58">${escapeXml(AVAILABILITY)}</text>
   </svg>`
 );
 
@@ -265,8 +265,8 @@ const manifest = {
   description: "I build " + BUILDS + ".",
   start_url: "/",
   display: "standalone",
-  background_color: "#fcfcfb",
-  theme_color: "#fcfcfb",
+  background_color: "#f7f7f5",
+  theme_color: "#f7f7f5",
   icons: [
     { src: "/icon-192.png", sizes: "192x192", type: "image/png" },
     { src: "/icon-512.png", sizes: "512x512", type: "image/png" },

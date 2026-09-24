@@ -54,7 +54,16 @@ const {
     title && (
       <div class="column">
         <div class="flex flex-wrap items-baseline justify-between gap-x-4 gap-y-1">
-          <Tag class="band-title">
+          {/*
+            A band that IS the page heading takes the display step, not
+            the section step. --text-display is documented "h1 only",
+            and every page whose h1 is a Band was rendering it at
+            --text-title instead: on /work that put "Systems" at 28px
+            directly above card titles at 28px, so the page heading and
+            the things it introduced were indistinguishable. Measured,
+            not guessed: getComputedStyle returned 28px for both.
+          */}
+          <Tag class:list={["band-title", Tag === "h1" && "band-title-lead"]}>
             {title}
             {count !== undefined && <span class="band-count">({count})</span>}
           </Tag>

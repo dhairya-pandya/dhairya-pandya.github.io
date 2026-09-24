@@ -26,34 +26,25 @@ const initial =
   hour < 5 ? "Still up?" : hour < 12 ? "Good morning" : hour < 18 ? "Good afternoon" : "Good evening";
 ---
 
+{/*
+  One statement instead of four bullets: the lead carries the claim at
+  --text-lead, the line under it carries the detail. The eye lands on
+  the idea first and reaches the facts second.
+*/}
 <div>
-  <p
-    class="text-title font-medium text-ink" data-greeting
-  >
-    {initial}
+  <p class="label" data-greeting>{initial}</p>
+
+  <p class="lead mt-3">
+    I care less about a model's best score than about the conditions
+    under which it fails.
   </p>
 
-  <ul class="mt-4 space-y-3">
-    <li class="bullet prose-measure">
-      I am <strong class="font-medium text-ink">{site.name}</strong>, an AI/ML
-      engineer in {site.location}, working across the full lifecycle of a
-      model: data, training, evaluation, and deployment.
-    </li>
-    <li class="bullet prose-measure">
-      What I actually care about is measurement. Every project on this site
-      states its baseline, its evaluation set, and the conditions under which it
-      fails. A metric without those three is a decoration.
-    </li>
-    <li class="bullet prose-measure">
-      Currently: building ML evaluation benchmarks and data solutions for AI
-      labs at <span class="text-ink">Shipd</span>, and looking for an AI/ML
-      internship for summer 2027.
-    </li>
-    <li class="bullet prose-measure">
-      Also open to research roles: alignment, model evals, and getting
-      capable models to run where the infrastructure genuinely isn't.
-    </li>
-  </ul>
+  <p class="prose-measure mt-5 text-body text-ink-2">
+    Which is why every project here states its baseline, its evaluation set,
+    and the conditions under which it fails. Currently: building ML
+    evaluation benchmarks for AI labs at <span class="text-ink">Shipd</span>,
+    and open to AI/ML internships and research roles for summer 2027.
+  </p>
 </div>
 
 <style>

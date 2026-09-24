@@ -15,13 +15,46 @@ is decoration.
 
 ## Run it
 
+You need [pnpm](https://pnpm.io). This repo pins it via `packageManager` in
+`package.json`, so pick whichever install you prefer:
+
+```bash
+corepack enable pnpm          # uses the pinned version; needs an admin shell on Windows
+npm i -g pnpm@10.22.0         # user-scoped, no admin
+```
+
+Then:
+
 ```bash
 pnpm install
-pnpm dev            # http://localhost:4321
+pnpm dev            # http://127.0.0.1:4321
 ```
 
 That is the whole setup. No env vars, no database, no accounts needed to see
 the site.
+
+In a normal terminal `pnpm dev` runs in the foreground with live logs, and
+Ctrl+C stops it. Nothing else to know.
+
+**Inside an AI coding agent it behaves differently.** Astro 7 detects an agent
+environment and forces the dev server into the background, so the command
+returns to the prompt immediately with no live log. An instant prompt there
+does not mean it failed to start:
+
+```bash
+pnpm exec astro dev status    # is it up, and on what pid
+pnpm exec astro dev logs      # the output you would have seen inline
+pnpm exec astro dev stop      # shut it down
+```
+
+Two consequences worth knowing, both of which cost real time to work out:
+
+- Anything that runs `astro dev stop` kills the shared background server, and
+  the next page load then looks like the site is broken.
+- After editing `astro.config.mjs`, the first start re-optimizes Vite's
+  dependency cache. That can exceed the background server's 30 second
+  readiness window and report `Dev server failed to start within 30s`. It is a
+  timeout, not a failure. Run it again and it comes up.
 
 To run the contact backend too (Cloudflare Worker + local D1 on disk):
 

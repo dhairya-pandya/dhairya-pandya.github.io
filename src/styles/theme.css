@@ -28,25 +28,70 @@
     Consolas, monospace;
 
   /* ============================================================
-     THE TYPE SCALE. Four sizes, and content only ever uses one.
+     THE TYPE SCALE.
 
-     Every piece of content on this site is set at --text-body.
-     Not "mostly": all of it. Prose, row titles, values, bullets,
-     captions, list items, table cells.
+     ONE BASE, ONE RATIO, SIX STEPS.
+       base  16px
+       ratio 1.25 (major third)
+       steps 16 / 20 / 25 / 31 / 39 / 49 / 61
 
-     The previous scale had nine sizes between 10px and 46px, and
-     the effect was that nothing was emphasised because everything
-     was slightly different. Hierarchy here comes from weight,
-     colour and position instead, which are free, rather than from
-     size, which costs a scale step every time it is used.
+     The old scale was four fixed sizes with body at 16 and the h1
+     at 28. A 1.75x ratio between the largest and smallest thing on
+     a page is not a hierarchy: measured on the home page, 246 of
+     the 257 text elements rendered at either 16px or 12px, and the
+     single biggest piece of type on the whole site was a decorative
+     150px wordmark in the FOOTER. The page had nowhere for the eye
+     to land, which is what "monotonous" actually means.
 
-     The three exceptions are structural, not content:
-       --text-label   mono uppercase micro-label (section eyebrows,
-                      dates, chips, spec keys). Never a sentence.
-       --text-title   section headings.
-       --text-display h1 only, one per page.
+     Six steps, not nine. The previous nine-size scale failed the
+     opposite way: everything was slightly different, so nothing was
+     emphasised. Linear ships five for a far denser product and gets
+     the rest of its hierarchy from weight and tone, which cost
+     nothing; Geist ships eight. Six sits between, and --text-card is
+     the one that had to be argued for. See the note on it below.
+
+     STEP-SKIPPING IS THE RULE. Two neighbouring elements are never
+     adjacent on the scale, because adjacent steps read as an
+     accident rather than as a decision:
+       display 36 -> title 28  one, but they never share a viewport:
+                               a page has one h1 and it is above every
+                               band heading on it
+       lead    31 -> body 16   three steps
+       title   28 -> card 20   one and a half
+       card    20 -> body 16   one, and the tightest pair on the site:
+                               a card title sits on its own surface, so
+                               weight and containment carry what size
+                               does not
+
+     The display step was 40-61px and came down to 28-36 by request.
+     That tightens the top of the ladder: lead at 31 now sits within a
+     sixth of display at 36. They are never adjacent (the hero h1 and
+     the about statement are separated by two full bands), but if the
+     two ever land in one viewport, lead is the one to drop a step.
+     Any one screen uses about three of the five. The scale is a
+     source of sizes, not a thing to display.
+
+     FLUID, WITH REM ENDPOINTS. Every step interpolates between a
+     320px and a 1440px viewport, so there are no typography
+     breakpoints. The min and max are in rem and only the middle
+     term carries vw: a px min/max ignores the reader's browser
+     font-size setting entirely, which is the single most common bug
+     in fluid type.
+
+     Leading tightens as size grows, tracking goes negative as size
+     grows. Both are paired to the step so they cannot drift.
+
+       --text-label   12px mono uppercase. Eyebrows, dates, chips,
+                      spec keys. Never a sentence.
+       --text-body    16px. Nearly all content, ~246 uses per page.
+       --text-card    20px. The title of a repeated entity in a card.
+       --text-title   24-28px. Section headings.
+       --text-lead    22-31px. The one-statement blocks: the about
+                      line, a pulled claim. Two or three lines, never
+                      a paragraph.
+       --text-display 28-36px. h1 only, one per page.
      ============================================================ */
-  --text-body: 1rem; /* 16px, the only content size */
+  --text-body: 1rem; /* 16px, nearly all content */
   --text-body--line-height: 1.5rem;
   --text-body--letter-spacing: 0.01em;
 
@@ -54,51 +99,96 @@
   --text-label--line-height: 1rem;
   --text-label--letter-spacing: 0.04em;
 
-  --text-title: 1.375rem; /* 22px section heading */
-  --text-title--line-height: 1.75rem;
-  --text-title--letter-spacing: -0.015em;
+  /* Step 1. The title of a repeated entity inside a card or a row.
+     Fixed, not fluid: a 20-to-22px ramp is not worth a clamp.
 
-  --text-display: 1.75rem; /* 28px, h1 only */
-  --text-display--line-height: 2rem;
-  --text-display--letter-spacing: -0.025em;
+     ADDING THIS STEP IS A DELIBERATE DEVIATION. The rule is to count
+     usage first, and a step used under ~50 times is hierarchy you could
+     have got from weight or tone. This one appears about ten times a
+     build. It earns its place anyway because the alternative was worse:
+     card titles were sharing --text-title with the section heading
+     directly above them, so "Selected systems" and "Spindle Sentinel"
+     rendered at an identical 28px and the heading stopped reading as a
+     heading. Weight and tone could not fix that, because the section
+     heading already uses both. Six steps, still fewer than Geist's
+     eight, and every screen uses three of them. */
+  --text-card: 1.25rem; /* 20px */
+  --text-card--line-height: 1.6rem;
+  --text-card--letter-spacing: -0.015em;
+
+  /* 24px at 320 -> 28px at 1440 */
+  --text-title: clamp(1.5rem, 1.4286rem + 0.3571vw, 1.75rem);
+  --text-title--line-height: 1.2;
+  --text-title--letter-spacing: -0.02em;
+
+  /* 22px at 320 -> 31px at 1440 */
+  --text-lead: clamp(1.375rem, 1.2143rem + 0.8036vw, 1.9375rem);
+  --text-lead--line-height: 1.3;
+  --text-lead--letter-spacing: -0.021em;
+
+  /* 28px at 320 -> 36px at 1440.
+     Solved from the two endpoints: slope (36-28)/1120 = 0.7143vw, and
+     the rem term is the intercept, 28 - 0.007143*320 = 25.714px. */
+  --text-display: clamp(1.75rem, 1.6071rem + 0.7143vw, 2.25rem);
+  --text-display--line-height: 1.08;
+  --text-display--letter-spacing: -0.03em;
 
   /* ---- ground and surface --------------------------------
-     Light is the base. Three steps, no more: elevation is a
+     Light is the base. Four steps, no more: elevation is a
      surface change plus a hairline, and there is no shadow
      scale on purpose.
 
-     Not pure white. #fcfcfb takes the glare off a full-bleed
-     page and lets --color-surface (true white) read as a step
-     up without needing a border to prove it. */
-  --color-ground: #fcfcfb;
-  --color-surface: #ffffff;
-  --color-raised: #f1f1ef;
-  --color-sunken: #f7f7f5;
+     NOTHING HERE TOUCHES PURE WHITE. --color-surface used to be
+     #ffffff and the page read as glary: a full-bleed sheet at
+     100% luminance is the brightest thing on most monitors, and
+     next to it every tinted token looked dirty rather than warm.
+     The whole ramp now sits a few points down, which keeps the
+     same four steps and the same relationships while letting the
+     paper read as paper. */
+  --color-ground: #f7f7f5;
+  --color-surface: #fbfbfa;
+  --color-raised: #eaeae6;
+  --color-sunken: #f2f2ef;
 
   /* ---- ink ------------------------------------------------
      Four steps, each with a job: titles, body, meta, and the
-     faint tier for glyphs and separators. All four clear WCAG
-     AA against --color-ground except --color-ink-4, which is
-     never used for text, only for icons and rules. */
-  --color-ink: #131313;
-  --color-ink-2: #5c5c5a;
-  --color-ink-3: #82827f;
-  --color-ink-4: #b6b6b2;
+     faint tier for glyphs and separators.
+
+     --color-ink is no longer #131313. Near-black on near-white
+     is the highest-contrast pair a screen can produce and it
+     reads as harsh rather than as crisp; at #1e1e1d the ratio
+     against ground is still 14:1, which is double what AAA asks
+     for body text.
+
+     --color-ink-3 moved the OTHER way, from #82827f to #73736f.
+     The old comment here claimed all four cleared AA except
+     ink-4. That was false: ink-3 measured 3.75:1 against the old
+     ground, under the 4.5:1 AA needs, and it is used for real
+     meta text all over the site. Darkening it clears AA properly
+     and happens to pull in the same direction as wanting more
+     contrast, not less.
+
+     ink-4 is the one genuine exception. It is never text, only
+     icons and rules, so it answers to the 3:1 non-text minimum. */
+  --color-ink: #1e1e1d;
+  --color-ink-2: #5a5a58;
+  --color-ink-3: #71716d;
+  --color-ink-4: #8c8c87;
 
   /* ---- lines ----------------------------------------------
      The hairline is the loudest thing on the page after the
      type, so it gets two weights and no more. --color-line
      rules between rows; --color-line-2 draws the full-bleed
      grid that frames the column. */
-  --color-line: rgb(0 0 0 / 0.13);
-  --color-line-2: rgb(0 0 0 / 0.07);
+  --color-line: rgb(0 0 0 / 0.15);
+  --color-line-2: rgb(0 0 0 / 0.085);
 
   /* ---- state, and only state ------------------------------
      The chrome is monochrome. Every bit of chroma on the page
      comes from the artifact posters, which is why these four
      are reserved for status and never for decoration. */
-  --color-live: #157f3d; /* deployed, passing, measured */
-  --color-caution: #9a5b06; /* draft, prototype, partial */
+  --color-live: #106b32; /* deployed, passing, measured */
+  --color-caution: #8a5205; /* draft, prototype, partial */
   --color-halt: #b3261e; /* archived, failing */
   --color-note: #1d4ed8; /* new, informational */
 
@@ -129,11 +219,24 @@
   --space-group: 1.25rem; /* 20px  between related items */
   --space-block: 2.75rem; /* 44px  between sections; opened up from 32 for air */
 
-  /* ---- motion: 4 durations, 4 curves ---------------------- */
+  /* ---- motion: 4 durations, 4 curves ----------------------
+
+     --ease-swing REPLACED --ease-spring. The spring, cubic-bezier(0.34,
+     3.85, 0.64, 1), overshot by 285% and was unusable at any travel
+     under about 40px; nothing referenced it. The dock's lift keeps
+     those physics under its own --avatar-ease-out.
+
+     Swing is the curve the other three could not do: control point
+     (0, 0.55) puts velocity at its maximum on frame one, so the element
+     is already moving when the pointer lands and decelerates into
+     place. Reads as tracking intent rather than playing a clip. Use it
+     for hover feedback and anything that follows the pointer.
+     Reference: Obsidian's --anim-motion-swing, vault note "Obsidian's
+     motion system".                                              */
   --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
   --ease-in-out: cubic-bezier(0.77, 0, 0.175, 1);
   --ease-exit: cubic-bezier(0.4, 0, 1, 1);
-  --ease-spring: cubic-bezier(0.34, 3.85, 0.64, 1);
+  --ease-swing: cubic-bezier(0, 0.55, 0.45, 1);
 
   --transition-duration-instant: 80ms;
   --transition-duration-fast: 150ms;
@@ -184,15 +287,15 @@
    a 1px line at all. */
 @media (prefers-color-scheme: dark) {
   :root:not([data-theme="light"]) {
-    --color-ground: #0b0b0c;
-    --color-surface: #151517;
-    --color-raised: #1f1f22;
-    --color-sunken: #101012;
+    --color-ground: #131316;
+    --color-surface: #1c1c20;
+    --color-raised: #26262b;
+    --color-sunken: #17171a;
 
-    --color-ink: #f4f4f3;
-    --color-ink-2: #a0a09d;
-    --color-ink-3: #7a7a77;
-    --color-ink-4: #4d4d4a;
+    --color-ink: #e9e9e7;
+    --color-ink-2: #a3a3a0;
+    --color-ink-3: #84847f;
+    --color-ink-4: #6b6b66;
 
     --color-line: rgb(255 255 255 / 0.13);
     --color-line-2: rgb(255 255 255 / 0.07);
@@ -205,15 +308,15 @@
 }
 
 [data-theme="dark"] {
-  --color-ground: #0b0b0c;
-  --color-surface: #151517;
-  --color-raised: #1f1f22;
-  --color-sunken: #101012;
+  --color-ground: #131316;
+  --color-surface: #1c1c20;
+  --color-raised: #26262b;
+  --color-sunken: #17171a;
 
-  --color-ink: #f4f4f3;
-  --color-ink-2: #a0a09d;
-  --color-ink-3: #7a7a77;
-  --color-ink-4: #4d4d4a;
+  --color-ink: #e9e9e7;
+  --color-ink-2: #a3a3a0;
+  --color-ink-3: #84847f;
+  --color-ink-4: #6b6b66;
 
   --color-line: rgb(255 255 255 / 0.13);
   --color-line-2: rgb(255 255 255 / 0.07);
@@ -371,10 +474,10 @@ body {
     line-height: var(--text-label--line-height);
     letter-spacing: var(--text-label--letter-spacing);
     text-transform: uppercase;
-    color: var(--color-ink-3);
+    color: var(--color-ink-2);
   }
   .label-quiet {
-    color: var(--color-ink-4);
+    color: var(--color-ink-3);
   }
 
   .band-title {
@@ -383,6 +486,44 @@ body {
     letter-spacing: var(--text-title--letter-spacing);
     font-weight: 500;
     color: var(--color-ink);
+    /* Headings are the one place a bad break is visible, because
+       there are only two or three words to break. */
+    text-wrap: balance;
+  }
+
+  /* The page heading, when a band carries it. Three scale steps above
+     body and two above a card title, so a page whose content is itself
+     a grid of titled cards still has one thing that is clearly the
+     page. Paired with the h1 tag by Band, never applied by hand. */
+  .band-title-lead {
+    font-size: var(--text-display);
+    line-height: var(--text-display--line-height);
+    letter-spacing: var(--text-display--letter-spacing);
+  }
+
+  /* ----------------------------------------------------------
+     The lead. A single statement at two or three lines, never a
+     paragraph: past three lines this size stops being a focal
+     point and becomes a wall.
+
+     `max-width` is in ch and deliberately tight. At 31px a 68ch
+     measure would run to five lines in the 768px column, so the
+     lead carries its own, shorter measure rather than borrowing
+     the prose one.
+     ---------------------------------------------------------- */
+  .lead {
+    font-size: var(--text-lead);
+    line-height: var(--text-lead--line-height);
+    letter-spacing: var(--text-lead--letter-spacing);
+    font-weight: 400;
+    color: var(--color-ink);
+    max-width: 24ch;
+    text-wrap: pretty;
+  }
+  @media (min-width: 40rem) {
+    .lead {
+      max-width: 30ch;
+    }
   }
   /* The count that follows a title: "(12)". Information, so it
      is mono; subordinate, so it is raised and quiet rather than
@@ -391,7 +532,7 @@ body {
     font-family: var(--font-mono);
     font-size: var(--text-label);
     letter-spacing: var(--text-label--letter-spacing);
-    color: var(--color-ink-4);
+    color: var(--color-ink-3);
     vertical-align: super;
     margin-left: 0.375rem;
   }
@@ -479,6 +620,155 @@ body {
     .row-interactive:hover {
       background-color: var(--color-sunken);
     }
+  }
+
+  /* ----------------------------------------------------------
+     INVERTED SURFACE.
+
+     A block that reverses against the page: dark in the light theme,
+     light in the dark theme. Used for the compose card and the
+     footer, where a single reversed panel is the strongest emphasis
+     available in a design with no shadows and no accent colour.
+
+     IT SWAPS TOKENS, NOT COLOURS. The whole ink/ground/surface/line
+     set is redeclared on the block, so every descendant re-resolves
+     against it with no per-element overrides: .label, .field-key,
+     .chip, .bullet and .pill-solid all invert for free, and any
+     component dropped in here later inverts too. Overriding colours
+     element by element would have needed a rule per child and would
+     silently miss the next one added.
+
+     The values ARE the opposite theme's palette, literally. That is
+     what makes the contrast guarantees carry over: these exact pairs
+     were measured at 4.5:1 or better in the audit, so a reversed
+     panel cannot quietly become the one place that fails AA.
+
+     Declared explicitly per theme rather than derived. `--color-ink:
+     var(--color-ground)` alongside `--color-ground: var(--color-ink)`
+     is a custom-property cycle, which resolves to invalid and paints
+     nothing. Two explicit blocks are the boring, working version.
+     ---------------------------------------------------------- */
+  .invert-surface {
+    --color-ground: #131316;
+    --color-surface: #1c1c20;
+    --color-raised: #26262b;
+    --color-sunken: #17171a;
+    --color-ink: #e9e9e7;
+    --color-ink-2: #a3a3a0;
+    --color-ink-3: #84847f;
+    --color-ink-4: #6b6b66;
+    --color-line: rgb(255 255 255 / 0.15);
+    --color-line-2: rgb(255 255 255 / 0.085);
+    --color-live: #4ade80;
+    --color-caution: #fbbf24;
+    --color-halt: #f87171;
+    --color-note: #60a5fa;
+
+    background-color: var(--color-ground);
+    color: var(--color-ink-2);
+  }
+
+  /*
+   * NESTED, IT FLIPS BACK.
+   *
+   * The rule is not "this block is dark", it is "this block reverses
+   * against whatever it sits on". The compose card carries it so it is
+   * the strongest thing in the contact surface; the footer carries it
+   * so the page ends on a change of ground. The card lives inside the
+   * footer, so without this rule the two cancel and the card becomes
+   * dark-on-dark, indistinguishable from the panel beside it.
+   *
+   * One level of nesting is all that is defined, because two reversals
+   * is already the deepest emphasis this design has. A third would be
+   * back where it started.
+   */
+  .invert-surface .invert-surface {
+    --color-ground: #f7f7f5;
+    --color-surface: #fbfbfa;
+    --color-raised: #eaeae6;
+    --color-sunken: #f2f2ef;
+    --color-ink: #1e1e1d;
+    --color-ink-2: #5a5a58;
+    --color-ink-3: #71716d;
+    --color-ink-4: #8c8c87;
+    --color-line: rgb(0 0 0 / 0.15);
+    --color-line-2: rgb(0 0 0 / 0.085);
+    --color-live: #106b32;
+    --color-caution: #8a5205;
+    --color-halt: #b3261e;
+    --color-note: #1d4ed8;
+  }
+
+  /* Both blocks again for a dark page, where every reversal points the
+     other way. Duplicated per scheme for the same reason the token
+     blocks above are: the media query honours the OS default and the
+     attribute lets the toggle win, and a custom property cannot be
+     defined in terms of the value it is replacing. */
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) .invert-surface {
+    --color-ground: #f7f7f5;
+    --color-surface: #fbfbfa;
+    --color-raised: #eaeae6;
+    --color-sunken: #f2f2ef;
+    --color-ink: #1e1e1d;
+    --color-ink-2: #5a5a58;
+    --color-ink-3: #71716d;
+    --color-ink-4: #8c8c87;
+    --color-line: rgb(0 0 0 / 0.15);
+    --color-line-2: rgb(0 0 0 / 0.085);
+    --color-live: #106b32;
+    --color-caution: #8a5205;
+    --color-halt: #b3261e;
+    --color-note: #1d4ed8;
+    }
+    :root:not([data-theme="light"]) .invert-surface .invert-surface {
+    --color-ground: #131316;
+    --color-surface: #1c1c20;
+    --color-raised: #26262b;
+    --color-sunken: #17171a;
+    --color-ink: #e9e9e7;
+    --color-ink-2: #a3a3a0;
+    --color-ink-3: #84847f;
+    --color-ink-4: #6b6b66;
+    --color-line: rgb(255 255 255 / 0.15);
+    --color-line-2: rgb(255 255 255 / 0.085);
+    --color-live: #4ade80;
+    --color-caution: #fbbf24;
+    --color-halt: #f87171;
+    --color-note: #60a5fa;
+    }
+  }
+  [data-theme="dark"] .invert-surface {
+    --color-ground: #f7f7f5;
+    --color-surface: #fbfbfa;
+    --color-raised: #eaeae6;
+    --color-sunken: #f2f2ef;
+    --color-ink: #1e1e1d;
+    --color-ink-2: #5a5a58;
+    --color-ink-3: #71716d;
+    --color-ink-4: #8c8c87;
+    --color-line: rgb(0 0 0 / 0.15);
+    --color-line-2: rgb(0 0 0 / 0.085);
+    --color-live: #106b32;
+    --color-caution: #8a5205;
+    --color-halt: #b3261e;
+    --color-note: #1d4ed8;
+  }
+  [data-theme="dark"] .invert-surface .invert-surface {
+    --color-ground: #131316;
+    --color-surface: #1c1c20;
+    --color-raised: #26262b;
+    --color-sunken: #17171a;
+    --color-ink: #e9e9e7;
+    --color-ink-2: #a3a3a0;
+    --color-ink-3: #84847f;
+    --color-ink-4: #6b6b66;
+    --color-line: rgb(255 255 255 / 0.15);
+    --color-line-2: rgb(255 255 255 / 0.085);
+    --color-live: #4ade80;
+    --color-caution: #fbbf24;
+    --color-halt: #f87171;
+    --color-note: #60a5fa;
   }
 
   /* The one permitted surface change: content that is genuinely
@@ -591,7 +881,11 @@ body {
     font-family: var(--font-mono);
     font-size: var(--text-label);
     letter-spacing: var(--text-label--letter-spacing);
-    color: var(--color-ink-3);
+    /* ink-2, not ink-3: this sits on --color-raised rather than on the
+       ground, and the raised surface eats enough of the difference that
+       ink-3 measured 4.06:1 here. A key cap nobody can read is worse
+       than no key cap. */
+    color: var(--color-ink-2);
   }
 
   /* Copy confirmation, swapped in place. */

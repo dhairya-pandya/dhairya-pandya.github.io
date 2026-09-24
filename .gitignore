@@ -76,3 +76,17 @@ test-results/
 playwright-report/
 .vercel
 .env*
+
+# ---- the component labs stay local --------------------------------
+# /playground is a workbench, not portfolio surface: five renderings of
+# the work index, plus a dial kit and three component labs that exist to
+# settle values which then get pasted into the real components. The
+# numbers it produces ship; the labs themselves never do. Untracked
+# rather than merely noindexed, so a push cannot carry them by accident.
+#
+# They live on disk and keep working locally. To ship them one day,
+# delete this block and `git add` them.
+src/pages/playground.astro
+src/pages/playground/
+src/components/playground/
+src/layouts/LabShell.astro

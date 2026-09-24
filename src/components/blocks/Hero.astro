@@ -23,7 +23,7 @@ import FloatingCard from "./FloatingCard.astro";
     src="/travel/buddha.jpg"
     alt="A white Buddha statue wrapped in flowers, Marble Mountains"
     side="right"
-    top="6rem"
+    top="3rem"
     tilt={-3}
     width="5.5rem"
   />
@@ -42,18 +42,30 @@ import FloatingCard from "./FloatingCard.astro";
         />
       </div>
 
+      {/*
+        The name is now the largest thing on the page rather than the
+        fourth largest. text-wrap:balance so "Dhairya Pandya" breaks
+        into two even lines at narrow widths instead of leaving one
+        orphaned word under a long one.
+      */}
       <h1
-        class="t-stagger-line t-stagger-line--2 mt-4 text-display font-medium text-ink"
+        class="t-stagger-line t-stagger-line--2 mt-5 text-display font-medium text-balance text-ink"
       >
         {site.name}
         {/*
           Pronunciation, revealed on demand. A name people mispronounce
           is a small real problem; the phonetic spelling is the honest
           fix, since a synthesised recording would not be his voice.
+
+          text-body pins this to the scale's base step. Without it the
+          button inherits --text-display and renders a 61px speaker
+          icon beside the name. The -2px nudge that used to sit here
+          was tuned against a 28px h1 and is wrong at every other size,
+          so the alignment is optical now via align-middle.
         */}
         <button
           type="button" data-pronounce
-          class="phon ml-1 inline-flex translate-y-[-2px] items-center gap-1.5 rounded-md px-1 align-middle text-ink-4 transition-colors duration-fast ease-out hover:text-ink"
+          class="phon ml-2 inline-flex items-center gap-1.5 rounded-md px-1 align-middle text-body text-ink-3 transition-colors duration-fast ease-out hover:text-ink"
           aria-expanded="false"
           aria-label="How to pronounce this name"
         >
@@ -64,7 +76,7 @@ import FloatingCard from "./FloatingCard.astro";
 
       <p class="t-stagger-line t-stagger-line--3 mt-1 text-ink-2">
         {site.role}
-        <span class="text-ink-4"> / </span>
+        <span class="text-ink-3"> / </span>
         <span class="font-mono">{site.tagline}</span>
       </p>
 
@@ -107,12 +119,22 @@ import FloatingCard from "./FloatingCard.astro";
 <style>
   /* The hero opens the page, so it gets air no other band gets:
      roughly double the section rhythm above, half again below. */
+  /*
+   * Top padding came down from 4.5/6.5rem to 2/3rem.
+   *
+   * The old value was tuned against a 28px name, where the block
+   * needed air above it to read as deliberate rather than as content
+   * that had slipped to the top of the page. At 61px the name supplies
+   * that weight itself, and the same padding then stacked with the
+   * 48px sticky bar and main's own 48px to put the focal point about
+   * 200px down: a hierarchy problem dressed up as whitespace.
+   */
   .hero-band {
-    padding-block: 4.5rem 3rem;
+    padding-block: 2rem 3rem;
   }
   @media (min-width: 40rem) {
     .hero-band {
-      padding-block: 6.5rem 3.5rem;
+      padding-block: 3rem 3.5rem;
     }
   }
 

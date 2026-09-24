@@ -184,9 +184,26 @@
    hero, which is the only place on the site with a genuine
    first-impression moment to spend it on.
    ============================================================ */
-.t-stagger-line {
-  display: block;
-}
+/*
+ * NO `display: block` HERE, and that is deliberate.
+ *
+ * It used to be, to guarantee a stagger line was a block-level box so
+ * the transform would apply. It is the same 0-1-0 specificity as
+ * Tailwind's `.flex` and it is emitted later, so it silently won every
+ * time: `class="t-stagger-line flex items-center"` computed to
+ * `display: block`, the flex context never existed, and the children
+ * fell back to inline.
+ *
+ * That is what broke the availability dot. `.status-dot` sets
+ * width/height 6px, which a non-replaced INLINE element ignores, so it
+ * rendered 0px wide by the line-box's 21px tall: a green hairline
+ * where a dot should be. Measured, not guessed: getBoundingClientRect
+ * returned {w: 0, h: 21} while the computed width still read "6px".
+ *
+ * Every stagger line is a block-level tag already (p, div, h1), so the
+ * declaration bought nothing. Anything that needs a different display
+ * now says so with a utility and is obeyed.
+ */
 /* Hidden-until-shown is opt-in via .js, exactly like .reveal: if the
    script never runs, the hero is simply visible. Only the animation
    may depend on JavaScript, never the content. */

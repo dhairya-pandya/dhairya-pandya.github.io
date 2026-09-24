@@ -8,11 +8,14 @@
  * worth including at all: a bare grid is a vanity metric, a figure
  * with a caption and a source is evidence.
  *
- * MOCK DATA, seeded so a rebuild is byte-identical. Shaped like a
- * real student's year rather than uniform noise: quiet in exam
- * weeks, dense in the two project sprints, near-zero on most
- * Sundays.
+ * THE YEAR ITSELF LIVES IN lib/heat.ts, not here. The grid renders in
+ * two places now, this figure and a local grid lab (untracked), and a
+ * lab holding its own copy of the generator is a lab that can quietly
+ * disagree with the thing it exists to judge. Seeded, so a rebuild is
+ * byte-identical.
  */
+import { buildHeat, heatLevels, heatTitle } from "../../lib/heat";
+
 interface Props {
   /** Figure number, so captions across a page stay in sequence. */
   fig?: number;
@@ -27,59 +30,47 @@ const {
   source = { label: "GitHub", url: "https://github.com/" },
 } = Astro.props;
 
-function rng(seed: number) {
-  let a = seed >>> 0;
-  return () => {
-    a = (a + 0x6d2b79f5) >>> 0;
-    let t = Math.imul(a ^ (a >>> 15), 1 | a);
-    t = (t + Math.imul(t ^ (t >>> 7), 61 | t)) ^ t;
-    return ((t ^ (t >>> 14)) >>> 0) / 4294967296;
-  };
-}
-
-const WEEKS = 52;
-const r = rng(20260827);
-
-/* Two sprints and two exam troughs, expressed as week ranges. */
-const sprint = (w: number) => (w > 8 && w < 17) || (w > 30 && w < 41);
-const exams = (w: number) => (w > 20 && w < 25) || (w > 44 && w < 48);
-
-const cells: { level: number; week: number; day: number }[] = [];
-for (let w = 0; w < WEEKS; w++) {
-  for (let d = 0; d < 7; d++) {
-    let p = 0.42;
-    if (sprint(w)) p = 0.86;
-    if (exams(w)) p = 0.12;
-    if (d === 0) p *= 0.28; // Sundays
-    const hit = r() < p;
-    const level = !hit ? 0 : 1 + Math.floor(r() * (sprint(w) ? 4 : 3));
-    cells.push({ level: Math.min(4, level), week: w, day: d });
-  }
-}
-const levels = ["", "opacity-25", "opacity-45", "opacity-70", "opacity-100"];
+/*
+ * One line, because the generator, the derived facts and the level
+ * class names all live in lib/heat.ts. This figure only decides how to
+ * draw them.
+ */
+const year = buildHeat(range);
+const cells = year.cells;
+const levels = heatLevels;
 ---
 
-<figure class="reveal">
+<figure class="reveal" data-heat-figure>
   {/*
     The grid scrolls on its own axis rather than shrinking the
     cells: below ~700px a 52-week grid either becomes unreadable
     2px squares or forces the page to scroll sideways, and both are
     worse than an internally scrolling figure.
   */}
+  {/*
+    auto-cols-[11px] pins the column track to the cell.
+
+    Without it the tracks are `auto`, and auto tracks stretch to absorb
+    free space: in a 744px container the 52 columns each grew to
+    11.2031px while the cell inside stayed 11px, so the real gap was
+    3.2px, not 3. Invisible, and wrong: the lab measures the same grid
+    at exactly 725 of content and the two should agree to the pixel.
+  */}
   <div class="-mx-1 overflow-x-auto pb-1">
     <div
-      class="heat grid min-w-[680px] grid-flow-col grid-rows-7 gap-[3px] px-1"
+      class="heat grid min-w-[680px] grid-flow-col grid-rows-7 auto-cols-[11px] gap-[3px] px-1"
       role="img"
       aria-label={`${total} contributions between ${range}`}
     >
       {
         cells.map((c) => (
           <span
-            class:list={[
-              "heat-cell size-[11px] rounded-[2px]",
-              c.level === 0 ? "heat-empty" : ["heat-on", levels[c.level]],
-            ]}
+            class:list={["heat-cell size-[11px] rounded-[2px]", levels[c.level]]}
             style={`--w:${c.week}`}
+            data-w={c.week}
+            data-d={c.day}
+            data-lv={c.level}
+            title={heatTitle(c)}
           />
         ))
       }
@@ -89,23 +80,50 @@ const levels = ["", "opacity-25", "opacity-45", "opacity-70", "opacity-100"];
   <figcaption
     class="mt-3 flex flex-wrap items-center justify-between gap-x-4 gap-y-2"
   >
-    <p class="text-body text-ink-2">
-      <span class="label">Fig. {fig}.</span>
-      {" "}
-      <span class="numeric text-ink">{total.toLocaleString("en-US")}</span>
-      {" "}contributions, <span class="numeric">{range}</span>. Source:{" "}
-      <a href={source.url} class="link-ref" rel="noopener">{source.label}</a>.
-    </p>
+    {/*
+      The caption and the live readout share one grid cell, stacked.
+      Swapping between them therefore cannot change the figure's height
+      or shift the legend beside it: the crossfade is the only thing
+      that happens. The readout is aria-hidden because each cell's own
+      title already carries the same sentence for assistive tech, and
+      announcing every day the pointer crosses would be noise.
+    */}
+    <div class="grid min-w-0 [&>*]:col-start-1 [&>*]:row-start-1">
+      <p class="heat-cap text-body text-ink-2">
+        <span class="label">Fig. {fig}.</span>
+        {" "}
+        <span class="numeric text-ink">{total.toLocaleString("en-US")}</span>
+        {" "}contributions, <span class="numeric">{range}</span>. Source:{" "}
+        <a href={source.url} class="link-ref" rel="noopener">{source.label}</a>.
+      </p>
 
-    <p class="flex items-center gap-1.5 text-label text-ink-3">
+      <p class="heat-live text-body text-ink-2" aria-hidden="true">
+        <span class="label">Fig. {fig}.</span>
+        {" "}
+        <span class="numeric text-ink" data-heat-n>0</span>
+        {" "}<span data-heat-unit>contributions</span> on{" "}
+        <span class="numeric" data-heat-when>{range}</span>.
+      </p>
+    </div>
+
+    {/*
+      THE RAMP KEY, ON TOUCH ONLY.
+
+      The figure drops the Less/More legend, because the readout answers
+      the question the legend was there to answer and answers it exactly:
+      hover any day and the caption states its count. That trade only
+      holds where there is a pointer. On touch there is no hover, no
+      title tooltip either, and a reader would be left with a green grid
+      and no key at all, so the legend comes back under
+      `@media (hover: none)`. Desktop pays nothing for it.
+    */}
+    <p class="heat-legend flex items-center gap-1.5 text-label text-ink-3" data-heat-legend>
       Less
       {
         [0, 1, 2, 3, 4].map((l) => (
           <span
-            class:list={[
-              "size-[10px] rounded-[2px]",
-              l === 0 ? "heat-empty" : ["heat-on", levels[l]],
-            ]}
+            class:list={["heat-key size-[9px] rounded-[2px]", levels[l]]}
+            data-key={l}
           />
         ))
       }
@@ -115,45 +133,249 @@ const levels = ["", "opacity-25", "opacity-45", "opacity-70", "opacity-100"];
 </figure>
 
 <style>
-  .heat-empty {
-    background-color: color-mix(in oklab, var(--color-ink) 6%, transparent);
-  }
   /*
-   * Monochrome, like the reference's own heatmap, and not the
-   * conventional green.
+   * THE GREEN RAMP.
    *
-   * Two reasons. The design reserves chroma for state and for the
-   * artifact posters, and a 364-cell grid in signal green is by far
-   * the loudest object on the page, which puts the emphasis on
-   * "look how much I commit" rather than on the work. In ink it
-   * reads as what it is: a density plot.
+   * This grid used to be monochrome, on the argument that the design
+   * reserves chroma for state and for the artifact posters, and that
+   * 364 cells of signal green would be the loudest object on the page.
+   * That argument was right about the loudness and wrong about the
+   * conclusion: a page with no chroma anywhere does not read as
+   * disciplined, it reads as unfinished, and this figure is the one
+   * element large enough to carry colour without a second one to
+   * balance it.
+   *
+   * Mixed from --color-live rather than hardcoded, for three reasons:
+   * the ramp inherits the token's AA-corrected hue, one formula covers
+   * both themes because --color-ground flips with them, and a future
+   * palette change moves the grid with it instead of stranding a
+   * literal green here.
+   *
+   * Mixing toward --color-ground (opaque) rather than transparent so
+   * a cell never picks up whatever it happens to sit over.
    */
-  .heat-on {
-    background-color: var(--color-ink);
+  .heat-l0 {
+    background-color: color-mix(in oklab, var(--color-ink) 7%, var(--color-ground));
+  }
+  .heat-l1 {
+    background-color: color-mix(in oklab, var(--color-live) 26%, var(--color-ground));
+  }
+  .heat-l2 {
+    background-color: color-mix(in oklab, var(--color-live) 50%, var(--color-ground));
+  }
+  .heat-l3 {
+    background-color: color-mix(in oklab, var(--color-live) 74%, var(--color-ground));
+  }
+  .heat-l4 {
+    background-color: var(--color-live);
+  }
+
+  /* ----------------------------------------------------------
+     THE HOVER.
+
+     Three things happen, and together they make it read as an
+     instrument rather than a grid of divs:
+
+       1. The hovered cell grows, on transform only, so it composites
+          and never reflows its 363 neighbours.
+       2. The whole field recedes behind ONE veil, and the hovered cell
+          plus its row and column sit above it. Isolating by receding
+          the field reads far more clearly than brightening the target,
+          because the target is 11px and the field is 725px wide.
+       3. The caption becomes that day's sentence.
+
+     THE VEIL IS ONE ELEMENT, AND THAT IS THE WHOLE FIX. This dimmed
+     363 cells by transitioning `filter: saturate() opacity()` on each
+     of them. Measured against the same grid without it: 2.01ms of style
+     recalculation per pointer move became 0.29ms, and layout 4.7ms
+     became 1.4ms, once the dim moved to a single opacity transition on
+     a pseudo-element. `saturate()` also forces a raster pass per cell,
+     and a greyed green reads as an error state; a veil just recedes.
+
+     Pointer-only. On touch there is no hover state to leave, so the
+     grid would latch dimmed after a tap.
+     ---------------------------------------------------------- */
+  /*
+     --duration-instant and --ease-swing, not --motion-hover.
+
+     This is the highest-frequency motion on the site: a pass across the
+     grid fires it a few hundred times. Atlassian's rule for motion
+     triggered "dozens of times a day" is under 150ms, and the
+     perceptual thresholds put acknowledgment under 100ms. 150ms with a
+     long-tailed ease-out sat at the ceiling of one and outside the
+     other, and read as lag. Swing starts at full velocity, so the cell
+     is already growing on the frame the pointer lands.
+
+     NO will-change. It promoted 364 cells to permanent compositor
+     layers for a transform that only one of them runs at a time, and
+     each promotion is a stacking context. Measured no benefit.
+  */
+  /*
+     position, z-index and the outline are all STATIC.
+
+     Toggling `position: relative` on :hover creates and destroys a
+     stacking context every time the pointer crosses a cell edge, and
+     forces layout each time. Declaring the outline transparent here
+     means only its colour changes on hover, which is paint rather than
+     layout, and border-radius no longer changes at all for the same
+     reason.
+  */
+  .heat-cell {
+    position: relative;
+    z-index: 0;
+    opacity: 1;
+    outline: 1px solid transparent;
+    outline-offset: 1px;
+    transition:
+      transform var(--duration-instant) var(--ease-swing),
+      outline-color var(--duration-instant) var(--ease-swing);
+  }
+
+  /* The veil. inset:0 rather than a negative inset: .heat carries its
+     own px-1, so the padding box already gives the veil a 4px bleed
+     without it overflowing the scroll container beside it. */
+  .heat {
+    position: relative;
+  }
+  .heat::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    background-color: var(--color-ground);
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity var(--duration-instant) var(--ease-swing);
+  }
+
+  /* Raised above the veil: the hovered cell at 3, its row and column
+     at 2. The hovered cell carries .is-x too, since it sits in its own
+     row and column; the two selectors tie on specificity, so the
+     :hover rule coming later in source order is what wins. */
+  .heat .heat-cell.is-x {
+    z-index: 2;
+  }
+
+  @media (hover: hover) and (pointer: fine) {
+    /* :has() with a child combinator, so it only looks one level down.
+       It is the only :has() in the hover path. */
+    .heat:has(> .heat-cell:hover)::after {
+      opacity: 0.62;
+    }
+    .heat .heat-cell:hover {
+      z-index: 3;
+      transform: scale(1.65);
+      /* The outline rides the transform, so it stays a hairline at
+         any scale instead of thickening with the cell. */
+      outline-color: var(--color-ink);
+    }
+  }
+
+  /* ----------------------------------------------------------
+     THE CAPTION READOUT.
+
+     While a day is hovered the figure caption crossfades to that day's
+     sentence, and comes back the moment the pointer leaves the grid.
+     This is what earns dropping the Less/More legend: the legend said
+     what a shade meant approximately, the readout says what this day
+     was exactly.
+
+     80ms, the acknowledgment window. The readout is a response to the
+     pointer, not a story about it, so it must not be seen arriving.
+     ---------------------------------------------------------- */
+  .heat-cap,
+  .heat-live {
+    transition: opacity var(--duration-instant) var(--ease-swing);
+  }
+  .heat-live {
+    opacity: 0;
+    pointer-events: none;
+  }
+  [data-heat-figure][data-live="on"] .heat-cap {
+    opacity: 0;
+  }
+  [data-heat-figure][data-live="on"] .heat-live {
+    opacity: 1;
+  }
+
+  /* ----------------------------------------------------------
+     THE RAMP KEY, ON TOUCH ONLY. See the note in the markup: the
+     readout replaces the legend, and it cannot run without a pointer.
+     ---------------------------------------------------------- */
+  .heat-legend {
+    display: none;
+  }
+  @media (hover: none) {
+    .heat-legend {
+      display: flex;
+    }
+  }
+
+  /* The legend, where it is shown, is also a filter: hovering or
+     focusing a swatch raises every cell at that level above the veil.
+     Driven by data-iso from scripts/heat.ts, not by :has(). */
+  .heat-key {
+    cursor: pointer;
+    transition:
+      opacity var(--duration-instant) var(--ease-swing),
+      transform var(--duration-instant) var(--ease-swing);
+  }
+  [data-heat-figure][data-iso] .heat::after {
+    opacity: 0.62;
+  }
+  [data-heat-figure][data-iso] .heat-key {
+    opacity: 0.45;
+  }
+  [data-heat-figure][data-iso="0"] .heat-cell[data-lv="0"],
+  [data-heat-figure][data-iso="1"] .heat-cell[data-lv="1"],
+  [data-heat-figure][data-iso="2"] .heat-cell[data-lv="2"],
+  [data-heat-figure][data-iso="3"] .heat-cell[data-lv="3"],
+  [data-heat-figure][data-iso="4"] .heat-cell[data-lv="4"] {
+    z-index: 2;
+  }
+  [data-heat-figure][data-iso="0"] .heat-key[data-key="0"],
+  [data-heat-figure][data-iso="1"] .heat-key[data-key="1"],
+  [data-heat-figure][data-iso="2"] .heat-key[data-key="2"],
+  [data-heat-figure][data-iso="3"] .heat-key[data-key="3"],
+  [data-heat-figure][data-iso="4"] .heat-key[data-key="4"] {
+    opacity: 1;
+    transform: scale(1.4);
   }
 
   /*
    * Column-by-column wipe on first reveal. The delay is driven off
-   * the week index, so the year fills left to right like a
-   * timeline rather than all at once. Capped at 52 columns times
-   * 8ms, which is 416ms: inside the reveal budget, so it never
-   * holds up reading.
+   * the week index, so the year fills left to right like a timeline
+   * rather than all at once. Capped at 52 columns times 8ms, which is
+   * 416ms: inside the reveal budget, so it never holds up reading.
+   *
+   * Visible by default, so no-JS and reduced-motion get a plain grid.
+   * The wipe only exists once the figure has been revealed: previously
+   * all 364 cells started animating on page load while still below the
+   * fold, putting 364 concurrent animations in competition with the
+   * loader and the hero for the first frames.
+   *
+   * The four heat-in-25/45/70 keyframe variants that used to live here
+   * are gone. They existed only because the level was painted with
+   * Tailwind opacity utilities, which fought this animation's end
+   * state. Levels are background colours now, so one keyframe covers
+   * every cell.
    */
-  /*
-   * Visible by default, so no-JS and reduced-motion get a plain
-   * grid. The wipe only exists once the figure has been revealed:
-   * previously all 364 cells started animating on page load while
-   * still below the fold, which put 364 concurrent animations in
-   * competition with the loader and the hero for the first frames.
-   */
-  .heat-cell {
-    opacity: 1;
-  }
   :global(.js) .reveal:not([data-seen="true"]) .heat-cell {
     opacity: 0;
   }
+  /*
+   * `backwards`, not `both`. This was `both`, and it meant the hover
+   * scale below never fired once the grid had revealed: a forwards fill
+   * keeps the last keyframe's `transform: none` applied after the
+   * animation ends, and animations outrank every normal declaration in
+   * the cascade, so `transform: scale(1.65)` on :hover silently lost.
+   * Found in the lab, where the hovered cell measured as an identity
+   * matrix with the hover rule matching. `backwards` applies the `from`
+   * state during the delay, which is what hides a column until its
+   * turn, then releases; the natural state already is the end state.
+   */
   :global(.js) .reveal[data-seen="true"] .heat-cell {
-    animation: heat-in 260ms var(--ease-out) both;
+    animation: heat-in 260ms var(--ease-out) backwards;
     animation-delay: calc(var(--w) * 8ms);
   }
   @keyframes heat-in {
@@ -166,53 +388,35 @@ const levels = ["", "opacity-25", "opacity-45", "opacity-70", "opacity-100"];
       transform: none;
     }
   }
-  /* The utility opacity classes have to win over the keyframe's
-     end state, so they are re-applied here at the same specificity
-     the animation resolves at. */
-  :global(.js) .reveal[data-seen="true"] .heat-cell.opacity-25 {
-    animation-name: heat-in-25;
-  }
-  :global(.js) .reveal[data-seen="true"] .heat-cell.opacity-45 {
-    animation-name: heat-in-45;
-  }
-  :global(.js) .reveal[data-seen="true"] .heat-cell.opacity-70 {
-    animation-name: heat-in-70;
-  }
-  @keyframes heat-in-25 {
-    from {
-      opacity: 0;
-      transform: scale(0.4);
-    }
-    to {
-      opacity: 0.25;
-      transform: none;
-    }
-  }
-  @keyframes heat-in-45 {
-    from {
-      opacity: 0;
-      transform: scale(0.4);
-    }
-    to {
-      opacity: 0.45;
-      transform: none;
-    }
-  }
-  @keyframes heat-in-70 {
-    from {
-      opacity: 0;
-      transform: scale(0.4);
-    }
-    to {
-      opacity: 0.7;
-      transform: none;
-    }
-  }
 
   @media (prefers-reduced-motion: reduce) {
     .heat-cell {
       animation: none;
       opacity: 1;
     }
+    /* The veil, the crosshair and the readout are STATE, not motion, so
+       they stay and simply arrive instantly. Only the cell's growth is
+       dropped, because it is the one part that actually moves. */
+    .heat-cell,
+    .heat::after,
+    .heat-cap,
+    .heat-live,
+    .heat-key {
+      transition: none;
+    }
+    .heat .heat-cell:hover {
+      transform: none;
+    }
   }
 </style>
+
+{/*
+  The interaction layer, from scripts/heat.ts so the lab at
+  the local grid lab runs the same code rather than its own copy.
+  Bundled and deferred, not is:inline: it is an interaction, not
+  paint-critical state, so it has no reason to block.
+*/}
+<script>
+  import { initHeatFigures } from "../../scripts/heat";
+  initHeatFigures();
+</script>

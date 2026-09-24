@@ -67,12 +67,12 @@ const machineDoc = machineProject(p);
             class="label transition-colors duration-fast ease-out hover:text-ink"
             >Systems</a
           >
-          <span class="label text-ink-4" aria-hidden="true">/</span>
+          <span class="label text-ink-3" aria-hidden="true">/</span>
           <span class="label truncate text-ink">{p.title}</span>
         </nav>
 
         <div class="flex shrink-0 items-center gap-1">
-          <span class="numeric mr-1 text-label text-ink-4">
+          <span class="numeric mr-1 text-label text-ink-3">
             {index} / {total}
           </span>
           {
@@ -140,7 +140,7 @@ const machineDoc = machineProject(p);
               ]}>{m.label}</span
             >
             <span class="numeric">{dateRange(p.start, p.end)}</span>
-            <span class="text-ink-4">|</span>
+            <span class="text-ink-3">|</span>
             <span class="numeric">{humanDuration(p.start, p.end)}</span>
           </p>
         </div>
