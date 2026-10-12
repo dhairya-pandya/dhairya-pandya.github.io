@@ -63,9 +63,8 @@ const tones = ["neutral", "note", "live", "halt", "caution"] as const;
     <div class="hero-body t-stagger" data-hero-body>
       <div class="t-stagger-line t-stagger-line--1">
         <div class="cluster">
-          <img src="/hero/logo-tile.svg" alt="" width="48" height="48" class="tile tile-logo" />
           <span class="tile tile-photo">
-            <img src="/avatar.jpg" alt={site.name} width="60" height="59" fetchpriority="high" decoding="async" class="h-full w-full object-cover" />
+            <img src="/avatar.jpg" alt={site.name} width="120" height="120" fetchpriority="high" decoding="async" class="h-full w-full object-cover" />
           </span>
         </div>
       </div>
@@ -286,44 +285,35 @@ const tones = ["neutral", "note", "live", "halt", "caution"] as const;
   /* ---- avatar cluster, Figma 68:1818 ---- */
   .cluster {
     position: relative;
-    width: 138px;
-    height: 54px;
+    width: 120px;
+    height: 120px;
   }
   .tile {
     position: absolute;
     display: block;
-    width: 48px;
-    height: 48px;
+    width: 120px;
+    height: 120px;
     transition: transform var(--motion-disclose);
   }
-  .tile-logo {
-    left: -7.9px;
-    top: -1.9px;
-    transform: rotate(-7.99deg);
-  }
   .tile-photo {
-    left: 33.1px;
-    top: -3.9px;
+    left: 0;
+    top: 0;
     overflow: hidden;
-    border-radius: 12px;
-    border: 0.8px solid rgb(0 0 0 / 0.04);
-    background: url("/hero/tile-bg.png") center / cover;
+    border-radius: 24px;
+    border: 1px solid rgb(0 0 0 / 0.08);
   }
   .tile-photo > img {
     position: absolute;
     left: 50%;
-    top: calc(50% + 1.5px);
-    width: 60px;
-    height: 59px;
+    top: 50%;
+    width: 120px;
+    height: 120px;
     max-width: none;
     translate: -50% -50%;
     object-fit: cover;
   }
-  .cluster:hover .tile-logo {
-    transform: translate(-6px, 0) rotate(-14deg);
-  }
   .cluster:hover .tile-photo {
-    transform: translate(8px, 0) rotate(6deg);
+    transform: rotate(-3deg);
   }
 
   /* ---- greeting: scaled with the letter, 22 above, 10 below ---- */
@@ -639,9 +629,6 @@ const tones = ["neutral", "note", "live", "halt", "caution"] as const;
     .tile,
     .hero-body {
       transition: none;
-    }
-    .cluster:hover .tile-logo {
-      transform: rotate(-7.99deg);
     }
     .cluster:hover .tile-photo {
       transform: none;

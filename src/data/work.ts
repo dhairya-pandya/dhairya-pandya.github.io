@@ -210,8 +210,7 @@ export const projects: Project[] = [
       baseline: "Hand-written PID controller: 45% on the same level",
     },
     evidence: [
-      { kind: "repo", label: "Source", url: "https://github.com/dhairya-pandya/RocketLandingWithRL" },
-      { kind: "writeup", label: "Full results", url: "https://github.com/dhairya-pandya/RocketLandingWithRL/blob/main/RESULTS.md" },
+      { kind: "demo", label: "Play the game", url: "https://rocket-landing-with-rl.vercel.app" },
     ],
     featured: true,
   },
