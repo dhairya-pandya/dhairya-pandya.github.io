@@ -62,7 +62,7 @@ export const identity = [
 
 /** External profiles. `stat` is the thing a reviewer can verify. */
 export const profiles = [
-  { platform: "GitHub", handle: "dhairya-pandya", url: "https://github.com/dhairya-pandya", stat: "1,284 contributions", icon: "ph:github-logo" },
+  { platform: "GitHub", handle: "dhairya-pandya", url: "https://github.com/dhairya-pandya", stat: "Code for the projects on this site", icon: "ph:github-logo" },
   { platform: "LinkedIn", handle: "dhairya-pandya", url: "https://www.linkedin.com/in/dhairya-pandya/", stat: "Open to internships and research roles", icon: "ph:linkedin-logo" },
 ] as const;
 
