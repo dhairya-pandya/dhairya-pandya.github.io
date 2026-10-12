@@ -12,7 +12,6 @@ import { getCollection } from "astro:content";
 import PageLayout from "../layouts/PageLayout.astro";
 import Band from "../components/ui/Band.astro";
 import Hero from "../components/blocks/Hero.astro";
-import Heatmap from "../components/blocks/Heatmap.astro";
 import AchievementBanner from "../components/blocks/AchievementBanner.astro";
 import Greeting from "../components/blocks/Greeting.astro";
 import ExperienceList from "../components/blocks/ExperienceList.astro";
@@ -95,10 +94,6 @@ const machineDoc = machineHome(
 
 <PageLayout machine={machineDoc} section="home">
   <Hero />
-
-  <Band>
-    <Heatmap fig={1} />
-  </Band>
 
   <Band>
     <AchievementBanner />

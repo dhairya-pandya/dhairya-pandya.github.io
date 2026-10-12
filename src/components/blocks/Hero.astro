@@ -26,13 +26,8 @@
 import { Icon } from "astro-icon/components";
 import HeroEntity from "./HeroEntity.astro";
 import { site, profiles } from "../../config/site";
-import { buildHeat } from "../../lib/heat";
 
 const github = profiles.find((p) => p.platform === "GitHub")!;
-
-/* The peek's mini contribution grid is the last 18 weeks of the same
-   generator the Heatmap figure draws, so the two can never disagree. */
-const recent = buildHeat("01.09.2025 - 27.08.2026").cells.filter((c) => c.week >= 52 - 18);
 
 /* Peek geometry, from the lab (Pair, tilt 7, spread 116, width 240,
    lift 30). Portrait cards are 4:5, landscape cards 1.45x wide at 16:10. */
@@ -100,7 +95,7 @@ const tones = ["neutral", "note", "live", "halt", "caution"] as const;
         </p>
 
         <p class="hero-para t-stagger-line t-stagger-line--3">
-          I build <HeroEntity icon="cpu" tone="note">machine learning</HeroEntity> that has to hold up outside the <HeroEntity icon="notebook">notebook</HeroEntity>, and I have <HeroEntity icon="trophy" tone="caution" peek="floor">hackathon</HeroEntity> scars to show for it.
+          I build <HeroEntity icon="cpu" tone="note">machine learning</HeroEntity> that has to hold up outside the <HeroEntity icon="notebook">notebook</HeroEntity>. Lately I've been learning <HeroEntity icon="brain" tone="live">interpretability</HeroEntity> and <HeroEntity icon="rocket-launch" tone="note">reinforcement learning</HeroEntity>, mostly by landing a rocket on a moving ship in simulation. I have <HeroEntity icon="trophy" tone="caution" peek="floor">hackathon</HeroEntity> scars to show for it.
         </p>
 
         <p class="hero-para t-stagger-line t-stagger-line--4">
@@ -180,11 +175,6 @@ const tones = ["neutral", "note", "live", "halt", "caution"] as const;
               <span class="font-mono text-[12px] text-ink">@{github.handle}</span>
             </span>
             <Icon name="ph:arrow-up-right" class="size-3 text-ink-3" />
-          </div>
-          <div class="grid grid-flow-col grid-rows-7 justify-start gap-[2px]">
-            {recent.map((c) => (
-              <span class="size-[7px] rounded-[1.5px]" style={c.level === 0 ? "background:var(--color-line-2)" : `background:var(--color-live);opacity:${c.level / 4}`} />
-            ))}
           </div>
           <p class="font-mono text-[10px] text-ink-3">{github.stat}</p>
         </div>
