@@ -95,11 +95,11 @@ export const experience: OrgGroup[] = [
           },
           {
             name: "Biohub — Cell Tracking During Development",
-            detail: "Under 200",
+            detail: "993rd of almost 4,000 teams",
             status: "ongoing",
             url: "https://www.kaggle.com/competitions/biohub-cell-tracking-during-development",
             writeup:
-              "Detecting and tracking zebrafish cells through 3D space and time as the embryo develops. Sitting under 200 on the leaderboard right now.",
+              "Detecting and tracking zebrafish cells through 3D space and time as the embryo develops. Sitting 993rd of almost 4,000 teams on the leaderboard right now. Nowadays I think probing beats genuinely novel approaches: find out what the model is actually using before trying to invent something new.",
           },
         ],
       },
