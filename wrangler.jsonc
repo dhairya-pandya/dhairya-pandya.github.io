@@ -22,7 +22,7 @@
     {
       "binding": "DB",
       "database_name": "holdout-contact",
-      "database_id": "REPLACE-ON-FIRST-DEPLOY"
+      "database_id": "ecb83e4f-f648-47ff-afb8-63b75ea4a6fc"
     }
   ],
 
