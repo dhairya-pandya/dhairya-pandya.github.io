@@ -1,6 +1,6 @@
 {
   "$schema": "node_modules/wrangler/config-schema.json",
-  "name": "holdout",
+  "name": "dhairyapandya",
   "compatibility_date": "2026-08-01",
 
   // The backend: one worker (worker/index.js) in front of the static
