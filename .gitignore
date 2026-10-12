@@ -77,6 +77,12 @@ playwright-report/
 .vercel
 .env*
 
+# ---- screen recordings stay local ----------------------------------
+# public/reff/ is capture footage of the workbench: seconds of video per
+# iteration, tens of megabytes, and nothing links to it. public/ is copied
+# verbatim into dist/, so a stray add here would ship all of it.
+public/reff/
+
 # ---- the component labs stay local --------------------------------
 # /playground is a workbench, not portfolio surface: five renderings of
 # the work index, plus a dial kit and three component labs that exist to

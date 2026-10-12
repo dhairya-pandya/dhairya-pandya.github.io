@@ -12,7 +12,7 @@ import { getCollection } from "astro:content";
 import PageLayout from "../layouts/PageLayout.astro";
 import Band from "../components/ui/Band.astro";
 import Hero from "../components/blocks/Hero.astro";
-import IdentityGrid from "../components/blocks/IdentityGrid.astro";
+import Heatmap from "../components/blocks/Heatmap.astro";
 import AchievementBanner from "../components/blocks/AchievementBanner.astro";
 import Greeting from "../components/blocks/Greeting.astro";
 import ExperienceList from "../components/blocks/ExperienceList.astro";
@@ -96,10 +96,8 @@ const machineDoc = machineHome(
 <PageLayout machine={machineDoc} section="home">
   <Hero />
 
-  {/* Identity. No heading: the grid's own icons label every row,
-      and a heading here would just repeat the hero. */}
   <Band>
-    <IdentityGrid />
+    <Heatmap fig={1} />
   </Band>
 
   <Band>

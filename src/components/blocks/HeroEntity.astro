@@ -1,0 +1,99 @@
+---
+/**
+ * One inline noun in the hero letter.
+ *
+ * Every entity reads as ink against the ink-2 prose, with its Phosphor
+ * glyph trailing in ink-3. While the reader's pointer is anywhere in
+ * the entity's paragraph, the entity takes its tone (one of the four
+ * status tokens, so the colour means something: measured is green,
+ * failure is red) and the glyph swaps to its fill weight. That is pure
+ * CSS on the paragraph's :hover, so it costs no script.
+ *
+ * `peek` names a card pair in the hero's peek layer. Only three
+ * entities carry one; the rest take ink and nothing else.
+ *
+ * The markup is on one line on purpose: any whitespace between these
+ * tags would render as a space before the punctuation that follows the
+ * entity in the sentence.
+ */
+import { Icon } from "astro-icon/components";
+
+interface Props {
+  /** Phosphor glyph name, without the `ph:` prefix. */
+  icon?: string;
+  tone?: "note" | "live" | "halt" | "caution";
+  /** Key of a card pair in the hero's peek layer. */
+  peek?: string;
+  href?: string;
+}
+const { icon, tone, peek, href } = Astro.props;
+const Tag = href ? "a" : "span";
+---
+
+<Tag class="ent" href={href} data-tone={tone} data-peek={peek} style={tone ? `--tone: var(--color-${tone})` : undefined} tabindex={peek ? 0 : undefined} role={peek ? "button" : undefined} aria-expanded={peek ? "false" : undefined}><span class="ent-word"><slot /></span>{icon && <span class="ent-ico" aria-hidden="true"><Icon name={`ph:${icon}`} class="ent-ico-reg" /><Icon name={`ph:${icon}-fill`} class="ent-ico-fill" /></span>}</Tag>
+
+<style>
+  .ent {
+    font-weight: 500;
+    color: var(--color-ink);
+    white-space: nowrap;
+    border-radius: 4px;
+    outline: none;
+    transition: color var(--motion-hover);
+  }
+  .ent[role="button"] {
+    cursor: pointer;
+  }
+  .ent:focus-visible {
+    box-shadow:
+      0 0 0 2px var(--color-ground),
+      0 0 0 3.5px var(--color-note);
+  }
+  a.ent:hover .ent-word {
+    text-decoration: underline;
+    text-decoration-thickness: from-font;
+    text-underline-position: from-font;
+  }
+
+  .ent-ico {
+    display: inline-grid;
+    margin-left: 0.12em;
+    vertical-align: -0.16em;
+    color: var(--color-ink-3);
+    transition:
+      color var(--motion-hover),
+      transform var(--motion-hover);
+  }
+  .ent-ico > :global(svg) {
+    grid-area: 1 / 1;
+    width: 1.05em;
+    height: 1.05em;
+  }
+  .ent-ico > :global(.ent-ico-fill) {
+    opacity: 0;
+  }
+
+  /* Paragraph hover: the tone arrives on every entity in the
+     paragraph at once, and the glyph fills. */
+  :global(.hero-para:hover) .ent[data-tone] {
+    color: var(--tone);
+  }
+  :global(.hero-para:hover) .ent[data-tone] .ent-ico {
+    color: var(--tone);
+  }
+  :global(.hero-para:hover) .ent[data-tone] .ent-ico > :global(.ent-ico-reg) {
+    opacity: 0;
+  }
+  :global(.hero-para:hover) .ent[data-tone] .ent-ico > :global(.ent-ico-fill) {
+    opacity: 1;
+  }
+  .ent:hover .ent-ico {
+    transform: rotate(-8deg) scale(1.12);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .ent:hover .ent-ico {
+      transform: none;
+    }
+  }
+</style>

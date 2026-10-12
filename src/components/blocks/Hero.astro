@@ -1,221 +1,655 @@
 ---
 /**
- * Hero.
+ * Hero. Figma 68:1806, settled in /playground/hero.
  *
- * Structure follows the reference you pointed at: avatar, name at a
- * modest size, role, two lines of bio, then a row of pills. The
- * previous version led with a 46px name over a large drawing, which
- * spent the whole first screen on saying who he is and none of it on
- * what he does.
+ * A letter rather than a name plate: the avatar cluster, "Hey!", then
+ * four short paragraphs whose proper nouns are the interface. Every
+ * value below was dialled in the lab and is pasted here as a constant;
+ * the lab stays the place to argue about them.
  *
- * What is ours rather than borrowed: the mono tagline line and the
- * availability dot that only goes green while the copy says he is
- * looking. No backdrop drawing: the air is the backdrop.
+ * Four systems, each small enough to read in one sitting:
+ *
+ *   Banner   A dithered warp field (paper-shaders, vanilla, no React),
+ *            full bleed behind the top bar, faded into the ground.
+ *   Ink      Paragraph hover colours every entity in that paragraph
+ *            with its status token. Pure CSS, see HeroEntity.
+ *   Editor   "AI engineer" sits in a design-tool selection with a live
+ *            format bar: font, bold, italic, ink. A wink at the craft,
+ *            and a real control.
+ *   Peek     Three entities (the name, the hackathon floor, the handle)
+ *            lift a tilted pair of cards that follow the cursor. The
+ *            pointer can travel onto the cards; they hold.
+ *
+ * Content stays readable with no script: the banner, the peek and the
+ * editor are enhancement, and the letter is plain prose underneath.
  */
 import { Icon } from "astro-icon/components";
-import { site } from "../../config/site";
-import FloatingCard from "./FloatingCard.astro";
+import HeroEntity from "./HeroEntity.astro";
+import { site, profiles } from "../../config/site";
+import { buildHeat } from "../../lib/heat";
 
+const github = profiles.find((p) => p.platform === "GitHub")!;
+
+/* The peek's mini contribution grid is the last 18 weeks of the same
+   generator the Heatmap figure draws, so the two can never disagree. */
+const recent = buildHeat("01.09.2025 - 27.08.2026").cells.filter((c) => c.week >= 52 - 18);
+
+/* Peek geometry, from the lab (Pair, tilt 7, spread 116, width 240,
+   lift 30). Portrait cards are 4:5, landscape cards 1.45x wide at 16:10. */
+const W = 240;
+const portrait = { w: W, h: W * 1.25 };
+const landscape = { w: W * 1.45, h: (W * 1.45) / 1.6 };
+const poseA = { x: -58, y: 0, r: -7 };
+const poseB = { x: 58, y: -4, r: 4.2 };
+const pose = (p: { x: number; y: number; r: number }, s: { w: number; h: number }) =>
+  `--x:${p.x}px;--y:${p.y}px;--r:${p.r}deg;--w:${s.w}px;--h:${s.h}px`;
+
+const tones = ["neutral", "note", "live", "halt", "caution"] as const;
 ---
 
-<section class="band hero-band relative">
-  <FloatingCard
-    src="/travel/buddha.jpg"
-    alt="A white Buddha statue wrapped in flowers, Marble Mountains"
-    side="right"
-    top="3rem"
-    tilt={-3}
-    width="5.5rem"
-  />
+<section class="band hero-band relative" data-hero>
+  {/* Full bleed, pulled up behind the sticky bar. The canvas mounts
+      into it from hero.ts; with no script it is just the ground. */}
+  <div class="hero-banner" aria-hidden="true" data-hero-banner>
+    <div class="hero-banner-canvas" data-hero-banner-canvas></div>
+    <div class="hero-banner-fade"></div>
+  </div>
 
-  <div class="column">
-    <div class="t-stagger">
-      <div class="t-stagger-line t-stagger-line--1 flex items-center">
-        <img
-          src="/avatar.jpg"
-          alt={site.name}
-          width="112"
-          height="112"
-          class="avatar object-cover"
-          fetchpriority="high"
-          decoding="async"
-        />
+  <div class="column relative z-[1]">
+    {/* The page's h1. "Hey!" is the visual lead, but a greeting is a
+        poor document title for a search engine or a screen reader. */}
+    <h1 class="sr-only">{site.name}, {site.role}</h1>
+
+    <div class="hero-body t-stagger" data-hero-body>
+      <div class="t-stagger-line t-stagger-line--1">
+        <div class="cluster">
+          <img src="/hero/logo-tile.svg" alt="" width="48" height="48" class="tile tile-logo" />
+          <span class="tile tile-photo">
+            <img src="/avatar.jpg" alt={site.name} width="60" height="59" fetchpriority="high" decoding="async" class="h-full w-full object-cover" />
+          </span>
+        </div>
       </div>
 
-      {/*
-        The name is now the largest thing on the page rather than the
-        fourth largest. text-wrap:balance so "Dhairya Pandya" breaks
-        into two even lines at narrow widths instead of leaving one
-        orphaned word under a long one.
-      */}
-      <h1
-        class="t-stagger-line t-stagger-line--2 mt-5 text-display font-medium text-balance text-ink"
-      >
-        {site.name}
-        {/*
-          Pronunciation, revealed on demand. A name people mispronounce
-          is a small real problem; the phonetic spelling is the honest
-          fix, since a synthesised recording would not be his voice.
+      <p class="greet t-stagger-line t-stagger-line--2">Hey!</p>
 
-          text-body pins this to the scale's base step. Without it the
-          button inherits --text-display and renders a 61px speaker
-          icon beside the name. The -2px nudge that used to sit here
-          was tuned against a 28px h1 and is wrong at every other size,
-          so the alignment is optical now via align-middle.
-        */}
-        <button
-          type="button" data-pronounce
-          class="phon ml-2 inline-flex items-center gap-1.5 rounded-md px-1 align-middle text-body text-ink-3 transition-colors duration-fast ease-out hover:text-ink"
-          aria-expanded="false"
-          aria-label="How to pronounce this name"
-        >
-          <Icon name="ph:speaker-high" class="size-4" aria-hidden="true" />
-          <span class="phon-text label normal-case">{site.pronounce}</span>
-        </button>
-      </h1>
+      <div class="letter">
+        <p class="hero-para t-stagger-line t-stagger-line--3">
+          I'm <HeroEntity peek="name">Dhairya</HeroEntity>, an <span class="sel" data-sel><span class="sel-phrase" data-sel-phrase>AI/ML engineer</span><span class="sel-h sel-tl" aria-hidden="true"></span><span class="sel-h sel-tr" aria-hidden="true"></span><span class="sel-h sel-bl" aria-hidden="true"></span><span class="sel-h sel-br" aria-hidden="true"></span><span class="sel-bar" role="toolbar" aria-label="Format the selected phrase">
+            <button type="button" class="sel-tool sel-tool-wide" data-sel-menu="font" aria-haspopup="menu" aria-expanded="false"><span data-sel-font-label>Geist</span><Icon name="ph:caret-down" class="size-2.5" aria-hidden="true" /></button>
+            <span class="sel-sep" aria-hidden="true"></span>
+            <button type="button" class="sel-tool" data-sel-bold aria-pressed="false" aria-label="Bold"><Icon name="ph:text-b-bold" class="size-[13px]" aria-hidden="true" /></button>
+            <button type="button" class="sel-tool" data-sel-italic aria-pressed="false" aria-label="Italic"><Icon name="ph:text-italic-bold" class="size-[13px]" aria-hidden="true" /></button>
+            <span class="sel-sep" aria-hidden="true"></span>
+            <button type="button" class="sel-tool sel-tool-wide" data-sel-menu="color" aria-haspopup="menu" aria-expanded="false" aria-label="Colour"><span class="sel-dot" data-sel-dot></span><Icon name="ph:caret-down" class="size-2.5" aria-hidden="true" /></button>
 
-      <p class="t-stagger-line t-stagger-line--3 mt-1 text-ink-2">
-        {site.role}
-        <span class="text-ink-3"> / </span>
-        <span class="font-mono">{site.tagline}</span>
-      </p>
+            <span class="sel-menu sel-menu-left" role="menu" aria-label="Fonts" data-sel-panel="font">
+              <span class="sel-menu-label">Fonts</span>
+              <button type="button" role="menuitemradio" aria-checked="true" class="sel-item" data-font="sans"><Icon name="ph:text-aa" class="size-[13px]" aria-hidden="true" /><span class="font-sans">Geist</span></button>
+              <button type="button" role="menuitemradio" aria-checked="false" class="sel-item" data-font="mono"><Icon name="ph:text-aa" class="size-[13px]" aria-hidden="true" /><span class="font-mono">Geist Mono</span></button>
+              <button type="button" role="menuitemradio" aria-checked="false" class="sel-item" data-font="serif"><Icon name="ph:text-aa" class="size-[13px]" aria-hidden="true" /><span style="font-family:'Instrument Serif', Georgia, serif">Instrument Serif</span></button>
+            </span>
 
-      <p class="t-stagger-line t-stagger-line--4 prose-measure mt-3 text-ink-2">
-        I build {site.builds}. Every project here states its baseline and the
-        conditions under which it fails.
-      </p>
+            <span class="sel-menu sel-menu-right" role="menu" aria-label="Ink" data-sel-panel="color">
+              <span class="sel-menu-label">Ink</span>
+              <span class="flex items-center gap-1.5 px-1 pb-0.5">
+                {tones.map((t) => (
+                  <button type="button" role="menuitemradio" aria-checked={t === "neutral" ? "true" : "false"} aria-label={t} class="sel-swatch" data-tone={t} style={`background:${t === "neutral" ? "var(--color-ink)" : `var(--color-${t})`}`} />
+                ))}
+              </span>
+            </span>
+          </span></span> in <HeroEntity icon="map-pin" tone="note">{site.location}</HeroEntity>, open to <HeroEntity icon="briefcase" tone="live">internships and research roles</HeroEntity> for summer 2027.
+        </p>
 
-      <p
-        class="t-stagger-line t-stagger-line--4 mt-3 flex items-center gap-2 text-ink-2"
-      >
-        <span class="status-dot" aria-hidden="true"></span>
-        {site.availability}
-      </p>
+        <p class="hero-para t-stagger-line t-stagger-line--3">
+          I build <HeroEntity icon="cpu" tone="note">machine learning</HeroEntity> that has to hold up outside the <HeroEntity icon="notebook">notebook</HeroEntity>, and I have <HeroEntity icon="trophy" tone="caution" peek="floor">hackathon</HeroEntity> scars to show for it.
+        </p>
 
-      <div
-        class="t-stagger-line t-stagger-line--5 mt-6 flex flex-wrap items-center gap-2.5"
-        style="display: flex;"
-      >
-        {/* Resume is the primary action: for the audience this site is
-            for, "show me the resume" is the job to be done, and email
-            lives one click away on /contact and in the dock. */}
-        <a href="/resume" class="pill pill-solid">
-          <Icon name="ph:read-cv-logo" class="size-4" aria-hidden="true" />
-          Resume
-        </a>
-        <a href="https://github.com/dhairya-pandya" rel="noopener" target="_blank" class="pill">
-          <Icon name="ph:github-logo" class="size-4" aria-hidden="true" />
-          GitHub
-        </a>
-        <button type="button" data-copy-email={site.email} class="pill">
-          <Icon name="ph:copy" class="size-4" aria-hidden="true" />
-          <span data-copy-label>Copy email</span>
-        </button>
+        <p class="hero-para t-stagger-line t-stagger-line--4">
+          Every project states its <HeroEntity icon="chart-line-up" tone="live">baseline</HeroEntity> and the conditions under which it <HeroEntity icon="warning-circle" tone="halt">fails</HeroEntity>.
+        </p>
+
+        <p class="hero-para t-stagger-line t-stagger-line--4">
+          Reach me at <span class="handle" data-peek="handle" tabindex="0" role="button" aria-expanded="false">@{github.handle}</span>, or read the <HeroEntity icon="read-cv-logo" tone="note" href="/resume">resume</HeroEntity>.
+        </p>
+
+        <div class="actions t-stagger-line t-stagger-line--5 flex flex-wrap items-center gap-2">
+          {/* Resume is the primary action: for the audience this site is
+              for, "show me the resume" is the job to be done. */}
+          <a href="/resume" class="pill pill-solid">
+            <Icon name="ph:read-cv-logo" class="size-4" aria-hidden="true" />
+            Resume
+          </a>
+          <a href={github.url} rel="noopener" target="_blank" class="pill">
+            <Icon name="ph:github-logo" class="size-4" aria-hidden="true" />
+            GitHub
+          </a>
+          <button type="button" data-copy-email={site.email} class="pill">
+            <Icon name="ph:copy" class="size-4" aria-hidden="true" />
+            <span data-copy-label>Copy email</span>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  {/* The peek layer. Decorative duplicates of what the letter already
+      says, so hidden from assistive tech; hero.ts moves it and opens
+      one group at a time. */}
+  <div class="peek-layer" aria-hidden="true" data-peek-layer>
+    <div class="peek-group" data-peek-group="name">
+      <div class="peek-card peek-img" style={pose(poseA, portrait)}>
+        <img src="/avatar.jpg" alt="" loading="lazy" decoding="async" />
+      </div>
+      <div class="peek-card" style={pose(poseB, landscape)}>
+        <div class="peek-face flex h-full flex-col justify-between p-3.5">
+          <div class="flex items-center gap-2.5">
+            <img src="/avatar.jpg" alt="" class="size-8 rounded-[10px] object-cover" loading="lazy" />
+            <div class="min-w-0">
+              <p class="truncate text-[13px] font-medium text-ink">{site.name}</p>
+              <p class="truncate font-mono text-[10px] text-ink-3">{site.pronounce}</p>
+            </div>
+          </div>
+          <div>
+            <p class="text-[15px] font-semibold tracking-tight text-ink">{site.role}</p>
+            <p class="mt-1 flex items-center gap-1.5 font-mono text-[10px] text-ink-3">
+              <Icon name="ph:envelope-simple" class="size-[11px]" /> {site.email}
+            </p>
+            <p class="mt-0.5 flex items-center gap-1.5 font-mono text-[10px] text-ink-3">
+              <Icon name="ph:clock" class="size-[11px]" /> <span class="numeric" data-clock data-tz={site.timezone}>--:--:--</span> IST
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    {/* Travel photos, standing in for the "floor" peek. */}
+    <div class="peek-group" data-peek-group="floor">
+      <div class="peek-card peek-img" style={pose(poseA, portrait)}>
+        <img src="/travel/pagoda.jpg" alt="" loading="lazy" decoding="async" />
+      </div>
+      <div class="peek-card peek-img" style={pose(poseB, portrait)}>
+        <img src="/travel/buddha.jpg" alt="" loading="lazy" decoding="async" />
+      </div>
+    </div>
+
+    <div class="peek-group" data-peek-group="handle">
+      <div class="peek-card" style={pose(poseA, landscape)}>
+        <div class="peek-face flex h-full flex-col justify-between p-3.5">
+          <div class="flex items-center justify-between">
+            <span class="flex items-center gap-2">
+              <Icon name="ph:github-logo-fill" class="size-[18px] text-ink" />
+              <span class="font-mono text-[12px] text-ink">@{github.handle}</span>
+            </span>
+            <Icon name="ph:arrow-up-right" class="size-3 text-ink-3" />
+          </div>
+          <div class="grid grid-flow-col grid-rows-7 justify-start gap-[2px]">
+            {recent.map((c) => (
+              <span class="size-[7px] rounded-[1.5px]" style={c.level === 0 ? "background:var(--color-line-2)" : `background:var(--color-live);opacity:${c.level / 4}`} />
+            ))}
+          </div>
+          <p class="font-mono text-[10px] text-ink-3">{github.stat}</p>
+        </div>
+      </div>
+      <div class="peek-card" style={pose(poseB, landscape)}>
+        <div class="peek-face peek-contact flex h-full flex-col items-center justify-center p-3.5 text-center">
+          <p class="text-[19px] font-semibold tracking-tight text-note">{site.role}</p>
+          <p class="mt-1 flex items-center gap-1.5 font-mono text-[10px] text-ink-2">
+            <Icon name="ph:envelope-simple-fill" class="size-[11px]" /> {site.email}
+          </p>
+        </div>
       </div>
     </div>
   </div>
 </section>
 
 <style>
-  /* The hero opens the page, so it gets air no other band gets:
-     roughly double the section rhythm above, half again below. */
-  /*
-   * Top padding came down from 4.5/6.5rem to 2/3rem.
-   *
-   * The old value was tuned against a 28px name, where the block
-   * needed air above it to read as deliberate rather than as content
-   * that had slipped to the top of the page. At 61px the name supplies
-   * that weight itself, and the same padding then stacked with the
-   * 48px sticky bar and main's own 48px to put the focal point about
-   * 200px down: a hierarchy problem dressed up as whitespace.
-   */
+  /* The lab's "top: 164" is measured from the viewport. Here the
+     section already starts 96px down (48px bar + main's 48px), so 68px
+     of padding puts the cluster at the same 164. */
   .hero-band {
-    padding-block: 2rem 3rem;
+    padding-block: 2.5rem 3rem;
+    /* Clip sideways only: the peek pair can overhang a phone's edge,
+       and the banner still needs to spill upward behind the bar. */
+    overflow-x: clip;
   }
   @media (min-width: 40rem) {
     .hero-band {
-      padding-block: 3rem 3.5rem;
+      padding-block: 68px 3.5rem;
     }
   }
 
-  /* ---- avatar ------------------------------------------------
-     One portrait, no monogram behind it. The paired-squircle idea
-     came from the reference, but with a real photograph the second
-     mark only competed with the face. */
-  .avatar {
-    width: 4.75rem;
-    height: 4.75rem;
-    border-radius: 1.375rem;
-    display: block;
-    background-color: var(--color-raised);
+  /* ---- banner: 300 tall, pulled up to the top of the page ---- */
+  .hero-banner {
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: -176px;
+    height: 300px;
+    opacity: 0.7;
+    pointer-events: none;
+    z-index: 0;
+  }
+  .hero-banner-canvas {
+    position: absolute;
+    inset: 0;
+  }
+  /* 332 over a 300 banner: the fade starts above the banner's top edge,
+     so no row of the shader ever reads at full strength. */
+  .hero-banner-fade {
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    height: 332px;
+    background: linear-gradient(to top, var(--color-ground), transparent);
   }
 
-  /* ---- pronunciation ----------------------------------------- */
-  .phon-text {
-    max-width: 0;
-    overflow: hidden;
-    white-space: nowrap;
-    opacity: 0;
+  /* ---- the letter ---- */
+  /* 19/1.65 (31.35px leading). Up from the lab's 17/1.7: the letter
+     is the whole hero now, and at 17 it read as body copy rather than
+     as the page's opening statement. */
+  .hero-body {
+    font-size: 19px;
+    line-height: 1.65;
+    letter-spacing: 0.01em;
     transition:
-      max-width var(--motion-disclose),
+      filter var(--motion-disclose),
       opacity var(--motion-disclose);
   }
-  .phon[aria-expanded="true"] .phon-text,
-  .phon:hover .phon-text,
-  .phon:focus-visible .phon-text {
-    max-width: 16rem;
-    opacity: 1;
+  [data-hero][data-peeking] .hero-body {
+    filter: blur(3px);
+    opacity: 0.7;
+  }
+  /* Full column width. The lab's 640 measure left a dead strip on
+     the right of the 736 column; at 19px the full width is ~70
+     characters a line, still inside a comfortable measure. */
+  .letter {
+    display: grid;
+    gap: 22px;
+  }
+  .hero-para {
+    color: var(--color-ink-2);
+    text-wrap: pretty;
+  }
+  /* The stagger's shown state leaves every line with a transform and a
+     filter, which makes each one its own stacking context: the next
+     paragraph would paint over the format bar's menus and take their
+     clicks. The line holding the selection sits above its siblings. */
+  .letter > :has(.sel) {
+    position: relative;
+    z-index: 6;
+  }
+  .actions {
+    padding-top: 8px;
   }
 
-  /* ---- availability ------------------------------------------ */
-  .status-dot {
+  /* ---- avatar cluster, Figma 68:1818 ---- */
+  .cluster {
     position: relative;
-    width: 6px;
-    height: 6px;
-    flex: none;
-    border-radius: 999px;
-    background-color: var(--color-live);
+    width: 138px;
+    height: 54px;
   }
-  /* The pulse is a bordered ring scaling out, not a spreading
-     box-shadow: same signal, no shadow language, and transform +
-     opacity stay on the compositor. The only looping animation on
-     the site, well under the 3Hz flash threshold. */
-  .status-dot::after {
+  .tile {
+    position: absolute;
+    display: block;
+    width: 48px;
+    height: 48px;
+    transition: transform var(--motion-disclose);
+  }
+  .tile-logo {
+    left: -7.9px;
+    top: -1.9px;
+    transform: rotate(-7.99deg);
+  }
+  .tile-photo {
+    left: 33.1px;
+    top: -3.9px;
+    overflow: hidden;
+    border-radius: 12px;
+    border: 0.8px solid rgb(0 0 0 / 0.04);
+    background: url("/hero/tile-bg.png") center / cover;
+  }
+  .tile-photo > img {
+    position: absolute;
+    left: 50%;
+    top: calc(50% + 1.5px);
+    width: 60px;
+    height: 59px;
+    max-width: none;
+    translate: -50% -50%;
+    object-fit: cover;
+  }
+  .cluster:hover .tile-logo {
+    transform: translate(-6px, 0) rotate(-14deg);
+  }
+  .cluster:hover .tile-photo {
+    transform: translate(8px, 0) rotate(6deg);
+  }
+
+  /* ---- greeting: scaled with the letter, 22 above, 10 below ---- */
+  .greet {
+    margin: 22px 0 10px;
+    font-size: 25px;
+    line-height: 32px;
+    font-weight: 500;
+    letter-spacing: -0.005em;
+    color: var(--color-ink);
+  }
+
+  /* ---- the handle chip ---- */
+  .handle {
+    display: inline-block;
+    padding: 0 0.45em;
+    border-radius: 6px;
+    background: var(--color-raised);
+    color: var(--color-ink-2);
+    line-height: 1.5;
+    cursor: pointer;
+    outline: none;
+    transition:
+      background-color var(--motion-hover),
+      color var(--motion-hover);
+  }
+  .handle:hover,
+  .handle[aria-expanded="true"] {
+    background: var(--color-ink);
+    color: var(--color-ground);
+  }
+  .handle:focus-visible {
+    box-shadow:
+      0 0 0 2px var(--color-ground),
+      0 0 0 3.5px var(--color-note);
+  }
+
+  /* ---- selection editor ---- */
+  .sel {
+    position: relative;
+    display: inline-block;
+    padding: 0 0.3em;
+    margin: 0 0.1em;
+    line-height: 1.35;
+    color: var(--color-ink);
+  }
+  .sel-phrase {
+    transition: color var(--motion-hover);
+  }
+  .sel-h {
+    position: absolute;
+    width: 5px;
+    height: 5px;
+    background: var(--color-ground);
+    border: 0.8px solid var(--color-note);
+  }
+  .sel-tl { top: -3px; left: -3px; }
+  .sel-tr { top: -3px; right: -3px; }
+  .sel-bl { bottom: -3px; left: -3px; }
+  .sel-br { bottom: -3px; right: -3px; }
+
+  .sel-bar {
+    position: absolute;
+    top: calc(100% + 8px);
+    left: 50%;
+    translate: -50% 0;
+    z-index: 10;
+    display: flex;
+    align-items: center;
+    gap: 2px;
+    padding: 3px;
+    border-radius: 9px;
+    background: var(--color-surface);
+    border: 0.8px solid var(--color-line);
+    box-shadow: 0 8px 12px rgb(0 0 0 / 0.45);
+    font-size: 11px;
+    line-height: 1;
+    font-weight: 400;
+    font-style: normal;
+    letter-spacing: 0.01em;
+    color: var(--color-ink-2);
+    white-space: nowrap;
+  }
+  /* On a phone the phrase can wrap to the start of a line, and a
+     centred bar would hang off the left edge. Pin it to the phrase. */
+  @media (max-width: 40rem) {
+    .sel-bar {
+      left: 0;
+      translate: none;
+    }
+  }
+  .sel-tool {
+    display: inline-grid;
+    place-items: center;
+    height: 22px;
+    min-width: 22px;
+    padding: 0 5px;
+    border-radius: 6px;
+    color: var(--color-ink-2);
+    transition:
+      background-color var(--motion-hover),
+      color var(--motion-hover);
+  }
+  .sel-tool-wide {
+    display: inline-flex;
+    gap: 5px;
+    padding: 0 7px;
+  }
+  .sel-tool:hover,
+  .sel-tool[aria-expanded="true"],
+  .sel-tool[aria-pressed="true"] {
+    background: var(--color-raised);
+    color: var(--color-ink);
+  }
+  .sel-sep {
+    width: 1px;
+    height: 14px;
+    margin: 0 2px;
+    background: var(--color-line-2);
+  }
+  .sel-dot {
+    width: 9px;
+    height: 9px;
+    border-radius: 999px;
+    background: var(--color-ink);
+    box-shadow: inset 0 0 0 1px var(--color-line);
+  }
+
+  .sel-menu {
+    position: absolute;
+    top: calc(100% + 6px);
+    display: flex;
+    flex-direction: column;
+    gap: 1px;
+    min-width: 9.5rem;
+    padding: 4px;
+    border-radius: 10px;
+    background: var(--color-surface);
+    border: 1px solid var(--color-line);
+    box-shadow: 0 12px 32px -12px rgb(0 0 0 / 0.5);
+    opacity: 0;
+    visibility: hidden;
+    translate: 0 -4px;
+    filter: blur(6px);
+    transition:
+      opacity var(--motion-dismiss),
+      translate var(--motion-dismiss),
+      filter var(--motion-dismiss),
+      visibility 0s linear var(--duration-fast);
+  }
+  .sel-menu[data-open] {
+    opacity: 1;
+    visibility: visible;
+    translate: 0 0;
+    filter: blur(0);
+    transition:
+      opacity var(--motion-disclose),
+      translate var(--motion-disclose),
+      filter var(--motion-disclose),
+      visibility 0s;
+  }
+  .sel-menu-left { left: 0; }
+  .sel-menu-right { right: 0; min-width: 0; }
+  .sel-menu-label {
+    padding: 4px 6px 3px;
+    font-size: 10px;
+    color: var(--color-ink-3);
+  }
+  .sel-item {
+    display: flex;
+    align-items: center;
+    gap: 7px;
+    padding: 6px;
+    border-radius: 6px;
+    font-size: 12px;
+    color: var(--color-ink-2);
+    text-align: left;
+    transition:
+      background-color var(--motion-hover),
+      color var(--motion-hover);
+  }
+  .sel-item:hover,
+  .sel-item:focus-visible,
+  .sel-item[aria-checked="true"] {
+    background: var(--color-raised);
+    color: var(--color-ink);
+    outline: none;
+  }
+  .sel-swatch {
+    width: 18px;
+    height: 18px;
+    border-radius: 999px;
+    box-shadow: inset 0 0 0 1px var(--color-line);
+    transition:
+      transform var(--motion-hover),
+      box-shadow var(--motion-hover);
+  }
+  .sel-swatch:hover {
+    transform: scale(1.12);
+  }
+  .sel-swatch[aria-checked="true"] {
+    box-shadow:
+      0 0 0 2px var(--color-surface),
+      0 0 0 3.5px var(--color-ink-3);
+  }
+
+  /* ---- peek ---- */
+  .peek-layer {
+    position: absolute;
+    left: 0;
+    top: 0;
+    z-index: 20;
+    pointer-events: none;
+    will-change: transform;
+  }
+  @media (max-width: 40rem) {
+    .peek-layer {
+      scale: 0.7;
+    }
+  }
+  .peek-group {
+    position: absolute;
+    left: 0;
+    top: 0;
+  }
+  /* The bridge: from the anchor (just above the cursor) up to the
+     cards' bottom edge, as wide as the pair. Live only while open. */
+  .peek-group::after {
     content: "";
     position: absolute;
-    inset: -3px;
-    border-radius: 999px;
-    border: 1px solid var(--color-live);
-    animation: pulse 2.4s var(--ease-in-out) infinite;
+    left: -200px;
+    width: 440px;
+    bottom: 0;
+    height: 34px;
+    pointer-events: none;
   }
-  @keyframes pulse {
-    0% {
-      opacity: 0.8;
-      transform: scale(0.7);
-    }
-    70%,
-    100% {
-      opacity: 0;
-      transform: scale(1.6);
-    }
+  .peek-group[data-open]::after {
+    pointer-events: auto;
   }
+  .peek-card {
+    position: absolute;
+    bottom: 30px;
+    left: calc(var(--w) / -2);
+    width: var(--w);
+    height: var(--h);
+    overflow: hidden;
+    padding: 4px;
+    border-radius: 10.8px;
+    background: color-mix(in oklab, var(--color-ink) 92%, var(--color-ground));
+    box-shadow:
+      0 1px 0 rgb(255 255 255 / 0.04) inset,
+      0 22px 48px -18px rgb(0 0 0 / 0.6),
+      0 4px 12px -6px rgb(0 0 0 / 0.35);
+    transform-origin: 50% 100%;
+    opacity: 0;
+    filter: blur(3px);
+    transform: translate(0, 14px) rotate(0deg) scale(0.86);
+    pointer-events: none;
+    transition:
+      opacity var(--motion-dismiss),
+      transform var(--motion-dismiss),
+      filter var(--motion-dismiss),
+      box-shadow var(--motion-hover);
+  }
+  .peek-group[data-open] .peek-card {
+    opacity: 1;
+    filter: blur(0);
+    transform: translate(var(--x), var(--y)) rotate(var(--r)) scale(var(--s, 1));
+    pointer-events: auto;
+    transition:
+      opacity 320ms var(--ease-out),
+      transform 320ms var(--ease-out),
+      filter 320ms var(--ease-out),
+      box-shadow var(--motion-hover);
+  }
+  .peek-group[data-open] .peek-card:nth-child(2) {
+    transition-delay: 30ms;
+  }
+  .peek-group[data-open] .peek-card:nth-child(2):hover,
+  .peek-group[data-open] .peek-card:hover {
+    --r: 0deg;
+    --s: 1.06;
+    z-index: 9;
+    transition-delay: 0ms;
+    box-shadow:
+      0 1px 0 rgb(255 255 255 / 0.05) inset,
+      0 30px 60px -16px rgb(0 0 0 / 0.68),
+      0 8px 20px -8px rgb(0 0 0 / 0.45);
+  }
+  .peek-img > img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 6px;
+    filter: grayscale(1) contrast(1.05);
+  }
+  .peek-face {
+    border-radius: 7px;
+    background-color: var(--color-surface);
+  }
+  .peek-contact {
+    background-image:
+      repeating-linear-gradient(90deg, color-mix(in oklab, var(--color-note) 18%, transparent) 0 1px, transparent 1px 4px),
+      repeating-linear-gradient(0deg, color-mix(in oklab, var(--color-note) 18%, transparent) 0 1px, transparent 1px 4px);
+  }
+
   @media (prefers-reduced-motion: reduce) {
-    .status-dot::after {
-      animation: none;
-      opacity: 0;
+    .peek-card,
+    .peek-group[data-open] .peek-card,
+    .sel-menu,
+    .sel-menu[data-open],
+    .tile,
+    .hero-body {
+      transition: none;
+    }
+    .cluster:hover .tile-logo {
+      transform: rotate(-7.99deg);
+    }
+    .cluster:hover .tile-photo {
+      transform: none;
     }
   }
 </style>
 
 <script>
-  /* Toggle keeps the phonetic spelling open on touch, where there is
-     no hover to hold it. */
-  document.querySelectorAll<HTMLElement>("[data-pronounce]").forEach((b) => {
-    b.addEventListener("click", () => {
-      b.setAttribute(
-        "aria-expanded",
-        b.getAttribute("aria-expanded") === "true" ? "false" : "true"
-      );
-    });
-  });
+  import { initHero } from "../../scripts/hero";
+  initHero();
 </script>
