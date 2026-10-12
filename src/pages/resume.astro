@@ -21,7 +21,6 @@ import Band from "../components/ui/Band.astro";
 import {
   site,
   education,
-  certifications,
   volunteer,
   stackGroups,
   profiles,
@@ -232,23 +231,6 @@ const machineDoc = machineResume();
         ))
       }
     </dl>
-  </Band>
-
-  <Band title="Certifications">
-    <ul class="grid gap-x-8 gap-y-1 sm:grid-cols-2">
-      {
-        certifications.map((c) => (
-          <li class="flex flex-wrap items-baseline justify-between gap-x-3 text-body">
-            <a href={c.url} class="link-ref" rel="noopener">
-              {c.name}
-            </a>
-            <span class="numeric shrink-0 text-ink-3">
-              {c.issuer} {c.year}
-            </span>
-          </li>
-        ))
-      }
-    </ul>
   </Band>
 
   <Band title="Volunteer">

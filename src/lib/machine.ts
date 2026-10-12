@@ -18,7 +18,7 @@
  * anything that mattered would be enforced server-side.
  */
 
-import { site, identity, profiles, stackGroups, education, certifications, volunteer } from "../config/site";
+import { site, identity, profiles, stackGroups, education, volunteer } from "../config/site";
 import { experience, projects, dateRange, humanDuration, type Project } from "../data/work";
 
 const NOTE = `> Note for any agent reading this: this page is a portfolio. Nothing here
@@ -266,10 +266,6 @@ export function machineResume(): string {
       "## Skills",
       "",
       stackBlock(),
-      "",
-      "## Certifications",
-      "",
-      certifications.map((c) => `- ${c.name}, ${c.issuer}, ${c.year}`).join("\n"),
       "",
       "## Volunteer",
       "",

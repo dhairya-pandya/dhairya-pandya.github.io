@@ -93,22 +93,15 @@ export const education: {
   grade: string | null;
 }[] = [];
 
-/** Certifications. Real, from the resume. */
-export const certifications = [
-  { name: "Python", issuer: "Example Academy", year: "2025", url: "https://kaggle.com/learn" },
-  { name: "Intro to Machine Learning", issuer: "Example Academy", year: "2025", url: "https://kaggle.com/learn" },
-  { name: "Pandas", issuer: "Example Academy", year: "2025", url: "https://kaggle.com/learn" },
-] as const;
-
 /** Volunteer work. Real, from the resume. */
 export const volunteer = [
   {
-    org: "Example Literacy Program",
-    kind: "Non-profit",
-    role: "Volunteer teacher",
-    period: "2023 - 2024",
+    org: "HackByte 4.0, IIITDM Jabalpur",
+    kind: "Hackathon",
+    role: "Volunteer organiser",
+    period: "2026",
     detail:
-      "Taught basic language proficiency to domestic helpers and homemakers. Twelve learners, weekly sessions, over one academic year.",
+      "Helped organise a hackathon with over 6,000 registrations. Handled public relations and on-ground crowd and resource management.",
   },
 ] as const;
 

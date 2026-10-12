@@ -103,7 +103,7 @@ endobj
 << /Type /Page /Parent 2 0 R /MediaBox [0 0 595.28 841.89] /Resources << /Font << /F1 3 0 R /F2 4 0 R /F3 5 0 R >> >> /Contents 9 0 R >>
 endobj
 9 0 obj
-<< /Length 1302 >>
+<< /Length 1478 >>
 stream
 BT /F2 10 Tf 0 g 1 0 0 1 52.00 789.89 Tm (Serving and infra) Tj ET
 0.55 g 54.00 779.89 1.6 1.6 re f
@@ -117,12 +117,13 @@ BT /F1 9.5 Tf 0.2 g 1 0 0 1 62.00 711.89 Tm (Fine-tuning, time-series, computer 
 BT /F2 10 Tf 0 g 1 0 0 1 52.00 692.39 Tm (Foundations) Tj ET
 0.55 g 54.00 682.39 1.6 1.6 re f
 BT /F1 9.5 Tf 0.2 g 1 0 0 1 62.00 679.39 Tm (Linear algebra, probability, statistics, optimization) Tj ET
-BT /F2 9 Tf 0 g 1 0 0 1 52.00 654.89 Tm (CERTIFICATIONS) Tj ET
+BT /F2 9 Tf 0 g 1 0 0 1 52.00 654.89 Tm (VOLUNTEER) Tj ET
 0.8 G 0.5 w 52 649.89 m 543.28 649.89 l S
-BT /F2 10 Tf 0 g 1 0 0 1 52.00 635.89 Tm (Kaggle) Tj ET
-BT /F3 8.5 Tf 0.45 g 1 0 0 1 522.88 635.89 Tm (2025) Tj ET
+BT /F2 10 Tf 0 g 1 0 0 1 52.00 635.89 Tm (Volunteer organiser, HackByte 4.0, IIITDM Jabalpur) Tj ET
+BT /F3 8.5 Tf 0.45 g 1 0 0 1 522.88 635.89 Tm (2026) Tj ET
 0.55 g 54.00 625.89 1.6 1.6 re f
-BT /F1 9.5 Tf 0.2 g 1 0 0 1 62.00 622.89 Tm (Python / Intro to Machine Learning / Pandas) Tj ET
+BT /F1 9.5 Tf 0.2 g 1 0 0 1 62.00 622.89 Tm (Helped organise a hackathon with over 6,000 registrations. Handled public relations and on-ground crowd and) Tj ET
+BT /F1 9.5 Tf 0.2 g 1 0 0 1 62.00 610.39 Tm (resource management.) Tj ET
 BT /F3 7.5 Tf 0.55 g 1 0 0 1 144.64 34.00 Tm (Dhairya Pandya  /  page 2 of 2  /  dhairyapandya.holdout.workers.dev) Tj ET
 endstream
 endobj
@@ -141,5 +142,5 @@ xref
 trailer
 << /Size 10 /Root 1 0 R /Info << /Title (Dhairya Pandya - Resume) /Author (Dhairya Pandya) /Producer (scripts/gen-resume-pdf.mjs) >> >>
 startxref
-8558
+8734
 %%EOF

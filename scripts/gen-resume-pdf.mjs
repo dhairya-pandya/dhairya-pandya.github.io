@@ -192,9 +192,13 @@ const RESUME = {
       ],
     },
     {
-      title: "Certifications",
+      title: "Volunteer",
       entries: [
-        { head: "Kaggle", meta: "2025", bullets: ["Python  /  Intro to Machine Learning  /  Pandas"] },
+        {
+          head: "Volunteer organiser, HackByte 4.0, IIITDM Jabalpur",
+          meta: "2026",
+          bullets: ["Helped organise a hackathon with over 6,000 registrations. Handled public relations and on-ground crowd and resource management."],
+        },
       ],
     },
   ],
