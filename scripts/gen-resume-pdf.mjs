@@ -111,7 +111,7 @@ const RESUME = {
     "dhairyapandya.workspace@gmail.com",
     "+91 91739 31925",
     "India",
-    "dhairya-pandya.dev",
+    "dhairyapandya.holdout.workers.dev",
   ],
   summary:
     "AI/ML engineer focused end to end on machine learning: data pipelines, model training, evaluation, and deployment. Every result I report comes with the baseline it beat and the conditions under which it fails.",
@@ -305,7 +305,7 @@ for (const section of RESUME.sections) {
 pages.push(ops);
 const total = pages.length;
 pages.forEach((pageOps, i) => {
-  const label = `${RESUME.name}  /  page ${i + 1} of ${total}  /  dhairya-pandya.dev`;
+  const label = `${RESUME.name}  /  page ${i + 1} of ${total}  /  dhairyapandya.holdout.workers.dev`;
   const w = widthOf(label, "mono", 7.5);
   pageOps.push(
     `BT /F3 7.5 Tf 0.55 g 1 0 0 1 ${((PAGE_W - w) / 2).toFixed(2)} ${(M - 18).toFixed(2)} Tm (${esc(label)}) Tj ET`

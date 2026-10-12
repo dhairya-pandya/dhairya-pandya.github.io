@@ -30,7 +30,7 @@ export const site = {
   pronouns: "he/him",
   email: "dhairyapandya.workspace@gmail.com",
   phone: "+91 91739 31925",
-  url: "https://dhairya-pandya.dev",
+  url: "https://dhairyapandya.holdout.workers.dev",
   /** Rendered in the header's left slot, mono uppercase. */
   est: "EST. 2006",
 } as const;
@@ -143,7 +143,7 @@ export const notes = [
  * whose whole argument is "I show my work".
  */
 export const colophon = {
-  domain: "dhairya-pandya.dev",
+  domain: "dhairyapandya.holdout.workers.dev",
   blurb: "A portfolio that shows the measurement, not just the result.",
   cells: [
     { key: "Crafted by", value: "@dhairya-pandya", href: "https://github.com/dhairya-pandya" },
