@@ -274,40 +274,40 @@ const files = {};
 }
 
 /* =================================================================
-   3. Pipeline. AuraArchive: audio in, structured blog out, with the
-   review gate drawn as a real stage rather than an implied one,
-   because the review state is what the schema is built around.
+   3. RocketLandingWithRL: success rate per level, from the README's
+   results table (100 held-out starts per cell, one seed). Three rows:
+   the hand-written PID, the best mix-trained PPO, and the L3 specialist,
+   so the picture shows both the generalist win and the L4 gap.
    ================================================================= */
 {
-  const [hot] = HUES.amber;
-  const stages = [
-    { n: "AUDIO", s: "upload" },
-    { n: "GEMINI 2.5", s: "transcribe + reason" },
-    { n: "DRAFT", s: "structured JSON" },
-    { n: "REVIEW", s: "human gate" },
-    { n: "PUBLISHED", s: "public feed" },
+  const [hot] = HUES.cyan;
+  const levels = ["L0", "L1", "L2", "L3", "L4"];
+  const rows = [
+    { n: "PID (HAND-WRITTEN)", v: [1.0, 1.0, 0.98, 0.45, 0.45], c: INK, o: 0.3 },
+    { n: "PPO, L3 ONLY", v: [1.0, 0.99, 0.99, 0.95, 0.1], c: INK, o: 0.5 },
+    { n: "PPO, MIX + ENTROPY", v: [1.0, 0.95, 0.91, 0.62, 0.76], c: hot, o: 0.92 },
   ];
-  const y = H / 2 - 20, bw = 190, bh = 84, gap = 42;
-  const totalW = stages.length * bw + (stages.length - 1) * gap;
-  const x0 = (W - totalW) / 2;
-  let boxes = "", arrows = "";
-  stages.forEach((s, i) => {
-    const x = x0 + i * (bw + gap);
-    const isGate = s.n === "REVIEW";
-    boxes += `<g>
-      <rect x="${x}" y="${y}" width="${bw}" height="${bh}" rx="8" fill="${isGate ? hot : "none"}" opacity="${isGate ? 0.22 : 1}" stroke="${isGate ? hot : LINE}" stroke-width="${isGate ? 1.5 : 1}"/>
-      <text x="${x + bw / 2}" y="${y + 34}" text-anchor="middle" font-family="Geist Mono, ui-monospace, monospace" font-size="17" letter-spacing="1" fill="${INK}">${s.n}</text>
-      <text x="${x + bw / 2}" y="${y + 58}" text-anchor="middle" font-family="Geist Mono, ui-monospace, monospace" font-size="13" fill="${DIM}">${s.s}</text>
-    </g>`;
-    if (i < stages.length - 1) {
-      const ax = x + bw;
-      arrows += `<path d="M${ax + 8} ${y + bh / 2}h${gap - 16}" stroke="${hot}" stroke-width="1.5"/>
-        <path d="M${ax + gap - 20} ${y + bh / 2 - 5}l12 5-12 5" fill="none" stroke="${hot}" stroke-width="1.5"/>`;
-    }
+  const x0 = 110, y0 = 150, h = 270, groupW = 180, barW = 40;
+  let bars = "";
+  levels.forEach((lv, li) => {
+    const gx = x0 + li * groupW;
+    rows.forEach((r, ri) => {
+      const v = r.v[li];
+      const bh = v * h;
+      const bx = gx + ri * (barW + 6);
+      const by = y0 + h - bh;
+      bars += `<rect x="${bx}" y="${by.toFixed(1)}" width="${barW}" height="${bh.toFixed(1)}" fill="${r.c}" opacity="${r.o}"/>`;
+    });
+    bars += `<text x="${gx + (barW * 3 + 12) / 2}" y="${y0 + h + 30}" text-anchor="middle" font-family="Geist Mono, ui-monospace, monospace" font-size="18" fill="${INK}">${lv}</text>`;
   });
-  files["poster-auraarchive.svg"] = plate(
-    `${arrows}${boxes}${caption("FIG.03  AUDIO TO BLOG", "Draft, then a human gate", "resilient JSON parsing across the whole run")}`,
-    { grid: false }
+  let legend = "";
+  rows.forEach((r, i) => {
+    legend += `<rect x="${x0 + i * 300}" y="${y0 - 66}" width="14" height="14" fill="${r.c}" opacity="${r.o}"/>
+      <text x="${x0 + i * 300 + 24}" y="${y0 - 54}" font-family="Geist Mono, ui-monospace, monospace" font-size="15" letter-spacing="1" fill="${DIM}">${r.n}</text>`;
+  });
+  const hl = `<text x="${x0 + 4 * groupW + (barW * 2 + 6) + 14}" y="${y0 + h - 0.76 * h - 14}" font-family="Geist Mono, ui-monospace, monospace" font-size="22" fill="${hot}">76%</text>`;
+  files["poster-rocketlanding.svg"] = plate(
+    `${axes(x0 - 30, y0, levels.length * groupW, h, "", "SUCCESS RATE")}${legend}${bars}${hl}${caption("FIG.04  BOOSTER LANDING", "Generalists beat specialists", "100 held-out starts per cell, one seed, L4 is the far booster return")}`
   );
 }
 
@@ -681,6 +681,45 @@ const PW = 1000, PH = 500;
     PW, PH, { grid: false }
   );
 });
+
+/* =================================================================
+   RL and interpretability post. Two themed figures:
+   - cover: an illustrative action field over (tilt, offset), with
+     the bright ridge where a learned policy fires its engines. It is
+     drawn, not measured, and the label says so.
+   - diag: the reward shaping lesson. A flat crash penalty scores a
+     3 m/s touchdown the same as 30 m/s; the graded penalty does not.
+   ================================================================= */
+{
+  const [hot] = HUES.cyan;
+  const cols = 14, rows = 8, cw = 44, ch = 34, ox = 230, oy = 100;
+  let cells = "";
+  for (let r = 0; r < rows; r++) for (let c = 0; c < cols; c++) {
+    const u = c / (cols - 1) - 0.5, v = r / (rows - 1);
+    const ridge = Math.exp(-Math.pow((u * 2.2 + 0.25) * 3.2, 2)) * (0.35 + 0.65 * v);
+    cells += `<rect x="${ox + c * cw}" y="${oy + r * ch}" width="${cw - 3}" height="${ch - 3}" rx="2" fill="${hot}" opacity="${(0.06 + 0.9 * ridge).toFixed(3)}"/>`;
+  }
+  const coverChildren = `${cells}
+    <text x="${ox}" y="${oy - 22}" font-family="Geist Mono, ui-monospace, monospace" font-size="16" letter-spacing="1.4" fill="var(--lp-dim)">THRUST BY TILT (ILLUSTRATIVE)</text>
+    <text x="60" y="${PH - 40}" font-family="Geist Mono, ui-monospace, monospace" font-size="17" letter-spacing="1.6" fill="var(--lp-dim)">WHERE THE POLICY FIRES, AND WHY</text>`;
+  emitThemed(files, "cover-interp-rl", coverChildren, PW, PH, { grid: false });
+
+  const x0 = 150, y0 = 90, w = 700, h = 260;
+  const vmax = 30, pen = (v, mode) => (mode === "flat" ? -100 : Math.max(-100, -20 - 8 * v));
+  const px = (v) => x0 + (v / vmax) * w;
+  const py = (r) => y0 + h - ((r + 100) / 100) * h;
+  const pts = (mode) => Array.from({ length: 61 }, (_, i) => i / 2).map((v) => `${px(v).toFixed(1)},${py(pen(v, mode)).toFixed(1)}`).join(" ");
+  const diagChildren = `
+    <path d="M${x0} ${y0}V${y0 + h}H${x0 + w}" stroke="var(--lp-line)" stroke-width="1.5" fill="none"/>
+    <polyline points="${pts("flat")}" fill="none" stroke="var(--lp-dim)" stroke-width="3" stroke-dasharray="6 6"/>
+    <polyline points="${pts("graded")}" fill="none" stroke="${hot}" stroke-width="3.5"/>
+    <text x="${px(3)}" y="${py(-24) - 14}" font-family="Geist Mono, ui-monospace, monospace" font-size="16" fill="${hot}">3 m/s touchdown</text>
+    <text x="${px(30) - 6}" y="${py(-100) - 12}" text-anchor="end" font-family="Geist Mono, ui-monospace, monospace" font-size="16" fill="var(--lp-dim)">flat -100</text>
+    <text x="${x0 + w}" y="${y0 + h + 30}" text-anchor="end" font-family="Geist Mono, ui-monospace, monospace" font-size="15" fill="var(--lp-dim)">IMPACT SPEED, M/S</text>
+    <text x="${x0 - 12}" y="${y0 - 14}" font-family="Geist Mono, ui-monospace, monospace" font-size="15" fill="var(--lp-dim)">REWARD</text>
+    <text x="${px(30)}" y="${py(-100) + 30}" text-anchor="end" font-family="Geist Mono, ui-monospace, monospace" font-size="16" fill="${hot}">graded: -20 - 8v</text>`;
+  emitThemed(files, "diag-rl-slope", diagChildren, 1000, 420, { grid: false });
+}
 
 /* =================================================================
    Open Graph card. 1200x630, the one asset whose dimensions are

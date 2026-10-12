@@ -161,12 +161,12 @@ const RESUME = {
           ],
         },
         {
-          head: "AuraArchive",
-          meta: "Shipped / 02.2026",
+          head: "RocketLandingWithRL",
+          meta: "Shipped / 09.2026 - 10.2026",
           bullets: [
-            "Audio-to-blog platform: FastAPI plus Gemini 2.5 Flash turn a recorded discussion into a structured article, gated behind human review before it publishes.",
-            "Won Best Use of Gemini, HackBit, built with Nirvan Jain.",
-            "FastAPI / Gemini 2.5 Flash / Qdrant / Python",
+            "2D rocket landing on a moving drone ship in gusty wind: environment, physics and seven RL algorithms written from scratch, trained on a laptop CPU.",
+            "Randomized training produced a generalist that beats each level's specialist; the best mix-trained PPO lands 76% of far booster returns against a hand-written PID's 45%.",
+            "Python / PyTorch / PPO / SAC / GRPO",
           ],
         },
         {
