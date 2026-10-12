@@ -31,6 +31,6 @@
   // Without it, messages are still stored in D1 and readable via:
   //   npx wrangler d1 execute holdout-contact --command "SELECT * FROM submissions"
   "vars": {
-    "CONTACT_TO": "ashutosh@armoriq.io"
+    "CONTACT_TO": "dhairyapandya.workspace@gmail.com"
   }
 }
