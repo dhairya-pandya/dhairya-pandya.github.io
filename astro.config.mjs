@@ -11,7 +11,7 @@ export default defineConfig({
    * production URL; swap it for the custom domain when one is added,
    * or every generated absolute URL points at the wrong host.
    */
-  site: "https://dhairyapandya.holdout.workers.dev",
+  site: "https://dhairya-pandya.github.io",
 
   /**
    * Astro's dev toolbar is off.
