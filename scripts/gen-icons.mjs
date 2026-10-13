@@ -154,7 +154,9 @@ const SCALE = 2;
 const W = 1200;
 const H = 630;
 const PAD = 88;
-const AV = 132;
+const AV = 360;
+const AV_X = W - PAD - AV;
+const AV_Y = (H - AV) / 2;
 
 const escapeXml = (t) =>
   t
@@ -179,7 +181,7 @@ function wrap(text, maxChars, maxLines) {
   return lines.slice(0, maxLines);
 }
 
-const bioLines = wrap("I build " + BUILDS + ".", 58, 2);
+const bioLines = wrap("I build " + BUILDS + ".", 46, 3);
 
 const s = (n) => n * SCALE;
 const SANS = "Geist, Inter, system-ui, -apple-system, Segoe UI, sans-serif";
@@ -187,29 +189,31 @@ const MONO = "Geist Mono, ui-monospace, SFMono-Regular, Menlo, monospace";
 
 const ogBase = Buffer.from(
   `<svg xmlns="http://www.w3.org/2000/svg" width="${s(W)}" height="${s(H)}" viewBox="0 0 ${s(W)} ${s(H)}">
-    <rect width="${s(W)}" height="${s(H)}" fill="#f7f7f5"/>
+    <rect width="${s(W)}" height="${s(H)}" fill="#0d0d0e"/>
 
     <!-- The two column rules: the site's signature, free here. -->
-    <g stroke="rgba(0,0,0,0.07)" stroke-width="${SCALE}">
+    <g stroke="rgba(255,255,255,0.09)" stroke-width="${SCALE}">
       <path d="M${s(56)} 0V${s(H)}M${s(W - 56)} 0V${s(H)}"/>
     </g>
 
-    <text x="${s(PAD)}" y="${s(292)}" font-family="${SANS}" font-size="${s(70)}"
-          font-weight="500" letter-spacing="${s(-2.2)}" fill="#1e1e1d">${escapeXml(NAME)}</text>
+    <text x="${s(PAD)}" y="${s(250)}" font-family="${SANS}" font-size="${s(66)}"
+          font-weight="500" letter-spacing="${s(-2)}" fill="#f2f2f2">${escapeXml(NAME)}</text>
 
-    <text x="${s(PAD)}" y="${s(340)}" font-family="${MONO}" font-size="${s(27)}"
-          fill="#5a5a58">${escapeXml(ROLE)}  /  ${escapeXml(TAGLINE)}</text>
+    <text x="${s(PAD)}" y="${s(300)}" font-family="${MONO}" font-size="${s(25)}"
+          fill="#c9c9c6">${escapeXml(ROLE)}</text>
+    <text x="${s(PAD)}" y="${s(334)}" font-family="${MONO}" font-size="${s(22)}"
+          fill="#8f8f8f">${escapeXml(TAGLINE)}</text>
 
     ${bioLines
       .map(
         (line, i) =>
-          `<text x="${s(PAD)}" y="${s(410 + i * 36)}" font-family="${SANS}" font-size="${s(26)}" fill="#5a5a58">${escapeXml(line)}</text>`
+          `<text x="${s(PAD)}" y="${s(410 + i * 36)}" font-family="${SANS}" font-size="${s(25)}" fill="#8f8f8f">${escapeXml(line)}</text>`
       )
       .join("\n    ")}
 
-    <circle cx="${s(PAD + 8)}" cy="${s(541)}" r="${s(8)}" fill="#157f3d"/>
-    <text x="${s(PAD + 30)}" y="${s(550)}" font-family="${SANS}" font-size="${s(26)}"
-          fill="#5a5a58">${escapeXml(AVAILABILITY)}</text>
+    <circle cx="${s(PAD + 8)}" cy="${s(541)}" r="${s(8)}" fill="#20beff"/>
+    <text x="${s(PAD + 30)}" y="${s(550)}" font-family="${SANS}" font-size="${s(24)}"
+          fill="#c9c9c6">${escapeXml(AVAILABILITY)}</text>
   </svg>`
 );
 
@@ -251,7 +255,7 @@ const avatarRounded = await sharp(avatarSquare)
   .toBuffer();
 
 const ogPng = await sharp(ogFlat)
-  .composite([{ input: avatarRounded, top: PAD, left: PAD }])
+  .composite([{ input: avatarRounded, top: AV_Y, left: AV_X }])
   .png({ compressionLevel: 9 })
   .toBuffer();
 save("og.png", ogPng);
