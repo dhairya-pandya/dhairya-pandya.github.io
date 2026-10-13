@@ -11,7 +11,7 @@ export default defineConfig({
    * production URL; swap it for the custom domain when one is added,
    * or every generated absolute URL points at the wrong host.
    */
-  site: "https://holdout-ai-engineering.vercel.app",
+  site: "https://dhairyapandya.holdout.workers.dev",
 
   /**
    * Astro's dev toolbar is off.
