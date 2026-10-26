@@ -27,9 +27,12 @@ import { machineHome } from "../lib/machine";
    two-column grid, so an odd count leaves the last one alone beside a
    hole. Four fills two rows exactly, and a short list a reviewer will
    actually read still beats a complete one they scroll past. */
-const featured = [...projects]
-  .sort((a, b) => Number(b.featured) - Number(a.featured) || b.start.localeCompare(a.start))
-  .slice(0, 4);
+/* Fixed order for the home page, not computed: these four lead the
+   page in this sequence. Everything else is on /work. */
+const homeOrder = ["papersseum", "tripwire", "pathos", "rocketlanding"];
+const featured = homeOrder
+  .map((slug) => projects.find((p) => p.slug === slug))
+  .filter((p): p is (typeof projects)[number] => Boolean(p));
 
 const posts = (await getCollection("posts"))
   .sort((a, b) => b.data.date.getTime() - a.data.date.getTime())
