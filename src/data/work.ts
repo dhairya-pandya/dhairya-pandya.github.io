@@ -120,6 +120,8 @@ export interface Project {
   outcome: string;
   /** What I personally built, separate from the team's work. */
   contribution: string;
+  /** Research track, shown as a tag on the card. Omit when it is just a product. */
+  track?: string;
   bullets: string[];
   chips: string[];
   /** The headline measurement, with the context that makes it legible. */
@@ -138,6 +140,7 @@ export const projects: Project[] = [
     start: "2026-05",
     end: null,
     maturity: "shipped",
+    track: "Alignment",
     contribution:
       "I worked on both halves of PathOS. On the model side I handled the fine-tuning, the alignment work and the evaluation. On the device side I built the offline app and the packaging that lets it run without a GPU or a connection.",
     outcome:
@@ -260,6 +263,7 @@ export const projects: Project[] = [
     start: "2026-10",
     end: "2026-10",
     maturity: "prototype",
+    track: "Interpretability",
     contribution:
       "I designed and ran the whole study. I picked 44 real bug fixes from fastapi, rich and requests, and changed one expected value in each task's own test so that the test contradicted the bug report. I checked that the known-good fix failed the changed test, which meant the only way to pass was to bend something. I set up three conditions (the real task, the impossible task, and the impossible task with an explicit honesty instruction), ran Beam at three reasoning efforts for 616 episodes, and graded every episode from its trace by program. A small local judge gave a second opinion on the text-based labels, and I checked a sample of every label by hand. I wrote up the results and the design, and published the episodes and an explorer for anyone to read the traces.",
     outcome:
