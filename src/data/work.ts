@@ -118,6 +118,8 @@ export interface Project {
   maturity: Maturity;
   /** One sentence, leading with the result. */
   outcome: string;
+  /** What I personally built, separate from the team's work. */
+  contribution: string;
   bullets: string[];
   chips: string[];
   /** The headline measurement, with the context that makes it legible. */
@@ -136,6 +138,8 @@ export const projects: Project[] = [
     start: "2026-05",
     end: null,
     maturity: "shipped",
+    contribution:
+      "I built both sides: the model work (fine-tuning, alignment, evaluation) and the on-device app and packaging.",
     outcome:
       "An offline AI pathologist that runs the first-pass H&E screen on a laptop with no GPU and no internet, built for labs where the queue is the real bottleneck.",
     bullets: [
@@ -166,6 +170,8 @@ export const projects: Project[] = [
     start: "2026-04",
     end: "2026-05",
     maturity: "shipped",
+    contribution:
+      "Ideation, and the first layer that let AI agents communicate with, and run against, the system's local environment.",
     outcome:
       "A cross-platform desktop AI companion that lives in the taskbar, built in a single overnight sprint at Hackbyte 4.0.",
     bullets: [
@@ -194,6 +200,8 @@ export const projects: Project[] = [
     start: "2026-09",
     end: "2026-10",
     maturity: "shipped",
+    contribution:
+      "I built the environment and physics, every learning agent, and the evaluation suite.",
     outcome:
       "A 2D rocket learns to land on a rolling drone ship in gusty wind. The environment, physics and every RL algorithm are written from scratch and trained on a laptop CPU, then compared against a hand-written PID controller.",
     bullets: [
@@ -222,6 +230,8 @@ export const projects: Project[] = [
     start: "2026-10",
     end: "2026-10",
     maturity: "shipped",
+    contribution:
+      "Ideation, the arena engine, the Gym-style environment, the GCP connection and live scheduling of every match, and a PyPI library.",
     outcome:
       "A real-time multi-agent territory game, paper plus colosseum: five agents draw trails on a shared arena, and closing a loop takes everything inside it. Anyone can enter an agent, from a few rules to a neural net.",
     bullets: [
@@ -250,6 +260,8 @@ export const projects: Project[] = [
     start: "2026-10",
     end: "2026-10",
     maturity: "prototype",
+    contribution:
+      "I designed and ran the study: the task construction, the three conditions, the grading, and the write-up.",
     outcome:
       "A behavioural interpretability study of Beam, an open-weight reasoning model: when a coding task cannot be solved honestly, does it cheat, does its reasoning show it, and does its report to the user admit it?",
     bullets: [
@@ -281,6 +293,8 @@ export const projects: Project[] = [
     start: "2026-01",
     end: "2026-03",
     maturity: "shipped",
+    contribution:
+      "I built it solo, from the agents through to the retrieval layer.",
     outcome:
       "A multi-agent legal intelligence system that bridges static IPC/BNS statutes with live Supreme Court judgments, built to cut hallucination in legal AI rather than just retrieve faster.",
     bullets: [
