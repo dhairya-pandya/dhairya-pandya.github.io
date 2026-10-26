@@ -257,7 +257,7 @@ export const projects: Project[] = [
   },
   {
     slug: "tripwire",
-    title: "Tripwire: does Beam cheat, and does it say so?",
+    title: "Tripwire",
     icon: "ph:flask",
     poster: "/mock/poster-tripwire.svg",
     start: "2026-10",
