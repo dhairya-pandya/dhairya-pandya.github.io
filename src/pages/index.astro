@@ -34,36 +34,40 @@ const featured = homeOrder
   .map((slug) => projects.find((p) => p.slug === slug))
   .filter((p): p is (typeof projects)[number] => Boolean(p));
 
-const posts = (await getCollection("posts"))
-  .sort((a, b) => b.data.date.getTime() - a.data.date.getTime())
-  .filter((p) => p.data.status === "live")
-  .slice(0, 2);
+const posts = (await getCollection("posts")).filter((p) => p.data.status === "live");
 
 const fmt = (d: Date) =>
   new Intl.DateTimeFormat("en-GB", { day: "2-digit", month: "2-digit", year: "numeric" })
     .format(d)
     .replace(/\//g, ".");
 
-/* The Medium piece is pinned first: longest write-up on the site,
-   just not one Astro renders. */
+/* The four most recent write-ups, Medium included. Medium has no
+   entry in the content collection, so it is listed here with the date
+   it was published. */
+const mediumCard = {
+  slug: "four-breakpoints-fine-tuning-gemma-4-e2b",
+  title: "Four Breakpoints: Fine-Tuning Gemma 4 E2B",
+  blurb:
+    "The four walls we hit building PathOS under Gemma 4 Good Hackathon constraints: a memory ceiling, a refusal-hedging habit, a 55-point dev-to-deployment gap, and an edge device with no GPU.",
+  visual: "/mock/cover-breakpoints.svg",
+  meta: "29.08.2026 / 17 min / Medium",
+  href: "https://medium.com/@dhairyapandya2006/four-breakpoints-fine-tuning-gemma-4-e2b-0380d8aed3b5",
+  date: new Date("2026-08-29"),
+};
 const postCards = [
-  {
-    slug: "four-breakpoints-fine-tuning-gemma-4-e2b",
-    title: "Four Breakpoints: Fine-Tuning Gemma 4 E2B",
-    blurb:
-      "The four walls we hit building PathOS under Gemma 4 Good Hackathon constraints: a memory ceiling, a refusal-hedging habit, a 55-point dev-to-deployment gap, and an edge device with no GPU.",
-    visual: "/mock/cover-breakpoints.svg",
-    meta: "29.08.2026 / 17 min / Medium",
-    href: "https://medium.com/@dhairyapandya2006/four-breakpoints-fine-tuning-gemma-4-e2b-0380d8aed3b5",
-  },
   ...posts.map((p) => ({
     slug: p.id,
     title: p.data.title,
     blurb: p.data.description,
     visual: p.data.cover,
     meta: `${fmt(p.data.date)} / ${p.data.readingTime}`,
+    date: p.data.date,
   })),
-];
+  mediumCard,
+]
+  .sort((a, b) => b.date.getTime() - a.date.getTime())
+  .slice(0, 4)
+  .map(({ date: _date, ...card }) => card);
 
 const notes = [
   {
