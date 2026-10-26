@@ -152,6 +152,14 @@ const RESUME = {
           ],
         },
         {
+          head: "Papersseum",
+          meta: "Shipped / 10.2026",
+          bullets: [
+            "Real-time multi-agent territory game: five agents draw trails on a shared arena, and closing a loop takes everything inside it. Deterministic replays, Gym-style environment, replay viewer.",
+            "Python / Multi-agent / Reinforcement learning",
+          ],
+        },
+        {
           head: "Udte Bhawre",
           meta: "Shipped / 04.2026 - 05.2026",
           bullets: [
@@ -379,7 +387,7 @@ const problems = [];
 if (!site.includes(RESUME.name)) problems.push("name does not match site.ts");
 if (!site.includes(RESUME.contact[0])) problems.push("email does not match site.ts");
 const projectCount = (work.match(/^\s{4}slug: "/gm) || []).length;
-if (projectCount !== 4) problems.push(`work.ts has ${projectCount} projects, expected 4`);
+if (projectCount !== 5) problems.push(`work.ts has ${projectCount} projects, expected 5`);
 
 if (problems.length) {
   console.error("resume PDF drift check FAILED:");

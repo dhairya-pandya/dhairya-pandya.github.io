@@ -312,6 +312,33 @@ const files = {};
 }
 
 /* =================================================================
+   3b. Papersseum: a circular arena with five territories, each one a
+   tinted region with its own owner, and a trail left behind one
+   agent. Drawn, not a replay, so the label says so.
+   ================================================================= */
+{
+  const [hot] = HUES.violet;
+  const cx = W / 2, cy = H / 2 - 10, R = 230;
+  const owners = [
+    { c: HUES.violet[0], a: 0.55, dx: -120, dy: -60, r: 92 },
+    { c: HUES.cyan[0], a: 0.45, dx: 140, dy: -40, r: 80 },
+    { c: HUES.amber[0], a: 0.45, dx: -90, dy: 120, r: 70 },
+    { c: HUES.lime[0], a: 0.4, dx: 110, dy: 110, r: 66 },
+    { c: HUES.rose[0], a: 0.4, dx: 10, dy: -150, r: 56 },
+  ];
+  let body = `<circle cx="${cx}" cy="${cy}" r="${R}" fill="none" stroke="${INK}" stroke-width="2" opacity="0.6"/>`;
+  owners.forEach((o) => {
+    body += `<circle cx="${cx + o.dx}" cy="${cy + o.dy}" r="${o.r}" fill="${o.c}" opacity="${o.a}"/>`;
+  });
+  body += `<path d="M${cx - 60} ${cy + 180} C ${cx - 20} ${cy + 80}, ${cx + 40} ${cy + 60}, ${cx + 200} ${cy + 20}" fill="none" stroke="${hot}" stroke-width="5" stroke-linecap="round"/>`;
+  body += `<circle cx="${cx + 200}" cy="${cy + 20}" r="9" fill="${hot}"/>`;
+  body += `<text x="${cx + 214}" y="${cy + 14}" font-family="Geist Mono, ui-monospace, monospace" font-size="16" fill="${hot}">YOU</text>`;
+  files["poster-papersseum.svg"] = plate(
+    `${body}${caption("FIG.05  ARENA", "Five agents, one shared map", "180 seconds, deterministic replays from seed and action log")}`
+  );
+}
+
+/* =================================================================
    4. Agent orchestration. Legal-Advisory (NyayaSetu): the complete
    pass, not just the fan-in. A query enters on the left, three
    specialists work it in parallel, Senior Counsel synthesises, and

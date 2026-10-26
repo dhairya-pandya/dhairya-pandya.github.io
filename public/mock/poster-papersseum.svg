@@ -1,0 +1,23 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 750" width="1200" height="750" role="img">
+  <defs>
+    <linearGradient id="plate" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#141416"/>
+      <stop offset="1" stop-color="#0d0d0e"/>
+    </linearGradient>
+    <filter id="grain" x="0" y="0" width="100%" height="100%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.8" numOctaves="3" seed="7" result="n"/>
+      <feColorMatrix in="n" type="saturate" values="0"/>
+      <feComponentTransfer><feFuncA type="linear" slope="0.055"/></feComponentTransfer>
+    </filter>
+    
+  </defs>
+  <rect width="1200" height="750" fill="url(#plate)"/>
+  <path d="M40 0V750M80 0V750M120 0V750M160 0V750M200 0V750M240 0V750M280 0V750M320 0V750M360 0V750M400 0V750M440 0V750M480 0V750M520 0V750M560 0V750M600 0V750M640 0V750M680 0V750M720 0V750M760 0V750M800 0V750M840 0V750M880 0V750M920 0V750M960 0V750M1000 0V750M1040 0V750M1080 0V750M1120 0V750M1160 0V750M0 40H1200M0 80H1200M0 120H1200M0 160H1200M0 200H1200M0 240H1200M0 280H1200M0 320H1200M0 360H1200M0 400H1200M0 440H1200M0 480H1200M0 520H1200M0 560H1200M0 600H1200M0 640H1200M0 680H1200M0 720H1200" stroke="rgba(255,255,255,0.055)" stroke-width="1" fill="none"/>
+  <circle cx="600" cy="365" r="230" fill="none" stroke="#f2f2f2" stroke-width="2" opacity="0.6"/><circle cx="480" cy="305" r="92" fill="#a78bfa" opacity="0.55"/><circle cx="740" cy="325" r="80" fill="#22d3ee" opacity="0.45"/><circle cx="510" cy="485" r="70" fill="#f59e0b" opacity="0.45"/><circle cx="710" cy="475" r="66" fill="#a3e635" opacity="0.4"/><circle cx="610" cy="215" r="56" fill="#fb7185" opacity="0.4"/><path d="M540 545 C 580 445, 640 425, 800 385" fill="none" stroke="#a78bfa" stroke-width="5" stroke-linecap="round"/><circle cx="800" cy="385" r="9" fill="#a78bfa"/><text x="814" y="379" font-family="Geist Mono, ui-monospace, monospace" font-size="16" fill="#a78bfa">YOU</text><g font-family="Geist Mono, ui-monospace, monospace">
+    <text x="48" y="658" font-size="19" letter-spacing="1.6" fill="#8f8f8f">FIG.05  ARENA</text>
+    <text x="48" y="692" font-size="30" letter-spacing="-0.2" fill="#f2f2f2">Five agents, one shared map</text>
+    <text x="48" y="720" font-size="17" letter-spacing="0.5" fill="#8f8f8f">180 seconds, deterministic replays from seed and action log</text>
+  </g>
+  <rect width="1200" height="750" filter="url(#grain)" opacity="0.9"/>
+  <rect x="0.5" y="0.5" width="1199" height="749" fill="none" stroke="rgba(255,255,255,0.10)"/>
+</svg>

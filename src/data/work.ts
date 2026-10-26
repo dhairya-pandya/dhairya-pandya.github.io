@@ -215,6 +215,34 @@ export const projects: Project[] = [
     featured: true,
   },
   {
+    slug: "papersseum",
+    title: "Papersseum",
+    icon: "ph:map-trifold",
+    poster: "/mock/poster-papersseum.svg",
+    start: "2026-10",
+    end: "2026-10",
+    maturity: "shipped",
+    outcome:
+      "A real-time multi-agent territory game, paper plus colosseum: five agents draw trails on a shared arena, and closing a loop takes everything inside it. Anyone can enter an agent, from a few rules to a neural net.",
+    bullets: [
+      "Deterministic arena engine with a Gym-style environment, baseline agents and a replay viewer, so any match can be re-run from its seed and action log.",
+      "Ladder rounds of random five-agent lobbies rate agents by placement, then a final round sets the leaderboard.",
+      "Cutting a rival's trail takes their whole territory and grants a short speed burst, a deliberate change from a stock paper.io-style rule set.",
+    ],
+    chips: ["Python", "Multi-agent", "Reinforcement learning", "Game engine"],
+    metric: {
+      value: "180 s",
+      label: "per match, five agents, one shared map",
+      context: "matches replay exactly from their seed and action log",
+      baseline: null,
+    },
+    evidence: [
+      { kind: "repo", label: "Source", url: "https://github.com/dhairya-pandya/papersseum" },
+      { kind: "demo", label: "Live", url: "https://papersseum.vercel.app" },
+    ],
+    featured: false,
+  },
+  {
     slug: "nyayasetu",
     title: "NyayaSetu",
     icon: "ph:scales",
