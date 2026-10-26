@@ -139,7 +139,7 @@ export const projects: Project[] = [
     end: null,
     maturity: "shipped",
     contribution:
-      "I built both sides: the model work (fine-tuning, alignment, evaluation) and the on-device app and packaging.",
+      "I worked on both halves of PathOS. On the model side I handled the fine-tuning, the alignment work and the evaluation. On the device side I built the offline app and the packaging that lets it run without a GPU or a connection.",
     outcome:
       "An offline AI pathologist that runs the first-pass H&E screen on a laptop with no GPU and no internet, built for labs where the queue is the real bottleneck.",
     bullets: [
@@ -171,7 +171,7 @@ export const projects: Project[] = [
     end: "2026-05",
     maturity: "shipped",
     contribution:
-      "Ideation, and the first layer that let AI agents communicate with, and run against, the system's local environment.",
+      "I came up with the idea behind Udte Bhawre and built its first layer. That layer is what lets AI agents talk to each other and run actions against the system's local environment.",
     outcome:
       "A cross-platform desktop AI companion that lives in the taskbar, built in a single overnight sprint at Hackbyte 4.0.",
     bullets: [
@@ -201,7 +201,7 @@ export const projects: Project[] = [
     end: "2026-10",
     maturity: "shipped",
     contribution:
-      "I built the environment and physics, every learning agent, and the evaluation suite.",
+      "I built the rocket environment and its physics, every learning agent in the project, and the evaluation suite that compares them.",
     outcome:
       "A 2D rocket learns to land on a rolling drone ship in gusty wind. The environment, physics and every RL algorithm are written from scratch and trained on a laptop CPU, then compared against a hand-written PID controller.",
     bullets: [
@@ -231,7 +231,7 @@ export const projects: Project[] = [
     end: "2026-10",
     maturity: "shipped",
     contribution:
-      "Ideation, the arena engine, the Gym-style environment, the GCP connection and live scheduling of every match, and a PyPI library.",
+      "I came up with the idea for Papersseum and built the arena engine and the Gym-style environment. I also set up the GCP connection and the live scheduling that runs every match, and I published a PyPI library.",
     outcome:
       "A real-time multi-agent territory game, paper plus colosseum: five agents draw trails on a shared arena, and closing a loop takes everything inside it. Anyone can enter an agent, from a few rules to a neural net.",
     bullets: [
@@ -261,7 +261,7 @@ export const projects: Project[] = [
     end: "2026-10",
     maturity: "prototype",
     contribution:
-      "I designed and ran the study: the task construction, the three conditions, the grading, and the write-up.",
+      "I designed and ran the Tripwire study. That covered building the tasks, setting up the three conditions, grading the episodes, and writing up the results.",
     outcome:
       "A behavioural interpretability study of Beam, an open-weight reasoning model: when a coding task cannot be solved honestly, does it cheat, does its reasoning show it, and does its report to the user admit it?",
     bullets: [
@@ -294,7 +294,7 @@ export const projects: Project[] = [
     end: "2026-03",
     maturity: "shipped",
     contribution:
-      "I built it solo, from the agents through to the retrieval layer.",
+      "I built NyayaSetu on my own, from the agents all the way through to the retrieval layer.",
     outcome:
       "A multi-agent legal intelligence system that bridges static IPC/BNS statutes with live Supreme Court judgments, built to cut hallucination in legal AI rather than just retrieve faster.",
     bullets: [
