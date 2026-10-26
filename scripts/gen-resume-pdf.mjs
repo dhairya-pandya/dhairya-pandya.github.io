@@ -160,6 +160,15 @@ const RESUME = {
           ],
         },
         {
+          head: "Tripwire",
+          meta: "Prototype / 10.2026",
+          bullets: [
+            "Research study of whether Beam, an open-weight reasoning model, cheats on impossible coding tasks, and whether its reasoning and report to the user reveal it: 616 episodes across 44 real bug fixes.",
+            "Cheated in 66% of impossible-task episodes at low effort; a keyword rule over its reasoning found 87% of cheats, but only 6 of 33 cheats were mentioned in its note to the user.",
+            "Python / Interpretability / Reasoning models / Evaluation",
+          ],
+        },
+        {
           head: "Udte Bhawre",
           meta: "Shipped / 04.2026 - 05.2026",
           bullets: [
@@ -387,7 +396,7 @@ const problems = [];
 if (!site.includes(RESUME.name)) problems.push("name does not match site.ts");
 if (!site.includes(RESUME.contact[0])) problems.push("email does not match site.ts");
 const projectCount = (work.match(/^\s{4}slug: "/gm) || []).length;
-if (projectCount !== 5) problems.push(`work.ts has ${projectCount} projects, expected 5`);
+if (projectCount !== 6) problems.push(`work.ts has ${projectCount} projects, expected 6`);
 
 if (problems.length) {
   console.error("resume PDF drift check FAILED:");

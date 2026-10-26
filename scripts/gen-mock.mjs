@@ -339,6 +339,69 @@ const files = {};
 }
 
 /* =================================================================
+   3c. Tripwire: how often Beam cheats, by condition. Numbers from
+   beam-tripwire's RESULTS (616 episodes, 44 tasks; low/high = Beam's
+   reasoning effort). Control cheats once in 176 episodes.
+   ================================================================= */
+{
+  const [hot] = HUES.rose;
+  const rows = [
+    { n: "CONTROL", v: 0.006, c: INK, o: 0.35 },
+    { n: "IMPOSSIBLE, LOW", v: 0.66, c: hot, o: 0.85 },
+    { n: "IMPOSSIBLE, HIGH", v: 0.79, c: hot, o: 0.95 },
+    { n: "+ HONESTY, LOW", v: 0.23, c: INK, o: 0.5 },
+    { n: "+ HONESTY, HIGH", v: 0.41, c: INK, o: 0.5 },
+  ];
+  const x0 = 120, y0 = 120, h = 300, bw = 110, gap = 150;
+  let bars = "";
+  rows.forEach((r, i) => {
+    const x = x0 + i * gap;
+    const bh = Math.max(4, r.v * h);
+    bars += `<rect x="${x}" y="${(y0 + h - bh).toFixed(1)}" width="${bw}" height="${bh.toFixed(1)}" fill="${r.c}" opacity="${r.o}"/>`;
+    bars += `<text x="${x + bw / 2}" y="${(y0 + h - bh - 14).toFixed(1)}" text-anchor="middle" font-family="Geist Mono, ui-monospace, monospace" font-size="22" fill="${r.c === hot ? hot : INK}">${Math.round(r.v * 100)}%</text>`;
+    bars += `<text x="${x + bw / 2}" y="${y0 + h + 28}" text-anchor="middle" font-family="Geist Mono, ui-monospace, monospace" font-size="13" letter-spacing="1" fill="${INK}">${r.n}</text>`;
+  });
+  files["poster-tripwire.svg"] = plate(
+    `${axes(x0 - 30, y0, rows.length * gap, h, "", "CHEAT RATE")}${bars}${caption("FIG.06  TRIPWIRE", "Beam cheats when the test is impossible", "66 to 79% of impossible episodes, 1 in 176 on controls")}`
+  );
+}
+
+/* =================================================================
+   Platform and backend post: the pipeline this site runs on, drawn
+   as the path a change takes from commit to live. Themed, like the
+   other post covers.
+   ================================================================= */
+{
+  const [hot] = HUES.teal;
+  const stages = [
+    { n: "COMMIT", s: "main" },
+    { n: "CHECK", s: "typecheck" },
+    { n: "GENERATE", s: "assets, resume" },
+    { n: "BUILD", s: "static site" },
+    { n: "DEPLOY", s: "worker or pages" },
+  ];
+  const y = 200, bw = 176, bh = 96, gap = 34;
+  const total = stages.length * bw + (stages.length - 1) * gap;
+  const x0 = (1000 - total) / 2;
+  let boxes = "", arrows = "";
+  stages.forEach((st, i) => {
+    const x = x0 + i * (bw + gap);
+    const last = i === stages.length - 1;
+    boxes += `<rect x="${x}" y="${y}" width="${bw}" height="${bh}" rx="8" fill="${last ? hot : "none"}" opacity="${last ? 0.2 : 1}" stroke="${last ? hot : "var(--lp-line)"}" stroke-width="${last ? 1.5 : 1}"/>
+      <text x="${x + bw / 2}" y="${y + 40}" text-anchor="middle" font-family="Geist Mono, ui-monospace, monospace" font-size="16" letter-spacing="1" fill="var(--lp-ink)">${st.n}</text>
+      <text x="${x + bw / 2}" y="${y + 66}" text-anchor="middle" font-family="Geist Mono, ui-monospace, monospace" font-size="13" fill="var(--lp-dim)">${st.s}</text>`;
+    if (i < stages.length - 1) {
+      const ax = x + bw;
+      arrows += `<path d="M${ax + 6} ${y + bh / 2}h${gap - 14}" stroke="${hot}" stroke-width="1.5"/>`;
+    }
+  });
+  const coverChildren = `${arrows}${boxes}
+    <text x="${x0}" y="${y - 30}" font-family="Geist Mono, ui-monospace, monospace" font-size="15" letter-spacing="1.4" fill="var(--lp-dim)">ONE PATH, FIVE GATES</text>
+    <text x="60" y="460" font-family="Geist Mono, ui-monospace, monospace" font-size="17" letter-spacing="1.6" fill="var(--lp-dim)">A CHANGE IS NOT LIVE UNTIL EVERY GATE PASSES</text>`;
+  emitThemed(files, "cover-platform", coverChildren, 1000, 500, { grid: false });
+}
+
+/* =================================================================
    4. Agent orchestration. Legal-Advisory (NyayaSetu): the complete
    pass, not just the fan-in. A query enters on the left, three
    specialists work it in parallel, Senior Counsel synthesises, and

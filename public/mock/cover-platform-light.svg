@@ -1,0 +1,31 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 500" width="1000" height="500" role="img" class="lp">
+  <style>svg.lp { --lp-bg-a: #ffffff; --lp-bg-b: #f3f3f1; --lp-ink: #131313; --lp-dim: #6b6b68; --lp-line: rgba(0,0,0,0.14); --lp-faint: rgba(0,0,0,0.06); }</style>
+  <defs>
+    <linearGradient id="lpg" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="var(--lp-bg-a)"/>
+      <stop offset="1" stop-color="var(--lp-bg-b)"/>
+    </linearGradient>
+    <filter id="lpgrain" x="0" y="0" width="100%" height="100%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.8" numOctaves="3" seed="7" result="n"/>
+      <feColorMatrix in="n" type="saturate" values="0"/>
+      <feComponentTransfer><feFuncA type="linear" slope="0.055"/></feComponentTransfer>
+    </filter>
+  </defs>
+  <rect width="1000" height="500" fill="url(#lpg)"/>
+  
+  <path d="M174 248h20" stroke="#2dd4bf" stroke-width="1.5"/><path d="M384 248h20" stroke="#2dd4bf" stroke-width="1.5"/><path d="M594 248h20" stroke="#2dd4bf" stroke-width="1.5"/><path d="M804 248h20" stroke="#2dd4bf" stroke-width="1.5"/><rect x="-8" y="200" width="176" height="96" rx="8" fill="none" opacity="1" stroke="var(--lp-line)" stroke-width="1"/>
+      <text x="80" y="240" text-anchor="middle" font-family="Geist Mono, ui-monospace, monospace" font-size="16" letter-spacing="1" fill="var(--lp-ink)">COMMIT</text>
+      <text x="80" y="266" text-anchor="middle" font-family="Geist Mono, ui-monospace, monospace" font-size="13" fill="var(--lp-dim)">main</text><rect x="202" y="200" width="176" height="96" rx="8" fill="none" opacity="1" stroke="var(--lp-line)" stroke-width="1"/>
+      <text x="290" y="240" text-anchor="middle" font-family="Geist Mono, ui-monospace, monospace" font-size="16" letter-spacing="1" fill="var(--lp-ink)">CHECK</text>
+      <text x="290" y="266" text-anchor="middle" font-family="Geist Mono, ui-monospace, monospace" font-size="13" fill="var(--lp-dim)">typecheck</text><rect x="412" y="200" width="176" height="96" rx="8" fill="none" opacity="1" stroke="var(--lp-line)" stroke-width="1"/>
+      <text x="500" y="240" text-anchor="middle" font-family="Geist Mono, ui-monospace, monospace" font-size="16" letter-spacing="1" fill="var(--lp-ink)">GENERATE</text>
+      <text x="500" y="266" text-anchor="middle" font-family="Geist Mono, ui-monospace, monospace" font-size="13" fill="var(--lp-dim)">assets, resume</text><rect x="622" y="200" width="176" height="96" rx="8" fill="none" opacity="1" stroke="var(--lp-line)" stroke-width="1"/>
+      <text x="710" y="240" text-anchor="middle" font-family="Geist Mono, ui-monospace, monospace" font-size="16" letter-spacing="1" fill="var(--lp-ink)">BUILD</text>
+      <text x="710" y="266" text-anchor="middle" font-family="Geist Mono, ui-monospace, monospace" font-size="13" fill="var(--lp-dim)">static site</text><rect x="832" y="200" width="176" height="96" rx="8" fill="#2dd4bf" opacity="0.2" stroke="#2dd4bf" stroke-width="1.5"/>
+      <text x="920" y="240" text-anchor="middle" font-family="Geist Mono, ui-monospace, monospace" font-size="16" letter-spacing="1" fill="var(--lp-ink)">DEPLOY</text>
+      <text x="920" y="266" text-anchor="middle" font-family="Geist Mono, ui-monospace, monospace" font-size="13" fill="var(--lp-dim)">worker or pages</text>
+    <text x="-8" y="170" font-family="Geist Mono, ui-monospace, monospace" font-size="15" letter-spacing="1.4" fill="var(--lp-dim)">ONE PATH, FIVE GATES</text>
+    <text x="60" y="460" font-family="Geist Mono, ui-monospace, monospace" font-size="17" letter-spacing="1.6" fill="var(--lp-dim)">A CHANGE IS NOT LIVE UNTIL EVERY GATE PASSES</text>
+  <rect width="1000" height="500" filter="url(#lpgrain)" opacity="0.9"/>
+  <rect x="0.5" y="0.5" width="999" height="499" fill="none" stroke="var(--lp-line)"/>
+</svg>

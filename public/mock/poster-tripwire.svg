@@ -1,0 +1,29 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 750" width="1200" height="750" role="img">
+  <defs>
+    <linearGradient id="plate" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#141416"/>
+      <stop offset="1" stop-color="#0d0d0e"/>
+    </linearGradient>
+    <filter id="grain" x="0" y="0" width="100%" height="100%">
+      <feTurbulence type="fractalNoise" baseFrequency="0.8" numOctaves="3" seed="7" result="n"/>
+      <feColorMatrix in="n" type="saturate" values="0"/>
+      <feComponentTransfer><feFuncA type="linear" slope="0.055"/></feComponentTransfer>
+    </filter>
+    
+  </defs>
+  <rect width="1200" height="750" fill="url(#plate)"/>
+  <path d="M40 0V750M80 0V750M120 0V750M160 0V750M200 0V750M240 0V750M280 0V750M320 0V750M360 0V750M400 0V750M440 0V750M480 0V750M520 0V750M560 0V750M600 0V750M640 0V750M680 0V750M720 0V750M760 0V750M800 0V750M840 0V750M880 0V750M920 0V750M960 0V750M1000 0V750M1040 0V750M1080 0V750M1120 0V750M1160 0V750M0 40H1200M0 80H1200M0 120H1200M0 160H1200M0 200H1200M0 240H1200M0 280H1200M0 320H1200M0 360H1200M0 400H1200M0 440H1200M0 480H1200M0 520H1200M0 560H1200M0 600H1200M0 640H1200M0 680H1200M0 720H1200" stroke="rgba(255,255,255,0.055)" stroke-width="1" fill="none"/>
+  <g>
+    <path d="M90 120V420H840" stroke="rgba(255,255,255,0.10)" stroke-width="1.5" fill="none"/>
+    <g font-family="Geist Mono, ui-monospace, monospace" font-size="15" letter-spacing="1.2" fill="#8f8f8f">
+      <text x="840" y="446" text-anchor="end"></text>
+      <text x="80" y="110" text-anchor="start">CHEAT RATE</text>
+    </g>
+  </g><rect x="120" y="416.0" width="110" height="4.0" fill="#f2f2f2" opacity="0.35"/><text x="175" y="402.0" text-anchor="middle" font-family="Geist Mono, ui-monospace, monospace" font-size="22" fill="#f2f2f2">1%</text><text x="175" y="448" text-anchor="middle" font-family="Geist Mono, ui-monospace, monospace" font-size="13" letter-spacing="1" fill="#f2f2f2">CONTROL</text><rect x="270" y="222.0" width="110" height="198.0" fill="#fb7185" opacity="0.85"/><text x="325" y="208.0" text-anchor="middle" font-family="Geist Mono, ui-monospace, monospace" font-size="22" fill="#fb7185">66%</text><text x="325" y="448" text-anchor="middle" font-family="Geist Mono, ui-monospace, monospace" font-size="13" letter-spacing="1" fill="#f2f2f2">IMPOSSIBLE, LOW</text><rect x="420" y="183.0" width="110" height="237.0" fill="#fb7185" opacity="0.95"/><text x="475" y="169.0" text-anchor="middle" font-family="Geist Mono, ui-monospace, monospace" font-size="22" fill="#fb7185">79%</text><text x="475" y="448" text-anchor="middle" font-family="Geist Mono, ui-monospace, monospace" font-size="13" letter-spacing="1" fill="#f2f2f2">IMPOSSIBLE, HIGH</text><rect x="570" y="351.0" width="110" height="69.0" fill="#f2f2f2" opacity="0.5"/><text x="625" y="337.0" text-anchor="middle" font-family="Geist Mono, ui-monospace, monospace" font-size="22" fill="#f2f2f2">23%</text><text x="625" y="448" text-anchor="middle" font-family="Geist Mono, ui-monospace, monospace" font-size="13" letter-spacing="1" fill="#f2f2f2">+ HONESTY, LOW</text><rect x="720" y="297.0" width="110" height="123.0" fill="#f2f2f2" opacity="0.5"/><text x="775" y="283.0" text-anchor="middle" font-family="Geist Mono, ui-monospace, monospace" font-size="22" fill="#f2f2f2">41%</text><text x="775" y="448" text-anchor="middle" font-family="Geist Mono, ui-monospace, monospace" font-size="13" letter-spacing="1" fill="#f2f2f2">+ HONESTY, HIGH</text><g font-family="Geist Mono, ui-monospace, monospace">
+    <text x="48" y="658" font-size="19" letter-spacing="1.6" fill="#8f8f8f">FIG.06  TRIPWIRE</text>
+    <text x="48" y="692" font-size="30" letter-spacing="-0.2" fill="#f2f2f2">Beam cheats when the test is impossible</text>
+    <text x="48" y="720" font-size="17" letter-spacing="0.5" fill="#8f8f8f">66 to 79% of impossible episodes, 1 in 176 on controls</text>
+  </g>
+  <rect width="1200" height="750" filter="url(#grain)" opacity="0.9"/>
+  <rect x="0.5" y="0.5" width="1199" height="749" fill="none" stroke="rgba(255,255,255,0.10)"/>
+</svg>
