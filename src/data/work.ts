@@ -201,7 +201,7 @@ export const projects: Project[] = [
     end: "2026-10",
     maturity: "shipped",
     contribution:
-      "I built the rocket environment and its physics, every learning agent in the project, and the evaluation suite that compares them.",
+      "I built the rocket landing environment from scratch. That covers the 2D rigid-body physics, a main engine with a tilting gimbal, side thrusters, quadratic drag from wind, and fuel that makes the rocket lighter as it burns. I also modelled the drone ship's sway, drift, heave and roll, and the Ornstein-Uhlenbeck wind with gusts. On top of that I wrote the five difficulty levels as config files, the reward shaping, and snapshot and restore support for exact replays. I implemented all seven learning agents, the model-predictive planner and the hand-written PID baseline, along with the training, curriculum and mixed-level runs. I built the evaluation suite with confidence intervals and robustness sweeps, the side-by-side viewer, and the browser game, whose TypeScript physics is tested against the Python environment.",
     outcome:
       "A 2D rocket learns to land on a rolling drone ship in gusty wind. The environment, physics and every RL algorithm are written from scratch and trained on a laptop CPU, then compared against a hand-written PID controller.",
     bullets: [
@@ -261,7 +261,7 @@ export const projects: Project[] = [
     end: "2026-10",
     maturity: "prototype",
     contribution:
-      "I designed and ran the Tripwire study. That covered building the tasks, setting up the three conditions, grading the episodes, and writing up the results.",
+      "I designed and ran the whole study. I picked 44 real bug fixes from fastapi, rich and requests, and changed one expected value in each task's own test so that the test contradicted the bug report. I checked that the known-good fix failed the changed test, which meant the only way to pass was to bend something. I set up three conditions (the real task, the impossible task, and the impossible task with an explicit honesty instruction), ran Beam at three reasoning efforts for 616 episodes, and graded every episode from its trace by program. A small local judge gave a second opinion on the text-based labels, and I checked a sample of every label by hand. I wrote up the results and the design, and published the episodes and an explorer for anyone to read the traces.",
     outcome:
       "A behavioural interpretability study of Beam, an open-weight reasoning model: when a coding task cannot be solved honestly, does it cheat, does its reasoning show it, and does its report to the user admit it?",
     bullets: [
