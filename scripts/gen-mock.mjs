@@ -495,6 +495,43 @@ const files = {};
 }
 
 /* =================================================================
+   Covers for the interpretability and alignment posts. Abstract on
+   purpose: each one is a single idea drawn as a picture.
+   ================================================================= */
+{
+  const mono = "Geist Mono, ui-monospace, monospace";
+  // Refusal: a line of activations with one arrow pointing along a direction.
+  const [lime] = HUES.lime;
+  let c1 = "";
+  for (let i = 0; i < 9; i++) c1 += `<circle cx="${140 + i * 95}" cy="250" r="9" fill="var(--lp-dim)" opacity="0.5"/>`;
+  c1 += `<path d="M140 380 L 800 120" stroke="${lime}" stroke-width="4" stroke-linecap="round"/>`;
+  c1 += `<path d="M800 120 l-22 4 m22 -4 l-6 20" stroke="${lime}" stroke-width="4" stroke-linecap="round" fill="none"/>`;
+  c1 += `<text x="820" y="112" font-family="${mono}" font-size="18" fill="${lime}">refusal direction</text>`;
+  emitThemed(files, "cover-refusal-direction", `${c1}
+    <text x="60" y="460" font-family="${mono}" font-size="17" letter-spacing="1.6" fill="var(--lp-dim)">ONE DIRECTION, ONE EDIT</text>`, 1000, 500, { grid: false });
+
+  // Faithfulness: reasoning lines, one answer that does not follow them.
+  const [amber] = HUES.amber;
+  let c2 = "";
+  for (let i = 0; i < 5; i++) c2 += `<rect x="150" y="${130 + i * 46}" width="${520 - (i % 2) * 120}" height="16" rx="8" fill="var(--lp-dim)" opacity="0.45"/>`;
+  c2 += `<rect x="150" y="${130 + 5 * 46}" width="520" height="16" rx="8" fill="${amber}" opacity="0.8"/>`;
+  c2 += `<text x="700" y="${130 + 5 * 46 + 14}" font-family="${mono}" font-size="18" fill="${amber}">answer does not follow</text>`;
+  emitThemed(files, "cover-faithfulness", `${c2}
+    <text x="60" y="460" font-family="${mono}" font-size="17" letter-spacing="1.6" fill="var(--lp-dim)">THE REASONING YOU CAN READ</text>`, 1000, 500, { grid: false });
+
+  // Emergent: one narrow point, a wide spread of points around it.
+  const [rose] = HUES.rose;
+  let c3 = `<circle cx="250" cy="250" r="14" fill="${rose}"/>`;
+  for (let i = 0; i < 40; i++) {
+    const a = i * 2.4, r = 40 + (i * 37) % 260;
+    c3 += `<circle cx="${(250 + r * Math.cos(a)).toFixed(1)}" cy="${(250 + r * Math.sin(a) * 0.6).toFixed(1)}" r="4" fill="${rose}" opacity="${(0.25 + (i % 5) * 0.12).toFixed(2)}"/>`;
+  }
+  c3 += `<text x="300" y="256" font-family="${mono}" font-size="18" fill="${rose}">narrow training</text>`;
+  emitThemed(files, "cover-emergent", `${c3}
+    <text x="60" y="460" font-family="${mono}" font-size="17" letter-spacing="1.6" fill="var(--lp-dim)">NARROW IN, BROAD OUT</text>`, 1000, 500, { grid: false });
+}
+
+/* =================================================================
    4. Agent orchestration. Legal-Advisory (NyayaSetu): the complete
    pass, not just the fan-in. A query enters on the left, three
    specialists work it in parallel, Senior Counsel synthesises, and
