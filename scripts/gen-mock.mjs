@@ -402,6 +402,47 @@ const files = {};
 }
 
 /* =================================================================
+   3d. Research posters for MoRPH (KV-cache memory at 32k) and Swarm
+   Immunity (contamination by coordination design). Numbers from the
+   two repos' READMEs.
+   ================================================================= */
+{
+  const [hot] = HUES.lime;
+  const x0 = 200, y0 = 150, h = 260;
+  const mha = 2013, morph = 24;
+  const bars = [
+    { n: "MULTI-HEAD ATTENTION", v: 1, label: "2,013 MB", c: INK, o: 0.35 },
+    { n: "MORPH-S", v: morph / mha, label: "24 MB", c: hot, o: 0.95 },
+  ];
+  let body = "";
+  bars.forEach((b, i) => {
+    const bh = Math.max(4, b.v * h), bx = x0 + i * 240;
+    body += `<rect x="${bx}" y="${(y0 + h - bh).toFixed(1)}" width="130" height="${bh.toFixed(1)}" fill="${b.c}" opacity="${b.o}"/>`;
+    body += `<text x="${bx + 65}" y="${(y0 + h - bh - 14).toFixed(1)}" text-anchor="middle" font-family="Geist Mono, ui-monospace, monospace" font-size="20" fill="${b.c}">${b.label}</text>`;
+    body += `<text x="${bx + 65}" y="${y0 + h + 28}" text-anchor="middle" font-family="Geist Mono, ui-monospace, monospace" font-size="14" letter-spacing="1" fill="${INK}">${b.n}</text>`;
+  });
+  files["poster-morph.svg"] = plate(
+    `${axes(x0 - 30, y0, 480, h, "", "KV CACHE, 32K CONTEXT")}${body}${caption("FIG.07  KV CACHE", "86x less memory per context", "MoRPH-S, 170M parameters, standard attention for comparison")}`
+  );
+
+  const rows = [
+    { n: "LEADERLESS EVIDENCE", v: 0.06, c: hot, o: 0.95 },
+    { n: "QUORUM ON EVIDENCE", v: 0.33, c: INK, o: 0.5 },
+    { n: "CONFIDENCE-ELECTED", v: 0.67, c: INK, o: 0.35 },
+  ];
+  let sw = "";
+  rows.forEach((r, i) => {
+    const y = y0 + i * 80;
+    sw += `<text x="${x0 - 8}" y="${y + 26}" text-anchor="end" font-family="Geist Mono, ui-monospace, monospace" font-size="14" letter-spacing="1" fill="${INK}">${r.n}</text>`;
+    sw += `<rect x="${x0}" y="${y}" width="${Math.max(4, r.v * 560)}" height="34" fill="${r.c}" opacity="${r.o}"/>`;
+    sw += `<text x="${x0 + Math.max(4, r.v * 560) + 12}" y="${y + 24}" font-family="Geist Mono, ui-monospace, monospace" font-size="18" fill="${r.c}">${r.v.toFixed(2)}</text>`;
+  });
+  files["poster-swarm.svg"] = plate(
+    `${sw}${caption("FIG.08  CONTAMINATION", "Who gets to lead decides who gets fooled", "3 of 12 agents compromised, 18 seeds, lower is safer")}`
+  );
+}
+
+/* =================================================================
    4. Agent orchestration. Legal-Advisory (NyayaSetu): the complete
    pass, not just the fan-in. A query enters on the left, three
    specialists work it in parallel, Senior Counsel synthesises, and

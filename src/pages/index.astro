@@ -30,6 +30,8 @@ import { machineHome } from "../lib/machine";
 /* Fixed order for the home page, not computed: these four lead the
    page in this sequence. Everything else is on /work. */
 const homeOrder = ["papersseum", "tripwire", "pathos", "rocketlanding"];
+/* Research experiments: the projects flagged for their own section. */
+const research = projects.filter((p) => p.research);
 const featured = homeOrder
   .map((slug) => projects.find((p) => p.slug === slug))
   .filter((p): p is (typeof projects)[number] => Boolean(p));
@@ -125,6 +127,7 @@ const machineDoc = machineHome(
     <ExperienceList />
   </Band>
 
+
   <Band
     id="work"
     title="Selected systems"
@@ -139,6 +142,15 @@ const machineDoc = machineHome(
         <path d="M3 8h10M9 4l4 4-4 4" />
       </svg>
     </a>
+  </Band>
+
+  <Band
+    id="research"
+    title="Research experiments"
+    count={research.length}
+    note="Smaller studies run to find something out, not to ship. Each states what it measured and what it could not show."
+  >
+    <ProjectCards items={research} />
   </Band>
 
   {/* Field notes. The one non-instrument block: a small stack of

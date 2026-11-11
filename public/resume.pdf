@@ -18,7 +18,7 @@ endobj
 << /Type /Page /Parent 2 0 R /MediaBox [0 0 595.28 841.89] /Resources << /Font << /F1 3 0 R /F2 4 0 R /F3 5 0 R >> >> /Contents 7 0 R >>
 endobj
 7 0 obj
-<< /Length 7012 >>
+<< /Length 6956 >>
 stream
 BT /F2 20 Tf 0 g 1 0 0 1 52.00 789.89 Tm (Dhairya Pandya) Tj ET
 BT /F3 8.5 Tf 0.4 g 1 0 0 1 52.00 774.89 Tm (AI/ML Engineer  /  Dual degree in progress) Tj ET
@@ -76,30 +76,30 @@ BT /F1 9.5 Tf 0.2 g 1 0 0 1 62.00 309.39 Tm (Cheated in 66% of impossible-task e
 BT /F1 9.5 Tf 0.2 g 1 0 0 1 62.00 296.89 Tm (but only 6 of 33 cheats were mentioned in its note to the user.) Tj ET
 0.55 g 54.00 287.39 1.6 1.6 re f
 BT /F1 9.5 Tf 0.2 g 1 0 0 1 62.00 284.39 Tm (Python / Interpretability / Reasoning models / Evaluation) Tj ET
-BT /F2 10 Tf 0 g 1 0 0 1 52.00 264.89 Tm (Udte Bhawre) Tj ET
-BT /F3 8.5 Tf 0.45 g 1 0 0 1 405.58 264.89 Tm (Shipped / 04.2026 - 05.2026) Tj ET
+BT /F2 10 Tf 0 g 1 0 0 1 52.00 264.89 Tm (MoRPH) Tj ET
+BT /F3 8.5 Tf 0.45 g 1 0 0 1 446.38 264.89 Tm (Prototype / 10.2026) Tj ET
 0.55 g 54.00 254.89 1.6 1.6 re f
-BT /F1 9.5 Tf 0.2 g 1 0 0 1 62.00 251.89 Tm (Cross-platform desktop AI companion living in the taskbar, with concurrent Gemini, Claude and Codex sessions) Tj ET
-BT /F1 9.5 Tf 0.2 g 1 0 0 1 62.00 239.39 Tm (behind one MCP tool layer.) Tj ET
+BT /F1 9.5 Tf 0.2 g 1 0 0 1 62.00 251.89 Tm (Research experiment: a small language model built from scratch to cut KV-cache memory, with a self-modeling) Tj ET
+BT /F1 9.5 Tf 0.2 g 1 0 0 1 62.00 239.39 Tm (training objective.) Tj ET
 0.55 g 54.00 229.89 1.6 1.6 re f
-BT /F1 9.5 Tf 0.2 g 1 0 0 1 62.00 226.89 Tm (2nd prize, team getalife\(\), Hackbyte 4.0, IIITDM Jabalpur.) Tj ET
-0.55 g 54.00 217.39 1.6 1.6 re f
-BT /F1 9.5 Tf 0.2 g 1 0 0 1 62.00 214.39 Tm (Electron / Node.js / MongoDB / Gemini / MCP) Tj ET
-BT /F2 10 Tf 0 g 1 0 0 1 52.00 194.89 Tm (RocketLandingWithRL) Tj ET
-BT /F3 8.5 Tf 0.45 g 1 0 0 1 405.58 194.89 Tm (Shipped / 09.2026 - 10.2026) Tj ET
-0.55 g 54.00 184.89 1.6 1.6 re f
-BT /F1 9.5 Tf 0.2 g 1 0 0 1 62.00 181.89 Tm (2D rocket landing on a moving drone ship in gusty wind: environment, physics and seven RL algorithms written) Tj ET
-BT /F1 9.5 Tf 0.2 g 1 0 0 1 62.00 169.39 Tm (from scratch, trained on a laptop CPU.) Tj ET
-0.55 g 54.00 159.89 1.6 1.6 re f
-BT /F1 9.5 Tf 0.2 g 1 0 0 1 62.00 156.89 Tm (Randomized training produced a generalist that beats each level's specialist; the best mix-trained PPO lands 76%) Tj ET
-BT /F1 9.5 Tf 0.2 g 1 0 0 1 62.00 144.39 Tm (of far booster returns against a hand-written PID's 45%.) Tj ET
-0.55 g 54.00 134.89 1.6 1.6 re f
-BT /F1 9.5 Tf 0.2 g 1 0 0 1 62.00 131.89 Tm (Python / PyTorch / PPO / SAC / GRPO) Tj ET
-BT /F2 10 Tf 0 g 1 0 0 1 52.00 112.39 Tm (NyayaSetu) Tj ET
-BT /F3 8.5 Tf 0.45 g 1 0 0 1 405.58 112.39 Tm (Shipped / 01.2026 - 03.2026) Tj ET
-0.55 g 54.00 102.39 1.6 1.6 re f
-BT /F1 9.5 Tf 0.2 g 1 0 0 1 62.00 99.39 Tm (Multi-agent legal intelligence system bridging static IPC/BNS statutes with live Supreme Court judgments, to cut) Tj ET
-BT /F1 9.5 Tf 0.2 g 1 0 0 1 62.00 86.89 Tm (hallucination in legal AI.) Tj ET
+BT /F1 9.5 Tf 0.2 g 1 0 0 1 62.00 226.89 Tm (86x less cache than standard attention at 32k context \(24 MB against about 2,013 MB\) for the 170M-parameter) Tj ET
+BT /F1 9.5 Tf 0.2 g 1 0 0 1 62.00 214.39 Tm (MoRPH-S.) Tj ET
+0.55 g 54.00 204.89 1.6 1.6 re f
+BT /F1 9.5 Tf 0.2 g 1 0 0 1 62.00 201.89 Tm (PyTorch / Mamba2 / Attention / Pretraining) Tj ET
+BT /F2 10 Tf 0 g 1 0 0 1 52.00 182.39 Tm (Swarm Immunity) Tj ET
+BT /F3 8.5 Tf 0.45 g 1 0 0 1 446.38 182.39 Tm (Prototype / 11.2026) Tj ET
+0.55 g 54.00 172.39 1.6 1.6 re f
+BT /F1 9.5 Tf 0.2 g 1 0 0 1 62.00 169.39 Tm (Safety benchmark for bio-inspired coordination in LLM agent swarms: 483 LLM runs plus 327,600 runs of an) Tj ET
+BT /F1 9.5 Tf 0.2 g 1 0 0 1 62.00 156.89 Tm (agent-based twin.) Tj ET
+0.55 g 54.00 147.39 1.6 1.6 re f
+BT /F1 9.5 Tf 0.2 g 1 0 0 1 62.00 144.39 Tm (Leaderless evidence-sharing kept contamination at 0.06; confidence-elected leaders reached 0.67 with three of) Tj ET
+BT /F1 9.5 Tf 0.2 g 1 0 0 1 62.00 131.89 Tm (twelve agents compromised.) Tj ET
+0.55 g 54.00 122.39 1.6 1.6 re f
+BT /F1 9.5 Tf 0.2 g 1 0 0 1 62.00 119.39 Tm (Multi-agent / LLM agents / Safety / Evaluation) Tj ET
+BT /F2 10 Tf 0 g 1 0 0 1 52.00 99.89 Tm (Udte Bhawre) Tj ET
+BT /F3 8.5 Tf 0.45 g 1 0 0 1 405.58 99.89 Tm (Shipped / 04.2026 - 05.2026) Tj ET
+0.55 g 54.00 89.89 1.6 1.6 re f
+BT /F1 9.5 Tf 0.2 g 1 0 0 1 62.00 86.89 Tm (Cross-platform desktop AI companion living in the taskbar, with concurrent Gemini, Claude and Codex sessions) Tj ET
 BT /F3 7.5 Tf 0.55 g 1 0 0 1 144.64 34.00 Tm (Dhairya Pandya  /  page 1 of 2  /  dhairyapandya.holdout.workers.dev) Tj ET
 endstream
 endobj
@@ -107,40 +107,60 @@ endobj
 << /Type /Page /Parent 2 0 R /MediaBox [0 0 595.28 841.89] /Resources << /Font << /F1 3 0 R /F2 4 0 R /F3 5 0 R >> >> /Contents 9 0 R >>
 endobj
 9 0 obj
-<< /Length 2410 >>
+<< /Length 4046 >>
 stream
-0.55 g 54.00 792.89 1.6 1.6 re f
-BT /F1 9.5 Tf 0.2 g 1 0 0 1 62.00 789.89 Tm (4 specialized LangGraph agents \(retrieval, live-judgment verification, multimodal evidence review, synthesis\), built) Tj ET
-BT /F1 9.5 Tf 0.2 g 1 0 0 1 62.00 777.39 Tm (for Convolve 4.0, a Pan-IIT hackathon.) Tj ET
+BT /F1 9.5 Tf 0.2 g 1 0 0 1 62.00 789.89 Tm (behind one MCP tool layer.) Tj ET
+0.55 g 54.00 780.39 1.6 1.6 re f
+BT /F1 9.5 Tf 0.2 g 1 0 0 1 62.00 777.39 Tm (2nd prize, team getalife\(\), Hackbyte 4.0, IIITDM Jabalpur.) Tj ET
 0.55 g 54.00 767.89 1.6 1.6 re f
-BT /F1 9.5 Tf 0.2 g 1 0 0 1 62.00 764.89 Tm (LangGraph / LangChain / Streamlit / Qdrant / Gemini 2.5 Flash) Tj ET
-BT /F2 9 Tf 0 g 1 0 0 1 52.00 740.39 Tm (SKILLS AND TOOLS) Tj ET
-0.8 G 0.5 w 52 735.39 m 543.28 735.39 l S
-BT /F2 10 Tf 0 g 1 0 0 1 52.00 721.39 Tm (Languages) Tj ET
-0.55 g 54.00 711.39 1.6 1.6 re f
-BT /F1 9.5 Tf 0.2 g 1 0 0 1 62.00 708.39 Tm (Python, Java, C++, C, SQL) Tj ET
-BT /F2 10 Tf 0 g 1 0 0 1 52.00 688.89 Tm (ML and data) Tj ET
-0.55 g 54.00 678.89 1.6 1.6 re f
-BT /F1 9.5 Tf 0.2 g 1 0 0 1 62.00 675.89 Tm (scikit-learn, NumPy, Pandas, Matplotlib, exploratory data analysis) Tj ET
-BT /F2 10 Tf 0 g 1 0 0 1 52.00 656.39 Tm (Serving and infra) Tj ET
-0.55 g 54.00 646.39 1.6 1.6 re f
-BT /F1 9.5 Tf 0.2 g 1 0 0 1 62.00 643.39 Tm (PostgreSQL, Hugging Face, Docker, Bash, Git) Tj ET
-BT /F2 10 Tf 0 g 1 0 0 1 52.00 623.89 Tm (Applied AI) Tj ET
-0.55 g 54.00 613.89 1.6 1.6 re f
-BT /F1 9.5 Tf 0.2 g 1 0 0 1 62.00 610.89 Tm (Prompt engineering, retrieval, eval harnesses, quantization) Tj ET
-BT /F2 10 Tf 0 g 1 0 0 1 52.00 591.39 Tm (Modeling) Tj ET
-0.55 g 54.00 581.39 1.6 1.6 re f
-BT /F1 9.5 Tf 0.2 g 1 0 0 1 62.00 578.39 Tm (Fine-tuning, time-series, computer vision, recommendation systems, sequence-to-sequence) Tj ET
-BT /F2 10 Tf 0 g 1 0 0 1 52.00 558.89 Tm (Foundations) Tj ET
-0.55 g 54.00 548.89 1.6 1.6 re f
-BT /F1 9.5 Tf 0.2 g 1 0 0 1 62.00 545.89 Tm (Linear algebra, probability, statistics, optimization) Tj ET
-BT /F2 9 Tf 0 g 1 0 0 1 52.00 521.39 Tm (VOLUNTEER) Tj ET
-0.8 G 0.5 w 52 516.39 m 543.28 516.39 l S
-BT /F2 10 Tf 0 g 1 0 0 1 52.00 502.39 Tm (Volunteer organiser, HackByte 4.0, IIITDM Jabalpur) Tj ET
-BT /F3 8.5 Tf 0.45 g 1 0 0 1 522.88 502.39 Tm (2026) Tj ET
-0.55 g 54.00 492.39 1.6 1.6 re f
-BT /F1 9.5 Tf 0.2 g 1 0 0 1 62.00 489.39 Tm (Helped organise a hackathon with over 6,000 registrations. Handled public relations and on-ground crowd and) Tj ET
-BT /F1 9.5 Tf 0.2 g 1 0 0 1 62.00 476.89 Tm (resource management.) Tj ET
+BT /F1 9.5 Tf 0.2 g 1 0 0 1 62.00 764.89 Tm (Electron / Node.js / MongoDB / Gemini / MCP) Tj ET
+BT /F2 10 Tf 0 g 1 0 0 1 52.00 745.39 Tm (RocketLandingWithRL) Tj ET
+BT /F3 8.5 Tf 0.45 g 1 0 0 1 405.58 745.39 Tm (Shipped / 09.2026 - 10.2026) Tj ET
+0.55 g 54.00 735.39 1.6 1.6 re f
+BT /F1 9.5 Tf 0.2 g 1 0 0 1 62.00 732.39 Tm (2D rocket landing on a moving drone ship in gusty wind: environment, physics and seven RL algorithms written) Tj ET
+BT /F1 9.5 Tf 0.2 g 1 0 0 1 62.00 719.89 Tm (from scratch, trained on a laptop CPU.) Tj ET
+0.55 g 54.00 710.39 1.6 1.6 re f
+BT /F1 9.5 Tf 0.2 g 1 0 0 1 62.00 707.39 Tm (Randomized training produced a generalist that beats each level's specialist; the best mix-trained PPO lands 76%) Tj ET
+BT /F1 9.5 Tf 0.2 g 1 0 0 1 62.00 694.89 Tm (of far booster returns against a hand-written PID's 45%.) Tj ET
+0.55 g 54.00 685.39 1.6 1.6 re f
+BT /F1 9.5 Tf 0.2 g 1 0 0 1 62.00 682.39 Tm (Python / PyTorch / PPO / SAC / GRPO) Tj ET
+BT /F2 10 Tf 0 g 1 0 0 1 52.00 662.89 Tm (NyayaSetu) Tj ET
+BT /F3 8.5 Tf 0.45 g 1 0 0 1 405.58 662.89 Tm (Shipped / 01.2026 - 03.2026) Tj ET
+0.55 g 54.00 652.89 1.6 1.6 re f
+BT /F1 9.5 Tf 0.2 g 1 0 0 1 62.00 649.89 Tm (Multi-agent legal intelligence system bridging static IPC/BNS statutes with live Supreme Court judgments, to cut) Tj ET
+BT /F1 9.5 Tf 0.2 g 1 0 0 1 62.00 637.39 Tm (hallucination in legal AI.) Tj ET
+0.55 g 54.00 627.89 1.6 1.6 re f
+BT /F1 9.5 Tf 0.2 g 1 0 0 1 62.00 624.89 Tm (4 specialized LangGraph agents \(retrieval, live-judgment verification, multimodal evidence review, synthesis\), built) Tj ET
+BT /F1 9.5 Tf 0.2 g 1 0 0 1 62.00 612.39 Tm (for Convolve 4.0, a Pan-IIT hackathon.) Tj ET
+0.55 g 54.00 602.89 1.6 1.6 re f
+BT /F1 9.5 Tf 0.2 g 1 0 0 1 62.00 599.89 Tm (LangGraph / LangChain / Streamlit / Qdrant / Gemini 2.5 Flash) Tj ET
+BT /F2 9 Tf 0 g 1 0 0 1 52.00 575.39 Tm (SKILLS AND TOOLS) Tj ET
+0.8 G 0.5 w 52 570.39 m 543.28 570.39 l S
+BT /F2 10 Tf 0 g 1 0 0 1 52.00 556.39 Tm (Languages) Tj ET
+0.55 g 54.00 546.39 1.6 1.6 re f
+BT /F1 9.5 Tf 0.2 g 1 0 0 1 62.00 543.39 Tm (Python, Java, C++, C, SQL) Tj ET
+BT /F2 10 Tf 0 g 1 0 0 1 52.00 523.89 Tm (ML and data) Tj ET
+0.55 g 54.00 513.89 1.6 1.6 re f
+BT /F1 9.5 Tf 0.2 g 1 0 0 1 62.00 510.89 Tm (scikit-learn, NumPy, Pandas, Matplotlib, exploratory data analysis) Tj ET
+BT /F2 10 Tf 0 g 1 0 0 1 52.00 491.39 Tm (Serving and infra) Tj ET
+0.55 g 54.00 481.39 1.6 1.6 re f
+BT /F1 9.5 Tf 0.2 g 1 0 0 1 62.00 478.39 Tm (PostgreSQL, Hugging Face, Docker, Bash, Git) Tj ET
+BT /F2 10 Tf 0 g 1 0 0 1 52.00 458.89 Tm (Applied AI) Tj ET
+0.55 g 54.00 448.89 1.6 1.6 re f
+BT /F1 9.5 Tf 0.2 g 1 0 0 1 62.00 445.89 Tm (Prompt engineering, retrieval, eval harnesses, quantization) Tj ET
+BT /F2 10 Tf 0 g 1 0 0 1 52.00 426.39 Tm (Modeling) Tj ET
+0.55 g 54.00 416.39 1.6 1.6 re f
+BT /F1 9.5 Tf 0.2 g 1 0 0 1 62.00 413.39 Tm (Fine-tuning, time-series, computer vision, recommendation systems, sequence-to-sequence) Tj ET
+BT /F2 10 Tf 0 g 1 0 0 1 52.00 393.89 Tm (Foundations) Tj ET
+0.55 g 54.00 383.89 1.6 1.6 re f
+BT /F1 9.5 Tf 0.2 g 1 0 0 1 62.00 380.89 Tm (Linear algebra, probability, statistics, optimization) Tj ET
+BT /F2 9 Tf 0 g 1 0 0 1 52.00 356.39 Tm (VOLUNTEER) Tj ET
+0.8 G 0.5 w 52 351.39 m 543.28 351.39 l S
+BT /F2 10 Tf 0 g 1 0 0 1 52.00 337.39 Tm (Volunteer organiser, HackByte 4.0, IIITDM Jabalpur) Tj ET
+BT /F3 8.5 Tf 0.45 g 1 0 0 1 522.88 337.39 Tm (2026) Tj ET
+0.55 g 54.00 327.39 1.6 1.6 re f
+BT /F1 9.5 Tf 0.2 g 1 0 0 1 62.00 324.39 Tm (Helped organise a hackathon with over 6,000 registrations. Handled public relations and on-ground crowd and) Tj ET
+BT /F1 9.5 Tf 0.2 g 1 0 0 1 62.00 311.89 Tm (resource management.) Tj ET
 BT /F3 7.5 Tf 0.55 g 1 0 0 1 144.64 34.00 Tm (Dhairya Pandya  /  page 2 of 2  /  dhairyapandya.holdout.workers.dev) Tj ET
 endstream
 endobj
@@ -154,10 +174,10 @@ xref
 0000000320 00000 n 
 0000000415 00000 n 
 0000000567 00000 n 
-0000007631 00000 n 
-0000007783 00000 n 
+0000007575 00000 n 
+0000007727 00000 n 
 trailer
 << /Size 10 /Root 1 0 R /Info << /Title (Dhairya Pandya - Resume) /Author (Dhairya Pandya) /Producer (scripts/gen-resume-pdf.mjs) >> >>
 startxref
-10245
+11825
 %%EOF

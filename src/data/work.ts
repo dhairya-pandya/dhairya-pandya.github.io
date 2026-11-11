@@ -122,6 +122,8 @@ export interface Project {
   contribution: string;
   /** Research track, shown as a tag on the card. Omit when it is just a product. */
   track?: string;
+  /** Shown in the Research experiments section on the home page. */
+  research?: boolean;
   bullets: string[];
   chips: string[];
   /** The headline measurement, with the context that makes it legible. */
@@ -288,6 +290,69 @@ export const projects: Project[] = [
       { kind: "model", label: "Episodes", url: "https://huggingface.co/datasets/dhairyapandya/beam-tripwire-episodes" },
     ],
     featured: true,
+  },
+  {
+    slug: "morph",
+    title: "MoRPH",
+    icon: "ph:cube",
+    poster: "/mock/poster-morph.svg",
+    start: "2026-10",
+    end: "2026-10",
+    maturity: "prototype",
+    track: "Research experiment",
+    research: true,
+    outcome:
+      "A small language model built from scratch to cut the memory cost of the KV cache, trained with a self-modeling objective that pushes the network to keep its own internals simple.",
+    contribution:
+      "I designed the architecture, the training objective and the ablation plan, and built the pipeline that trains on free Kaggle GPU sessions and resumes across their time limits.",
+    bullets: [
+      "A hybrid stack: most layers are Mamba2 state-space blocks with constant memory, and a few attention layers share one cached latent between pairs, so each token caches two entries instead of four.",
+      "At a 32k context, the MoRPH-S model (170M parameters) needs about 24 MB for its cache where standard multi-head attention needs about 2,013 MB, an 86x reduction in the cache.",
+      "A self-modeling loss asks the network to predict the states entering its attention layers, with a proxy ablation that tests whether it protects a smaller cache.",
+    ],
+    chips: ["PyTorch", "Mamba2", "Attention", "Pretraining"],
+    metric: {
+      value: "86x",
+      label: "smaller KV cache at 32k context",
+      context: "MoRPH-S, 170M parameters, against standard multi-head attention",
+      baseline: "Standard multi-head attention: about 2,013 MB",
+    },
+    evidence: [
+      { kind: "repo", label: "Source", url: "https://github.com/dhairya-pandya/MoRPH" },
+    ],
+    featured: false,
+  },
+  {
+    slug: "swarm-immunity",
+    title: "Swarm Immunity",
+    icon: "ph:bug-beetle",
+    poster: "/mock/poster-swarm.svg",
+    start: "2026-11",
+    end: "2026-11",
+    maturity: "prototype",
+    track: "Research experiment",
+    research: true,
+    outcome:
+      "A safety benchmark asking which bio-inspired coordination designs keep a swarm of LLM agents correct when some of its members are compromised, and which defences are worth their cost.",
+    contribution:
+      "I wrote the study: the hidden-profile task, the coordination designs and attacks, the pre-registered confirmatory tests, the agent-based twin, and the report with its replay viewer.",
+    bullets: [
+      "483 LLM swarm runs with 12 agents, plus 327,600 runs of an agent-based twin calibrated on the pilot data.",
+      "Leaderless evidence-sharing kept contamination at 0.06, while leaders elected by self-reported confidence were captured, reaching 0.67 with three of twelve agents compromised.",
+      "Confirmatory tests were run on fresh seeds under a second pre-registration, committed before those runs.",
+    ],
+    chips: ["Multi-agent", "LLM agents", "Safety", "Evaluation"],
+    metric: {
+      value: "0.67",
+      label: "contamination when leaders are elected by confidence",
+      context: "3 of 12 agents compromised, 18 seeds",
+      baseline: "Leaderless evidence-sharing: 0.06",
+    },
+    evidence: [
+      { kind: "repo", label: "Source", url: "https://github.com/dhairya-pandya/AIAF-SwarmAlignment" },
+      { kind: "demo", label: "Results", url: "https://swarm-immunity.vercel.app" },
+    ],
+    featured: false,
   },
   {
     slug: "nyayasetu",

@@ -169,6 +169,24 @@ const RESUME = {
           ],
         },
         {
+          head: "MoRPH",
+          meta: "Prototype / 10.2026",
+          bullets: [
+            "Research experiment: a small language model built from scratch to cut KV-cache memory, with a self-modeling training objective.",
+            "86x less cache than standard attention at 32k context (24 MB against about 2,013 MB) for the 170M-parameter MoRPH-S.",
+            "PyTorch / Mamba2 / Attention / Pretraining",
+          ],
+        },
+        {
+          head: "Swarm Immunity",
+          meta: "Prototype / 11.2026",
+          bullets: [
+            "Safety benchmark for bio-inspired coordination in LLM agent swarms: 483 LLM runs plus 327,600 runs of an agent-based twin.",
+            "Leaderless evidence-sharing kept contamination at 0.06; confidence-elected leaders reached 0.67 with three of twelve agents compromised.",
+            "Multi-agent / LLM agents / Safety / Evaluation",
+          ],
+        },
+        {
           head: "Udte Bhawre",
           meta: "Shipped / 04.2026 - 05.2026",
           bullets: [
@@ -396,7 +414,7 @@ const problems = [];
 if (!site.includes(RESUME.name)) problems.push("name does not match site.ts");
 if (!site.includes(RESUME.contact[0])) problems.push("email does not match site.ts");
 const projectCount = (work.match(/^\s{4}slug: "/gm) || []).length;
-if (projectCount !== 6) problems.push(`work.ts has ${projectCount} projects, expected 6`);
+if (projectCount !== 8) problems.push(`work.ts has ${projectCount} projects, expected 8`);
 
 if (problems.length) {
   console.error("resume PDF drift check FAILED:");
