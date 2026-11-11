@@ -1,7 +1,7 @@
 {
   "name": "Dhairya Pandya, AI/ML Engineer",
   "short_name": "Dhairya Pandya",
-  "description": "I build machine learning systems end to end, from data pipelines and model training to evaluation and deployment.",
+  "description": "I build machine learning systems end to end, with the most care going into alignment, evaluation and whether a model's reasoning matches what it does.",
   "start_url": "/",
   "display": "standalone",
   "background_color": "#f7f7f5",

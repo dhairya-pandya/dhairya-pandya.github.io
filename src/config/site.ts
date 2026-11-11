@@ -21,16 +21,16 @@ export const site = {
   role: "AI/ML Engineer",
   /** Completes the sentence "I build ..." */
   builds:
-    "machine learning systems end to end, from data pipelines and model training to evaluation and deployment",
+    "machine learning systems end to end, with the most care going into alignment, evaluation and whether a model's reasoning matches what it does",
   tagline: "Measure it, or it did not happen.",
-  availability: "Open to AI/ML internships and research roles for Summer 2027",
+  availability: "Open to alignment, interpretability and evaluation research roles, and AI/ML internships for Summer 2027",
   status: "available",
   location: "India",
   timezone: "Asia/Kolkata",
   pronouns: "he/him",
   email: "dhairyapandya.workspace@gmail.com",
   phone: "+91 91739 31925",
-  url: "https://dhairyapandya.holdout.workers.dev",
+  url: "https://dhairya-pandya.github.io",
   /** Rendered in the header's left slot, mono uppercase. */
   est: "EST. 2006",
 } as const;
@@ -136,7 +136,7 @@ export const notes = [
  * whose whole argument is "I show my work".
  */
 export const colophon = {
-  domain: "dhairyapandya.holdout.workers.dev",
+  domain: "dhairya-pandya.github.io",
   blurb: "A portfolio that shows the measurement, not just the result.",
   cells: [
     { key: "Crafted by", value: "@dhairya-pandya", href: "https://github.com/dhairya-pandya" },
