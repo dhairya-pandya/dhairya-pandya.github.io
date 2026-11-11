@@ -402,43 +402,84 @@ const files = {};
 }
 
 /* =================================================================
-   3d. Research posters for MoRPH (KV-cache memory at 32k) and Swarm
-   Immunity (contamination by coordination design). Numbers from the
-   two repos' READMEs.
+   3d. Research posters. MoRPH draws its real layer order (Mamba2 blocks
+   in grey, the four attention layers in lime, each pair sharing one
+   cached latent). Swarm Immunity draws the two coordination designs as
+   graphs: honest agents dim, compromised agents rose, and the leader
+   of the elected design captured. Numbers from the two READMEs.
    ================================================================= */
 {
-  const [hot] = HUES.lime;
-  const x0 = 200, y0 = 150, h = 260;
-  const mha = 2013, morph = 24;
-  const bars = [
-    { n: "MULTI-HEAD ATTENTION", v: 1, label: "2,013 MB", c: INK, o: 0.35 },
-    { n: "MORPH-S", v: morph / mha, label: "24 MB", c: hot, o: 0.95 },
-  ];
-  let body = "";
-  bars.forEach((b, i) => {
-    const bh = Math.max(4, b.v * h), bx = x0 + i * 240;
-    body += `<rect x="${bx}" y="${(y0 + h - bh).toFixed(1)}" width="130" height="${bh.toFixed(1)}" fill="${b.c}" opacity="${b.o}"/>`;
-    body += `<text x="${bx + 65}" y="${(y0 + h - bh - 14).toFixed(1)}" text-anchor="middle" font-family="Geist Mono, ui-monospace, monospace" font-size="20" fill="${b.c}">${b.label}</text>`;
-    body += `<text x="${bx + 65}" y="${y0 + h + 28}" text-anchor="middle" font-family="Geist Mono, ui-monospace, monospace" font-size="14" letter-spacing="1" fill="${INK}">${b.n}</text>`;
+  const [lime] = HUES.lime;
+  const [rose] = HUES.rose;
+  const mono = "Geist Mono, ui-monospace, monospace";
+  // Layer stack, bottom (input) to top (output), 24 layers.
+  const attn = new Set([4, 9, 14, 19]);
+  const top = 92, lh = 14, gap = 2.5, x = 80, w = 96;
+  let stack = "", cache = "";
+  for (let i = 0; i < 24; i++) {
+    const y = top + (23 - i) * (lh + gap);
+    const isA = attn.has(i);
+    stack += `<rect x="${x}" y="${y}" width="${w}" height="${lh}" rx="3" fill="${isA ? lime : INK}" opacity="${isA ? 0.95 : 0.22}"/>`;
+  }
+  // Pair arrows: the second attention layer of each pair reuses the first.
+  [[4, 9], [14, 19]].forEach(([a, b]) => {
+    const ya = top + (23 - a) * (lh + gap) + lh / 2;
+    const yb = top + (23 - b) * (lh + gap) + lh / 2;
+    cache += `<path d="M${x + w + 10} ${ya} H${x + w + 46} V${yb} H${x + w + 10}" fill="none" stroke="${lime}" stroke-width="1.5" stroke-dasharray="4 4"/>`;
+    cache += `<text x="${x + w + 54}" y="${(ya + yb) / 2 + 5}" font-family="${mono}" font-size="13" fill="${lime}">shared latent</text>`;
   });
+  const labels = `<text x="${x - 12}" y="${top + 23 * (lh + gap) + lh}" text-anchor="end" font-family="${mono}" font-size="12" fill="${INK}">input</text>
+    <text x="${x - 12}" y="${top + 10}" text-anchor="end" font-family="${mono}" font-size="12" fill="${INK}">output</text>`;
+  // Cache bars at 32k context.
+  const bx = 520, by = 470, bh = 300;
+  const mhaH = bh, morphH = Math.max(6, (24 / 2013) * bh);
+  const bars = `<rect x="${bx}" y="${by - mhaH}" width="120" height="${mhaH}" fill="${INK}" opacity="0.3"/>
+    <rect x="${bx + 170}" y="${by - morphH}" width="120" height="${morphH.toFixed(1)}" fill="${lime}" opacity="0.95"/>
+    <text x="${bx + 60}" y="${by - mhaH - 12}" text-anchor="middle" font-family="${mono}" font-size="18" fill="${INK}">2,013 MB</text>
+    <text x="${bx + 230}" y="${by - morphH - 12}" text-anchor="middle" font-family="${mono}" font-size="18" fill="${lime}">24 MB</text>
+    <text x="${bx + 60}" y="${by + 26}" text-anchor="middle" font-family="${mono}" font-size="13" letter-spacing="1" fill="${DIM}">STANDARD ATTENTION</text>
+    <text x="${bx + 230}" y="${by + 26}" text-anchor="middle" font-family="${mono}" font-size="13" letter-spacing="1" fill="${DIM}">MORPH-S</text>`;
   files["poster-morph.svg"] = plate(
-    `${axes(x0 - 30, y0, 480, h, "", "KV CACHE, 32K CONTEXT")}${body}${caption("FIG.07  KV CACHE", "86x less memory per context", "MoRPH-S, 170M parameters, standard attention for comparison")}`
+    `<text x="${x}" y="70" font-family="${mono}" font-size="15" letter-spacing="1.4" fill="${DIM}">LAYER ORDER, MORPH-S</text>${stack}${cache}${labels}${bars}${caption("FIG.07  KV CACHE", "Mostly state, four cached attention layers", "86x less cache at a 32k context, 170M parameters")}`
   );
 
-  const rows = [
-    { n: "LEADERLESS EVIDENCE", v: 0.06, c: hot, o: 0.95 },
-    { n: "QUORUM ON EVIDENCE", v: 0.33, c: INK, o: 0.5 },
-    { n: "CONFIDENCE-ELECTED", v: 0.67, c: INK, o: 0.35 },
-  ];
-  let sw = "";
-  rows.forEach((r, i) => {
-    const y = y0 + i * 80;
-    sw += `<text x="${x0 - 8}" y="${y + 26}" text-anchor="end" font-family="Geist Mono, ui-monospace, monospace" font-size="14" letter-spacing="1" fill="${INK}">${r.n}</text>`;
-    sw += `<rect x="${x0}" y="${y}" width="${Math.max(4, r.v * 560)}" height="34" fill="${r.c}" opacity="${r.o}"/>`;
-    sw += `<text x="${x0 + Math.max(4, r.v * 560) + 12}" y="${y + 24}" font-family="Geist Mono, ui-monospace, monospace" font-size="18" fill="${r.c}">${r.v.toFixed(2)}</text>`;
+  // Swarm: two 12-agent graphs side by side.
+  const agents = (cx, cy, r, n) => Array.from({ length: n }, (_, i) => {
+    const a = (i / n) * Math.PI * 2 - Math.PI / 2;
+    return { x: cx + r * Math.cos(a), y: cy + r * Math.sin(a), bad: i % 4 === 1 && i !== 0 };
   });
+  const drawGraph = (cx, cy, mode) => {
+    const pts = agents(cx, cy, 130, 12);
+    let g = "";
+    if (mode === "leaderless") {
+      pts.forEach((p, i) => pts.slice(i + 1).forEach((q) => {
+        g += `<line x1="${p.x}" y1="${p.y}" x2="${q.x}" y2="${q.y}" stroke="${INK}" stroke-opacity="0.07"/>`;
+      }));
+    } else {
+      const hub = pts[0];
+      pts.slice(1).forEach((p) => {
+        g += `<line x1="${hub.x}" y1="${hub.y}" x2="${p.x}" y2="${p.y}" stroke="${rose}" stroke-opacity="0.35"/>`;
+      });
+    }
+    pts.forEach((p, i) => {
+      const isLeader = mode === "elected" && i === 0;
+      const col = p.bad || isLeader ? rose : lime;
+      const rad = isLeader ? 15 : 9;
+      g += `<circle cx="${p.x}" cy="${p.y}" r="${rad}" fill="${col}" opacity="${p.bad ? 1 : 0.7}"/>`;
+    });
+    return g;
+  };
+  const panelL = drawGraph(250, 300, "leaderless");
+  const panelR = drawGraph(720, 300, "elected");
+  const swarmLabels = `
+    <text x="250" y="${300 + 190}" text-anchor="middle" font-family="${mono}" font-size="16" letter-spacing="1.2" fill="${INK}">LEADERLESS EVIDENCE</text>
+    <text x="250" y="${300 + 214}" text-anchor="middle" font-family="${mono}" font-size="20" fill="${lime}">contamination 0.06</text>
+    <text x="720" y="${300 + 190}" text-anchor="middle" font-family="${mono}" font-size="16" letter-spacing="1.2" fill="${INK}">CONFIDENCE-ELECTED LEADER</text>
+    <text x="720" y="${300 + 214}" text-anchor="middle" font-family="${mono}" font-size="20" fill="${rose}">contamination 0.67</text>
+    <text x="250" y="110" text-anchor="middle" font-family="${mono}" font-size="13" fill="${lime}">● honest agent</text>
+    <text x="420" y="110" text-anchor="middle" font-family="${mono}" font-size="13" fill="${rose}">● compromised</text>`;
   files["poster-swarm.svg"] = plate(
-    `${sw}${caption("FIG.08  CONTAMINATION", "Who gets to lead decides who gets fooled", "3 of 12 agents compromised, 18 seeds, lower is safer")}`
+    `${panelL}${panelR}${swarmLabels}${caption("FIG.08  SWARM", "Who gets elected decides who gets fooled", "12 agents, 3 compromised, 18 seeds; lower contamination is safer")}`
   );
 }
 

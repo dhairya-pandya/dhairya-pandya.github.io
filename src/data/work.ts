@@ -302,13 +302,13 @@ export const projects: Project[] = [
     track: "Research experiment",
     research: true,
     outcome:
-      "A small language model built from scratch to cut the memory cost of the KV cache, trained with a self-modeling objective that pushes the network to keep its own internals simple.",
+      "A small language model built from scratch to shrink the memory its attention cache takes during generation, using a hybrid stack of state-space and attention layers and a self-modeling training objective.",
     contribution:
       "I designed the architecture, the training objective and the ablation plan, and built the pipeline that trains on free Kaggle GPU sessions and resumes across their time limits.",
     bullets: [
-      "A hybrid stack: most layers are Mamba2 state-space blocks with constant memory, and a few attention layers share one cached latent between pairs, so each token caches two entries instead of four.",
-      "At a 32k context, the MoRPH-S model (170M parameters) needs about 24 MB for its cache where standard multi-head attention needs about 2,013 MB, an 86x reduction in the cache.",
-      "A self-modeling loss asks the network to predict the states entering its attention layers, with a proxy ablation that tests whether it protects a smaller cache.",
+      "Most layers are Mamba2 state-space blocks, whose memory does not grow with the length of the context. Only four attention layers remain, and each pair shares one cached latent, so every token stores two cache entries instead of four.",
+      "At a 32k context, the 170M-parameter MoRPH-S needs about 24 MB of cache, against about 2,013 MB for standard multi-head attention.",
+      "A self-modeling loss asks the network to predict the states that enter its attention layers. A proxy ablation then tests whether that pressure protects a smaller cache.",
     ],
     chips: ["PyTorch", "Mamba2", "Attention", "Pretraining"],
     metric: {
@@ -333,13 +333,13 @@ export const projects: Project[] = [
     track: "Research experiment",
     research: true,
     outcome:
-      "A safety benchmark asking which bio-inspired coordination designs keep a swarm of LLM agents correct when some of its members are compromised, and which defences are worth their cost.",
+      "A safety benchmark for LLM agent swarms. It asks which bio-inspired coordination designs keep the group correct when some members are compromised, and which defences are worth their cost.",
     contribution:
       "I wrote the study: the hidden-profile task, the coordination designs and attacks, the pre-registered confirmatory tests, the agent-based twin, and the report with its replay viewer.",
     bullets: [
-      "483 LLM swarm runs with 12 agents, plus 327,600 runs of an agent-based twin calibrated on the pilot data.",
-      "Leaderless evidence-sharing kept contamination at 0.06, while leaders elected by self-reported confidence were captured, reaching 0.67 with three of twelve agents compromised.",
-      "Confirmatory tests were run on fresh seeds under a second pre-registration, committed before those runs.",
+      "The task is a hidden-profile decision: agents must pool facts that each of them holds, while up to a quarter of the swarm pushes a wrong option.",
+      "Across 483 LLM runs with 12 agents, and 327,600 runs of an agent-based twin calibrated on the pilot data, leaderless evidence-sharing stayed nearly uncontaminated at 0.06.",
+      "Leaders elected by self-reported confidence were captured by attackers, reaching 0.67 contamination with three of twelve agents compromised. The confirmatory tests ran on fresh seeds under a second pre-registration, committed before those runs.",
     ],
     chips: ["Multi-agent", "LLM agents", "Safety", "Evaluation"],
     metric: {
