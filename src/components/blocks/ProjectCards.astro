@@ -243,7 +243,7 @@ function footerActions(p: Project) {
     --pc-radius: 16px;
     --pc-border: 0.8px;
     --pc-frame-radius: 8px;
-    --pc-ratio: 1.274;
+    --pc-ratio: 1.6;
     --pc-hover: 1.03;
     --pc-body-y: 14px;
     --pc-body-x: 10px;
@@ -272,16 +272,10 @@ function footerActions(p: Project) {
      width/height attributes fix both axes, so nothing reflows as the
      poster loads.
 
-     1.274, DIALLED, AND IT CROPS. The frame was 8/5, which is the
-     generator's own 1200x750 and therefore cropped nothing. At 1.274
-     the frame is taller than the source, so object-cover trims about
-     20% of the poster's width, 10% from each side. What that costs is
-     the left edge of the generator's own caption plate in the
-     bottom-left corner. The plate's content is not lost from the page
-     (it is in the alt text, and in full on /work/[slug]), but it is
-     clipped in the artifact itself. `object-position: left center`
-     would trade the right-hand axis label for the whole plate if that
-     is the better trade.
+     1.6 matches the generator's 1200x750 exactly, so object-cover crops
+     nothing and every poster sits whole and centred in its frame. The
+     earlier 1.274 trimmed 10% from each side, which clipped the caption
+     plates and pushed the content off-centre.
   */
   .pcard-frame {
     position: relative;
