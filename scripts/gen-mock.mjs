@@ -89,7 +89,10 @@ function defs(extra = "") {
 
 /** The plate every poster sits on: gradient ground, hairline frame,
  *  a faint 40px measure grid, and a grain wash on top. */
-function plate(children, { grid = true } = {}) {
+function plate(children, { grid = true, dx = 0 } = {}) {
+  /* The caption block is split off so that only the artwork is centred;
+     the caption stays on its left margin. */
+  const [art, cap = ""] = children.split("<!--caption-->");
   let g = "";
   if (grid) {
     const lines = [];
@@ -101,7 +104,8 @@ function plate(children, { grid = true } = {}) {
   ${defs()}
   <rect width="${W}" height="${H}" fill="url(#plate)"/>
   ${g}
-  ${children}
+  <g transform="translate(${dx} 0)">${art}</g>
+  ${cap}
   <rect width="${W}" height="${H}" filter="url(#grain)" opacity="0.9"/>
   <rect x="0.5" y="0.5" width="${W - 1}" height="${H - 1}" fill="none" stroke="${LINE}"/>
 </svg>`;
@@ -109,7 +113,8 @@ function plate(children, { grid = true } = {}) {
 
 /** Mono caption block, bottom-left, matching the site's label style. */
 function caption(kicker, title, sub) {
-  return `<g font-family="Geist Mono, ui-monospace, monospace">
+  return `<!--caption-->
+  <g font-family="Geist Mono, ui-monospace, monospace">
     <text x="48" y="${H - 92}" font-size="19" letter-spacing="1.6" fill="${DIM}">${kicker}</text>
     <text x="48" y="${H - 58}" font-size="30" letter-spacing="-0.2" fill="${INK}">${title}</text>
     <text x="48" y="${H - 30}" font-size="17" letter-spacing="0.5" fill="${DIM}">${sub}</text>
@@ -159,7 +164,7 @@ const files = {};
   });
   files["poster-pathos.svg"] = plate(
     `${bars}${axes(x0 - 30, y0, W - 160, h, "", "YES/NO ACCURACY")}${caption("FIG.01  EVAL ACCURACY", "Single forward pass, no proxy", "100-sample PathVQA validation set")}`,
-    { grid: false }
+    { grid: false, dx: -15 }
   );
 }
 
@@ -270,6 +275,7 @@ const files = {};
 
   files["poster-udtebhawre.svg"] = plate(
     `${out}${caption("FIG.02  REQUEST PATH", "MongoDB off to one side", "tray to session to ArmorIQ to MCP to local system, one column")}`
+    , { dx: 34 }
   );
 }
 
@@ -308,6 +314,7 @@ const files = {};
   const hl = `<text x="${x0 + 4 * groupW + (barW * 2 + 6) + 14}" y="${y0 + h - 0.76 * h - 14}" font-family="Geist Mono, ui-monospace, monospace" font-size="22" fill="${hot}">76%</text>`;
   files["poster-rocketlanding.svg"] = plate(
     `${axes(x0 - 30, y0, levels.length * groupW, h, "", "SUCCESS RATE")}${legend}${bars}${hl}${caption("FIG.04  BOOSTER LANDING", "Generalists beat specialists", "100 held-out starts per cell, one seed, L4 is the far booster return")}`
+    , { dx: 75 }
   );
 }
 
@@ -335,6 +342,7 @@ const files = {};
   body += `<text x="${cx + 214}" y="${cy + 14}" font-family="Geist Mono, ui-monospace, monospace" font-size="16" fill="${hot}">YOU</text>`;
   files["poster-papersseum.svg"] = plate(
     `${body}${caption("FIG.05  ARENA", "Five agents, one shared map", "180 seconds, deterministic replays from seed and action log")}`
+    , { dx: -7 }
   );
 }
 
@@ -363,6 +371,7 @@ const files = {};
   });
   files["poster-tripwire.svg"] = plate(
     `${axes(x0 - 30, y0, rows.length * gap, h, "", "CHEAT RATE")}${bars}${caption("FIG.06  TRIPWIRE", "Beam cheats when the test is impossible", "66 to 79% of impossible episodes, 1 in 176 on controls")}`
+    , { dx: 140 }
   );
 }
 
@@ -441,6 +450,7 @@ const files = {};
     <text x="${bx + 230}" y="${by + 26}" text-anchor="middle" font-family="${mono}" font-size="13" letter-spacing="1" fill="${DIM}">MORPH-S</text>`;
   files["poster-morph.svg"] = plate(
     `<text x="${x}" y="70" font-family="${mono}" font-size="15" letter-spacing="1.4" fill="${DIM}">LAYER ORDER, MORPH-S</text>${stack}${cache}${labels}${bars}${caption("FIG.07  KV CACHE", "Mostly state, four cached attention layers", "86x less cache at a 32k context, 170M parameters")}`
+    , { dx: 198 }
   );
 
   // Swarm: two 12-agent graphs side by side.
@@ -480,6 +490,7 @@ const files = {};
     <text x="420" y="110" text-anchor="middle" font-family="${mono}" font-size="13" fill="${rose}">● compromised</text>`;
   files["poster-swarm.svg"] = plate(
     `${panelL}${panelR}${swarmLabels}${caption("FIG.08  SWARM", "Who gets elected decides who gets fooled", "12 agents, 3 compromised, 18 seeds; lower contamination is safer")}`
+    , { dx: 115 }
   );
 }
 
@@ -531,6 +542,7 @@ const files = {};
   </g>`;
   files["poster-nyayasetu.svg"] = plate(
     `${edges}${input}${nodes}${outEdge}${hub}${output}${caption("FIG.04  AGENT ORCHESTRATION", "Query in, verdict out", "LangGraph state machine, three specialists, truth-grounded synthesis")}`
+    , { dx: -48 }
   );
 }
 

@@ -13,7 +13,7 @@
   </defs>
   <rect width="1200" height="750" fill="url(#plate)"/>
   <path d="M40 0V750M80 0V750M120 0V750M160 0V750M200 0V750M240 0V750M280 0V750M320 0V750M360 0V750M400 0V750M440 0V750M480 0V750M520 0V750M560 0V750M600 0V750M640 0V750M680 0V750M720 0V750M760 0V750M800 0V750M840 0V750M880 0V750M920 0V750M960 0V750M1000 0V750M1040 0V750M1080 0V750M1120 0V750M1160 0V750M0 40H1200M0 80H1200M0 120H1200M0 160H1200M0 200H1200M0 240H1200M0 280H1200M0 320H1200M0 360H1200M0 400H1200M0 440H1200M0 480H1200M0 520H1200M0 560H1200M0 600H1200M0 640H1200M0 680H1200M0 720H1200" stroke="rgba(255,255,255,0.055)" stroke-width="1" fill="none"/>
-  <path d="M194 365 C 265 365, 265 150, 290 150" fill="none" stroke="#8f8f8f" stroke-width="1.5" opacity="0.5"/><path d="M530 150 C 680 150, 680 365, 746 365" fill="none" stroke="#a78bfa" stroke-width="1.8" opacity="0.55"/><path d="M194 365 C 265 365, 265 365, 290 365" fill="none" stroke="#8f8f8f" stroke-width="1.5" opacity="0.5"/><path d="M530 365 C 680 365, 680 365, 746 365" fill="none" stroke="#a78bfa" stroke-width="1.8" opacity="0.55"/><path d="M194 365 C 265 365, 265 470, 290 470" fill="none" stroke="#8f8f8f" stroke-width="1.5" opacity="0.5"/><path d="M530 470 C 680 470, 680 365, 746 365" fill="none" stroke="#a78bfa" stroke-width="1.8" opacity="0.55"/><g>
+  <g transform="translate(-48 0)"><path d="M194 365 C 265 365, 265 150, 290 150" fill="none" stroke="#8f8f8f" stroke-width="1.5" opacity="0.5"/><path d="M530 150 C 680 150, 680 365, 746 365" fill="none" stroke="#a78bfa" stroke-width="1.8" opacity="0.55"/><path d="M194 365 C 265 365, 265 365, 290 365" fill="none" stroke="#8f8f8f" stroke-width="1.5" opacity="0.5"/><path d="M530 365 C 680 365, 680 365, 746 365" fill="none" stroke="#a78bfa" stroke-width="1.8" opacity="0.55"/><path d="M194 365 C 265 365, 265 470, 290 470" fill="none" stroke="#8f8f8f" stroke-width="1.5" opacity="0.5"/><path d="M530 470 C 680 470, 680 365, 746 365" fill="none" stroke="#a78bfa" stroke-width="1.8" opacity="0.55"/><g>
     <circle cx="150" cy="365" r="44" fill="none" stroke="#8f8f8f" stroke-width="1.5"/>
     <text x="150" y="362" text-anchor="middle" font-family="Geist Mono, ui-monospace, monospace" font-size="14" fill="#f2f2f2">USER</text>
     <text x="150" y="380" text-anchor="middle" font-family="Geist Mono, ui-monospace, monospace" font-size="14" fill="#f2f2f2">QUERY</text>
@@ -38,7 +38,9 @@
     <rect x="1040" y="331" width="150" height="68" rx="8" fill="#a78bfa" opacity="0.16" stroke="#a78bfa" stroke-width="1.5"/>
     <text x="1115" y="359" text-anchor="middle" font-family="Geist Mono, ui-monospace, monospace" font-size="14" fill="#f2f2f2">GROUNDED</text>
     <text x="1115" y="379" text-anchor="middle" font-family="Geist Mono, ui-monospace, monospace" font-size="14" fill="#f2f2f2">ADVICE</text>
-  </g><g font-family="Geist Mono, ui-monospace, monospace">
+  </g></g>
+  
+  <g font-family="Geist Mono, ui-monospace, monospace">
     <text x="48" y="658" font-size="19" letter-spacing="1.6" fill="#8f8f8f">FIG.04  AGENT ORCHESTRATION</text>
     <text x="48" y="692" font-size="30" letter-spacing="-0.2" fill="#f2f2f2">Query in, verdict out</text>
     <text x="48" y="720" font-size="17" letter-spacing="0.5" fill="#8f8f8f">LangGraph state machine, three specialists, truth-grounded synthesis</text>
