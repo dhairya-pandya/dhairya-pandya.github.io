@@ -299,7 +299,6 @@ export const projects: Project[] = [
     start: "2026-10",
     end: "2026-10",
     maturity: "prototype",
-    track: "Research experiment",
     research: true,
     outcome:
       "A small language model built from scratch to shrink the memory its attention cache takes during generation, using a hybrid stack of state-space and attention layers and a self-modeling training objective.",
@@ -330,7 +329,7 @@ export const projects: Project[] = [
     start: "2026-11",
     end: "2026-11",
     maturity: "prototype",
-    track: "Research experiment",
+    track: "Alignment",
     research: true,
     outcome:
       "A safety benchmark for LLM agent swarms. It asks which bio-inspired coordination designs keep the group correct when some members are compromised, and which defences are worth their cost.",
