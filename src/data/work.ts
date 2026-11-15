@@ -361,7 +361,6 @@ export const projects: Project[] = [
     start: "2026-11",
     end: "2026-11",
     maturity: "prototype",
-    track: "Alignment",
     research: true,
     outcome:
       "A study of whether a model's safety survives a fine-tuning attack in another language. In Tiny Aya Fire, English safety held while a Bengali attack left the model answering 59 to 61% of harmful Bengali prompts, and a low-rank repair brought that down to 14%.",
