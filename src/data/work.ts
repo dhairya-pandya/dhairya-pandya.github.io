@@ -354,6 +354,40 @@ export const projects: Project[] = [
     featured: false,
   },
   {
+    slug: "lexsi-cross-lingual",
+    title: "Cross-Lingual Safety",
+    icon: "ph:translate",
+    poster: "/mock/poster-lexsi.svg",
+    start: "2026-11",
+    end: "2026-11",
+    maturity: "prototype",
+    track: "Alignment",
+    research: true,
+    outcome:
+      "A study of whether a model's safety survives a fine-tuning attack in another language. In Tiny Aya Fire, English safety held while a Bengali attack left the model answering 59 to 61% of harmful Bengali prompts, and a low-rank repair brought that down to 14%.",
+    contribution:
+      "This was a team project for the Lexsi AI Alignment Hackathon. I worked on the cross-lingual attack and the low-rank repair experiments, and on the write-up and the interactive results site.",
+    bullets: [
+      "A model defended with standard safety fine-tuning refused 96 to 100% of harmful English prompts after a poisoned Bengali fine-tune, yet answered 59 to 61% of harmful Bengali prompts. An English-only evaluation would have approved it.",
+      "Adding Bengali safety data barely helped, with harm moving from 0.57 to 0.46. The attack overwrites the safety that is added, so this is a tamper-resistance problem rather than a coverage gap.",
+      "The attack's weight change is close to rank one. Removing the top singular direction of each attention and MLP update cut Bengali harm from 50% to 14%, kept English safe and preserved MMLU, with no retraining.",
+      "Anchoring refusal directions during fine-tuning did not work. In these experiments, repairing after the fine-tune beat preventing it during training.",
+    ],
+    chips: ["Tiny Aya", "Fine-tuning attacks", "Multilingual safety", "Low-rank repair"],
+    metric: {
+      value: "14%",
+      label: "Bengali harm after the low-rank repair",
+      context: "Tiny Aya Fire; English stayed safe and MMLU was preserved",
+      baseline: "Before repair: 50% Bengali harm",
+    },
+    evidence: [
+      { kind: "demo", label: "Results", url: "https://getalife-lexsi-study.vercel.app" },
+      { kind: "writeup", label: "Paper", url: "https://github.com/dhairya-pandya/Lexsi-AI-Alignment/blob/main/paper/cross-lingual-tamper-resistance.pdf" },
+      { kind: "repo", label: "Source", url: "https://github.com/dhairya-pandya/Lexsi-AI-Alignment" },
+    ],
+    featured: false,
+  },
+  {
     slug: "nyayasetu",
     title: "NyayaSetu",
     icon: "ph:scales",

@@ -532,6 +532,37 @@ const files = {};
 }
 
 /* =================================================================
+   Lexsi cross-lingual tamper resistance: Bengali harm after a poisoned
+   fine-tune, and after the low-rank repair. Numbers from the study's
+   README (English 0-4% harm, Bengali 59-61% after the attack, 14%
+   after removing the top direction).
+   ================================================================= */
+{
+  const [rose] = HUES.rose;
+  const [lime] = HUES.lime;
+  const mono = "Geist Mono, ui-monospace, monospace";
+  const h = 280, base = 470, bw = 150;
+  const bars = [
+    { n: "ENGLISH", s: "after attack", v: 0.04, label: "0-4%", c: INK, o: 0.35, x: 180 },
+    { n: "BENGALI", s: "after attack", v: 0.6, label: "59-61%", c: rose, o: 0.9, x: 420 },
+    { n: "BENGALI", s: "after repair", v: 0.14, label: "14%", c: lime, o: 0.95, x: 660 },
+  ];
+  let body = "";
+  bars.forEach((b) => {
+    const bh = Math.max(6, b.v * h);
+    body += `<rect x="${b.x}" y="${(base - bh).toFixed(1)}" width="${bw}" height="${bh.toFixed(1)}" fill="${b.c}" opacity="${b.o}"/>`;
+    body += `<text x="${b.x + bw / 2}" y="${(base - bh - 14).toFixed(1)}" text-anchor="middle" font-family="${mono}" font-size="20" fill="${b.c}">${b.label}</text>`;
+    body += `<text x="${b.x + bw / 2}" y="${base + 28}" text-anchor="middle" font-family="${mono}" font-size="14" letter-spacing="1" fill="${INK}">${b.n}</text>`;
+    body += `<text x="${b.x + bw / 2}" y="${base + 48}" text-anchor="middle" font-family="${mono}" font-size="13" fill="${DIM}">${b.s}</text>`;
+  });
+  files["poster-lexsi.svg"] = plate(
+    `${axes(140, base - h, 760, h, "", "HARMFUL ANSWERS")}${body}
+    ${caption("FIG.09  TAMPER RESISTANCE", "Safety holds in English, not in Bengali", "Tiny Aya Fire; a Bengali fine-tune attack, then a low-rank repair")}`,
+    { dx: 0 }
+  );
+}
+
+/* =================================================================
    4. Agent orchestration. Legal-Advisory (NyayaSetu): the complete
    pass, not just the fan-in. A query enters on the left, three
    specialists work it in parallel, Senior Counsel synthesises, and

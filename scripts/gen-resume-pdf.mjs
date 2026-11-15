@@ -187,6 +187,15 @@ const RESUME = {
           ],
         },
         {
+          head: "Cross-Lingual Safety",
+          meta: "Prototype / 11.2026",
+          bullets: [
+            "Team study for the Lexsi AI Alignment Hackathon: a poisoned Bengali fine-tune left Tiny Aya Fire answering 59 to 61% of harmful Bengali prompts, while English safety held.",
+            "A near rank-one low-rank repair cut Bengali harm from 50% to 14% with no retraining, keeping English safe and MMLU intact.",
+            "Python / Tiny Aya / Fine-tuning attacks / Multilingual safety",
+          ],
+        },
+        {
           head: "Udte Bhawre",
           meta: "Shipped / 04.2026 - 05.2026",
           bullets: [
@@ -414,7 +423,7 @@ const problems = [];
 if (!site.includes(RESUME.name)) problems.push("name does not match site.ts");
 if (!site.includes(RESUME.contact[0])) problems.push("email does not match site.ts");
 const projectCount = (work.match(/^\s{4}slug: "/gm) || []).length;
-if (projectCount !== 8) problems.push(`work.ts has ${projectCount} projects, expected 8`);
+if (projectCount !== 9) problems.push(`work.ts has ${projectCount} projects, expected 9`);
 
 if (problems.length) {
   console.error("resume PDF drift check FAILED:");
