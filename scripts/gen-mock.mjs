@@ -542,27 +542,29 @@ const files = {};
   const [rose] = HUES.rose;
   const [lime] = HUES.lime;
   const mono = "Geist Mono, ui-monospace, monospace";
+  const K = 1.5, CY = 330;
   const shield = (cx, cy, k) => {
     const p = (x, y) => `${(cx + x * k).toFixed(1)} ${(cy + y * k).toFixed(1)}`;
     return `M${p(0, -90)} L${p(70, -62)} L${p(70, -4)} Q${p(70, 60)} ${p(0, 92)} Q${p(-70, 60)} ${p(-70, -4)} L${p(-70, -62)} Z`;
   };
   let art = "";
   // English shield: whole, lime, with a check.
-  art += `<path d="${shield(300, 360, 1.9)}" fill="${lime}" fill-opacity="0.12" stroke="${lime}" stroke-width="4" stroke-linejoin="round"/>`;
-  art += `<path d="M258 362 L292 396 L346 330" fill="none" stroke="${lime}" stroke-width="12" stroke-linecap="round" stroke-linejoin="round"/>`;
-  // Bengali shield: cracked by the attack, drawn in rose.
-  art += `<path d="${shield(900, 360, 1.9)}" fill="${rose}" fill-opacity="0.08" stroke="${rose}" stroke-width="4" stroke-linejoin="round"/>`;
-  art += `<path d="M836 250 L862 300 L842 336 L880 372 L856 414 L898 452 L872 480" fill="none" stroke="${rose}" stroke-width="6" stroke-linejoin="round" stroke-linecap="round"/>`;
-  // Repair: a seam drawn over the crack, closing it.
-  art += `<path d="M868 258 L884 296 L876 322 L906 356 L888 388" fill="none" stroke="${lime}" stroke-width="5" stroke-linecap="round" stroke-dasharray="2 9"/>`;
-  art += `<path d="M822 360 H978" stroke="${INK}" stroke-width="1.5" stroke-dasharray="4 6" opacity="0.35"/>`;
-  art += `<text x="600" y="330" text-anchor="middle" font-family="${mono}" font-size="15" letter-spacing="1.4" fill="${DIM}">LOW-RANK</text>`;
-  art += `<text x="600" y="354" text-anchor="middle" font-family="${mono}" font-size="15" letter-spacing="1.4" fill="${DIM}">REPAIR</text>`;
-  art += `<path d="M560 378 H640" stroke="${lime}" stroke-width="3" stroke-linecap="round"/><path d="M630 370 L642 378 L630 386" fill="none" stroke="${lime}" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>`;
-  art += `<text x="300" y="520" text-anchor="middle" font-family="${mono}" font-size="16" letter-spacing="1.4" fill="${lime}">ENGLISH HOLDS</text>`;
-  art += `<text x="300" y="546" text-anchor="middle" font-family="${mono}" font-size="16" fill="${DIM}">refuses 96 to 100%</text>`;
-  art += `<text x="900" y="520" text-anchor="middle" font-family="${mono}" font-size="16" letter-spacing="1.4" fill="${rose}">BENGALI BREAKS</text>`;
-  art += `<text x="900" y="546" text-anchor="middle" font-family="${mono}" font-size="16" fill="${DIM}">answers 59 to 61%, then 14%</text>`;
+  art += `<path d="${shield(300, CY, K)}" fill="${lime}" fill-opacity="0.12" stroke="${lime}" stroke-width="4" stroke-linejoin="round"/>`;
+  art += `<path d="M266 ${CY + 2} L294 ${CY + 30} L340 ${CY - 30}" fill="none" stroke="${lime}" stroke-width="11" stroke-linecap="round" stroke-linejoin="round"/>`;
+  // Bengali shield: cracked by the attack, in rose.
+  art += `<path d="${shield(900, CY, K)}" fill="${rose}" fill-opacity="0.08" stroke="${rose}" stroke-width="4" stroke-linejoin="round"/>`;
+  // Crack and seam, drawn in the old coordinates and scaled to the shield.
+  art += `<g transform="translate(900 ${CY}) scale(${(K / 1.9).toFixed(3)}) translate(-900 -360)">`;
+  art += `<path d="M836 250 L862 300 L842 336 L880 372 L856 414 L898 452 L872 480" fill="none" stroke="${rose}" stroke-width="8" stroke-linejoin="round" stroke-linecap="round"/>`;
+  art += `<path d="M868 258 L884 296 L876 322 L906 356 L888 388" fill="none" stroke="${lime}" stroke-width="7" stroke-linecap="round" stroke-dasharray="2 12"/>`;
+  art += `</g>`;
+  art += `<text x="600" y="${CY - 8}" text-anchor="middle" font-family="${mono}" font-size="15" letter-spacing="1.4" fill="${DIM}">LOW-RANK</text>`;
+  art += `<text x="600" y="${CY + 16}" text-anchor="middle" font-family="${mono}" font-size="15" letter-spacing="1.4" fill="${DIM}">REPAIR</text>`;
+  art += `<path d="M560 ${CY + 36} H640" stroke="${lime}" stroke-width="3" stroke-linecap="round"/><path d="M630 ${CY + 28} L642 ${CY + 36} L630 ${CY + 44}" fill="none" stroke="${lime}" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>`;
+  art += `<text x="300" y="530" text-anchor="middle" font-family="${mono}" font-size="16" letter-spacing="1.4" fill="${lime}">ENGLISH HOLDS</text>`;
+  art += `<text x="300" y="556" text-anchor="middle" font-family="${mono}" font-size="16" fill="${DIM}">refuses 96 to 100%</text>`;
+  art += `<text x="900" y="530" text-anchor="middle" font-family="${mono}" font-size="16" letter-spacing="1.4" fill="${rose}">BENGALI BREAKS</text>`;
+  art += `<text x="900" y="556" text-anchor="middle" font-family="${mono}" font-size="16" fill="${DIM}">answers 59 to 61%, then 14%</text>`;
   files["poster-lexsi.svg"] = plate(
     `${art}${caption("FIG.09  TAMPER RESISTANCE", "Safety holds in English, not in Bengali", "Tiny Aya Fire; a Bengali fine-tune attack, then a low-rank repair")}`
   );
