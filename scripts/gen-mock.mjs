@@ -532,33 +532,39 @@ const files = {};
 }
 
 /* =================================================================
-   Lexsi cross-lingual tamper resistance: Bengali harm after a poisoned
-   fine-tune, and after the low-rank repair. Numbers from the study's
-   README (English 0-4% harm, Bengali 59-61% after the attack, 14%
-   after removing the top direction).
+   Lexsi cross-lingual safety. Two shields: the English one is whole,
+   the Bengali one is cracked open by the attack, and a seam is drawn
+   across the crack where the low-rank repair closes it. Drawn as a
+   picture of the idea, not a measurement; the numbers sit in the
+   caption.
    ================================================================= */
 {
   const [rose] = HUES.rose;
   const [lime] = HUES.lime;
   const mono = "Geist Mono, ui-monospace, monospace";
-  const h = 280, base = 470, bw = 150;
-  const bars = [
-    { n: "ENGLISH", s: "after attack", v: 0.04, label: "0-4%", c: INK, o: 0.35, x: 180 },
-    { n: "BENGALI", s: "after attack", v: 0.6, label: "59-61%", c: rose, o: 0.9, x: 420 },
-    { n: "BENGALI", s: "after repair", v: 0.14, label: "14%", c: lime, o: 0.95, x: 660 },
-  ];
-  let body = "";
-  bars.forEach((b) => {
-    const bh = Math.max(6, b.v * h);
-    body += `<rect x="${b.x}" y="${(base - bh).toFixed(1)}" width="${bw}" height="${bh.toFixed(1)}" fill="${b.c}" opacity="${b.o}"/>`;
-    body += `<text x="${b.x + bw / 2}" y="${(base - bh - 14).toFixed(1)}" text-anchor="middle" font-family="${mono}" font-size="20" fill="${b.c}">${b.label}</text>`;
-    body += `<text x="${b.x + bw / 2}" y="${base + 28}" text-anchor="middle" font-family="${mono}" font-size="14" letter-spacing="1" fill="${INK}">${b.n}</text>`;
-    body += `<text x="${b.x + bw / 2}" y="${base + 48}" text-anchor="middle" font-family="${mono}" font-size="13" fill="${DIM}">${b.s}</text>`;
-  });
+  const shield = (cx, cy, k) => {
+    const p = (x, y) => `${(cx + x * k).toFixed(1)} ${(cy + y * k).toFixed(1)}`;
+    return `M${p(0, -90)} L${p(70, -62)} L${p(70, -4)} Q${p(70, 60)} ${p(0, 92)} Q${p(-70, 60)} ${p(-70, -4)} L${p(-70, -62)} Z`;
+  };
+  let art = "";
+  // English shield: whole, lime, with a check.
+  art += `<path d="${shield(300, 360, 1.9)}" fill="${lime}" fill-opacity="0.12" stroke="${lime}" stroke-width="4" stroke-linejoin="round"/>`;
+  art += `<path d="M258 362 L292 396 L346 330" fill="none" stroke="${lime}" stroke-width="12" stroke-linecap="round" stroke-linejoin="round"/>`;
+  // Bengali shield: cracked by the attack, drawn in rose.
+  art += `<path d="${shield(900, 360, 1.9)}" fill="${rose}" fill-opacity="0.08" stroke="${rose}" stroke-width="4" stroke-linejoin="round"/>`;
+  art += `<path d="M836 250 L862 300 L842 336 L880 372 L856 414 L898 452 L872 480" fill="none" stroke="${rose}" stroke-width="6" stroke-linejoin="round" stroke-linecap="round"/>`;
+  // Repair: a seam drawn over the crack, closing it.
+  art += `<path d="M868 258 L884 296 L876 322 L906 356 L888 388" fill="none" stroke="${lime}" stroke-width="5" stroke-linecap="round" stroke-dasharray="2 9"/>`;
+  art += `<path d="M822 360 H978" stroke="${INK}" stroke-width="1.5" stroke-dasharray="4 6" opacity="0.35"/>`;
+  art += `<text x="600" y="330" text-anchor="middle" font-family="${mono}" font-size="15" letter-spacing="1.4" fill="${DIM}">LOW-RANK</text>`;
+  art += `<text x="600" y="354" text-anchor="middle" font-family="${mono}" font-size="15" letter-spacing="1.4" fill="${DIM}">REPAIR</text>`;
+  art += `<path d="M560 378 H640" stroke="${lime}" stroke-width="3" stroke-linecap="round"/><path d="M630 370 L642 378 L630 386" fill="none" stroke="${lime}" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>`;
+  art += `<text x="300" y="520" text-anchor="middle" font-family="${mono}" font-size="16" letter-spacing="1.4" fill="${lime}">ENGLISH HOLDS</text>`;
+  art += `<text x="300" y="546" text-anchor="middle" font-family="${mono}" font-size="16" fill="${DIM}">refuses 96 to 100%</text>`;
+  art += `<text x="900" y="520" text-anchor="middle" font-family="${mono}" font-size="16" letter-spacing="1.4" fill="${rose}">BENGALI BREAKS</text>`;
+  art += `<text x="900" y="546" text-anchor="middle" font-family="${mono}" font-size="16" fill="${DIM}">answers 59 to 61%, then 14%</text>`;
   files["poster-lexsi.svg"] = plate(
-    `${axes(140, base - h, 760, h, "", "HARMFUL ANSWERS")}${body}
-    ${caption("FIG.09  TAMPER RESISTANCE", "Safety holds in English, not in Bengali", "Tiny Aya Fire; a Bengali fine-tune attack, then a low-rank repair")}`,
-    { dx: 0 }
+    `${art}${caption("FIG.09  TAMPER RESISTANCE", "Safety holds in English, not in Bengali", "Tiny Aya Fire; a Bengali fine-tune attack, then a low-rank repair")}`
   );
 }
 
