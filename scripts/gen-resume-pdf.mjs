@@ -142,6 +142,15 @@ const RESUME = {
       title: "Selected systems",
       entries: [
         {
+          head: "Milaan",
+          meta: "Deployed / 11.2026 - now",
+          bullets: [
+            "GST reconciliation agent for Indian CA firms: matches a client's GSTR-2B against its purchase register and invoice PDFs, gives every invoice a rule-based verdict, and saves the reviewer's decision.",
+            "LangGraph pipeline with Gemini agents and a critic agent; 20,000 invoices in 370 ms (from 1,912 ms). One URL on Cloud Run, Supabase auth with row-level security.",
+            "Python / LangGraph / Gemini / FastAPI / Next.js / Cloud Run",
+          ],
+        },
+        {
           head: "PathOS",
           meta: "Shipped / 05.2026 - now",
           bullets: [
@@ -423,7 +432,7 @@ const problems = [];
 if (!site.includes(RESUME.name)) problems.push("name does not match site.ts");
 if (!site.includes(RESUME.contact[0])) problems.push("email does not match site.ts");
 const projectCount = (work.match(/^\s{4}slug: "/gm) || []).length;
-if (projectCount !== 9) problems.push(`work.ts has ${projectCount} projects, expected 9`);
+if (projectCount !== 10) problems.push(`work.ts has ${projectCount} projects, expected 10`);
 
 if (problems.length) {
   console.error("resume PDF drift check FAILED:");

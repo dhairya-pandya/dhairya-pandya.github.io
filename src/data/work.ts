@@ -135,6 +135,37 @@ export interface Project {
 
 export const projects: Project[] = [
   {
+    slug: "milaan",
+    title: "Milaan",
+    icon: "ph:receipt",
+    poster: "/mock/poster-milaan.svg",
+    start: "2026-11",
+    end: null,
+    maturity: "deployed",
+    contribution:
+      "I built Milaan on my own: the matcher, the LangGraph pipeline and Gemini agents, the FastAPI service, the Next.js app, and the Cloud Run and Supabase deployment.",
+    outcome:
+      "A GST reconciliation agent for Indian CA firms that checks a client's GSTR-2B against its purchase register and invoice PDFs, gives every invoice a verdict, and saves the reviewer's decision before input tax credit is claimed.",
+    bullets: [
+      "Reconciles structured data (GSTR-2B JSON or Excel, purchase-register CSV) with unstructured invoice PDFs. Fixed rules decide every verdict: fuzzy invoice numbers within the same PAN, a Rs 1 tolerance per tax head, and duplicate detection.",
+      "A LangGraph pipeline where Gemini 2.5 Flash agents explain flagged rows and a critic agent rejects amounts that are not in the source. Text is PII-masked and wrapped against prompt injection, and a reviewer accepts or rejects each flagged row.",
+      "Keeping inputs out of checkpointed state and indexing books by PAN cut a 20,000-invoice run from 1,912 ms to 370 ms. Per-firm token and cost budgets cap model spend, and an agent failure never fails a run.",
+      "Deployed as one URL on Google Cloud Run: Next.js proxies the API to a FastAPI service that verifies Supabase JWTs locally and queries Postgres with the user's own token under row-level security. The Gemini key lives in Secret Manager.",
+    ],
+    chips: ["Python", "LangGraph", "Gemini 2.5 Flash", "FastAPI", "Next.js", "Supabase", "Cloud Run"],
+    metric: {
+      value: "370 ms",
+      label: "end-to-end for 20,000 invoices",
+      context: "synthetic benchmark with a fake LLM, so model latency does not hide matcher cost",
+      baseline: "1,912 ms before three optimisation rounds",
+    },
+    evidence: [
+      { kind: "repo", label: "Source", url: "https://github.com/dhairya-pandya/gst-2b-recon-agent" },
+      { kind: "demo", label: "Live", url: "https://milaan-321997950255.asia-south1.run.app" },
+    ],
+    featured: false,
+  },
+  {
     slug: "pathos",
     title: "PathOS",
     icon: "ph:microscope",
